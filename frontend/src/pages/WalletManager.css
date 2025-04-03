@@ -1,0 +1,181 @@
+/* frontend/src/pages/WalletManager.css */
+.wallet-manager {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .wallet-manager h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .wallet-manager-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .wallet-section,
+  .exchange-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .wallet-section h3,
+  .exchange-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    color: #2c3e50;
+    font-size: 1.25rem;
+  }
+  
+  .wallet-list,
+  .exchange-list {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .wallet-item,
+  .exchange-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 4px solid #3498db;
+  }
+  
+  .wallet-info,
+  .exchange-info {
+    flex: 1;
+  }
+  
+  .wallet-name,
+  .exchange-name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: #2c3e50;
+  }
+  
+  .wallet-address,
+  .exchange-api-key {
+    font-family: monospace;
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .wallet-type,
+  .exchange-type {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+  
+  .remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  
+  .remove-button:hover {
+    background-color: #c82333;
+  }
+  
+  .remove-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  .add-wallet-form,
+  .add-exchange-form {
+    background-color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 4px;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .add-wallet-form h4,
+  .add-exchange-form h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  
+  .api-key-note {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  
+  .api-key-note p {
+    margin: 0;
+    color: #495057;
+  }
+  
+  .empty-state {
+    padding: 2rem;
+    text-align: center;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .wallet-manager {
+      padding: 1rem;
+    }
+    
+    .wallet-manager-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        input {
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    
+    <div>
+        <h2>Test Backend Connection</h2>
+        <p>URL: <input type="text" id="apiUrl" value="http://localhost:8000/api/v1/market/topcoins?limit=3" /></p>
+        <button onclick="testApi()">Test API Connection</button>
+        <div id="apiResult" class="result">Results will appear here...</div>
+    </div>
+
+    <script>
+        async function testApi() {
+            const resultDiv = document.getElementById('apiResult');
+            const url = document.getElementById('apiUrl').value;
+            
+            resultDiv.textContent = "Testing connection to " + url + "...";
+            
+            try {
+                const response = await fetch(url);
+                const status = response.status;
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.textContent = "✅ Success! Status: " + status + "\n\nResponse:\n" + 
+                        JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.textContent = "❌ Error! Status: " + status + "\n" + 
+                        (await response.text());
+                }
+            } catch (error) {
+                resultDiv.textContent = "❌ Connection Error:\n" + error.message;
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html> 

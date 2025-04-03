@@ -1,0 +1,112 @@
+.chat-interface {
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+}
+
+.chat-messages {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+/* Remove old chat-input class */
+/* .chat-input {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+} */
+
+.chat-input-container {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  transition: all 0.3s ease;
+  border-top: none;
+  box-shadow: none;
+}
+
+/* Dark mode styles */
+[data-mantine-color-scheme="dark"] .chat-interface .chat-input-container {
+  background-color: var(--mantine-color-dark-7);
+}
+
+/* Light mode styles */
+[data-mantine-color-scheme="light"] .chat-interface .chat-input-container {
+  background-color: var(--mantine-color-white);
+}
+
+.insights-panel {
+  padding: 1rem;
+}
+
+.insights-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  border: 1px solid;
+}
+
+/* Dark mode insights card */
+[data-mantine-color-scheme="dark"] .insights-card {
+  background-color: var(--mantine-color-dark-7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode insights card */
+[data-mantine-color-scheme="light"] .insights-card {
+  background-color: white;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Recommendations specific styles */
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recommendation-card {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Dark mode recommendation card */
+[data-mantine-color-scheme="dark"] .recommendation-card {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Light mode recommendation card */
+[data-mantine-color-scheme="light"] .recommendation-card {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.recommendation-card:hover {
+  transform: translateY(-1px);
+}
+
+[data-mantine-color-scheme="dark"] .recommendation-card:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-mantine-color-scheme="light"] .recommendation-card:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}

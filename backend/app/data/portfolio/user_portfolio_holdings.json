@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "quantity": 0.85,
+    "price_usd": 85210.00,
+    "current_value": 72428.50,
+    "purchase_price_avg": 67500.00,
+    "purchase_value": 57375.00,
+    "pnl": 15053.50,
+    "pnl_percent": 26.24,
+    "last_updated": "2025-04-01T15:32:21Z"
+  },
+  {
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "quantity": 2.1,
+    "price_usd": 1913.91,
+    "current_value": 4019.21,
+    "purchase_price_avg": 1650.00,
+    "purchase_value": 3465.00,
+    "pnl": 554.21,
+    "pnl_percent": 15.99,
+    "last_updated": "2025-04-01T15:32:21Z"
+  },
+  {
+    "symbol": "SOL",
+    "name": "Solana",
+    "quantity": 10,
+    "price_usd": 75.33,
+    "current_value": 753.30,
+    "purchase_price_avg": 58.20,
+    "purchase_value": 582.00,
+    "pnl": 171.30,
+    "pnl_percent": 29.43,
+    "last_updated": "2025-04-01T15:32:21Z"
+  },
+  {
+    "symbol": "DOT",
+    "name": "Polkadot",
+    "quantity": 150,
+    "price_usd": 7.89,
+    "current_value": 1183.50,
+    "purchase_price_avg": 12.50,
+    "purchase_value": 1875.00,
+    "pnl": -691.50,
+    "pnl_percent": -36.88,
+    "last_updated": "2025-04-01T15:32:21Z"
+  },
+  {
+    "symbol": "PEPE",
+    "name": "Pepe",
+    "quantity": 15000000,
+    "price_usd": 0.00000222,
+    "current_value": 33.30,
+    "purchase_price_avg": 0.00000185,
+    "purchase_value": 27.75,
+    "pnl": 5.55,
+    "pnl_percent": 20.00,
+    "last_updated": "2025-04-01T15:32:21Z"
+  }
+] 

@@ -1,0 +1,128 @@
+.
+├── README.md
+├── app
+│   ├── prompts
+│   │   ├── asset_evaluation_prompt.py
+│   │   └── prompt_registry.py
+│   └── services
+│       └── ai
+├── backend
+│   ├── README.md
+│   ├── README_GRAYSCALE_FIX.md
+│   ├── REFACTOR_SUMMARY.md
+│   ├── add_test_article.py
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── api
+│   │   ├── config.py
+│   │   ├── core
+│   │   ├── data
+│   │   ├── database.py
+│   │   ├── db
+│   │   ├── dependencies.py
+│   │   ├── generate_cache_data.py
+│   │   ├── legacy
+│   │   ├── main.py
+│   │   ├── models
+│   │   ├── prompts
+│   │   ├── routes
+│   │   ├── rules.py
+│   │   ├── services
+│   │   ├── simple_server.py
+│   │   ├── tempCodeRunnerFile.py
+│   │   ├── update_feeds.py
+│   │   ├── utils
+│   │   └── webhooks
+│   ├── backend
+│   │   ├── app
+│   │   └── logs
+│   ├── data
+│   │   ├── bitcoin_news.json
+│   │   ├── cross_alerts.json
+│   │   ├── crypto_news.json
+│   │   ├── crypto_portfolio.db
+│   │   ├── macro_news.json
+│   │   ├── market
+│   │   ├── market_data.json
+│   │   ├── messari_news.json
+│   │   ├── news_data.json
+│   │   ├── news_market.db
+│   │   ├── portfolio
+│   │   ├── portfolio_data.json
+│   │   ├── reddit_posts.json
+│   │   ├── settings.json
+│   │   └── test_message.md
+│   ├── fixtures
+│   │   └── crypto_news.json
+│   ├── logs
+│   │   ├── api.log
+│   │   ├── api.log.1
+│   │   ├── api.log.2
+│   │   ├── api.log.3
+│   │   ├── api.log.4
+│   │   ├── background.log
+│   │   └── error.log
+│   ├── pyrightconfig.json
+│   ├── requirements.txt
+│   ├── scripts
+│   │   ├── add_grayscale_article.py
+│   │   ├── init_db.py
+│   │   ├── load_fixtures.py
+│   │   ├── minimal_server.py
+│   │   ├── refactor_status_report.md
+│   │   ├── refresh_news.py
+│   │   ├── server_status.py
+│   │   └── start_services.sh
+│   ├── server.log
+│   ├── server_output.log
+│   ├── test_ai_context.py
+│   ├── test_context_protection.py
+│   ├── test_query.py
+│   ├── test_search.py
+│   ├── tests
+│   │   ├── mock_data_log.md
+│   │   └── test_ai_pipeline.py
+│   └── venv
+│       ├── bin
+│       ├── include
+│       ├── lib
+│       └── pyvenv.cfg
+├── filetree.txt
+├── frontend
+│   ├── build
+│   │   ├── asset-manifest.json
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   ├── robots.txt
+│   │   ├── static
+│   │   └── test-api.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   ├── robots.txt
+│   │   └── test-api.html
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.js
+│   │   ├── MockBackend.js
+│   │   ├── api
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── config.js
+│   │   ├── contexts
+│   │   ├── hooks
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   ├── mocks
+│   │   ├── pages
+│   │   ├── reportWebVitals.js
+│   │   ├── services
+│   │   ├── styles.css
+│   │   └── utils
+│   └── tsconfig.json
+├── package.json
+└── rules.md
+
+46 directories, 80 files
