@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+frontend/node_modules
+frontend/node_modules/
 /.pnp
 .pnp.js
 
@@ -11,6 +13,8 @@
 # production
 /build
 /dist
+frontend/build
+frontend/dist
 
 # misc
 .DS_Store
@@ -21,6 +25,9 @@
 .env.production.local
 backend/.env
 backend/.env.local
+frontend/.env
+frontend/.env.local
+frontend/.env.development
 
 # logs
 npm-debug.log*
@@ -35,6 +42,13 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+.cursor.json
+
+# Cache files
+.eslintcache
+.cache
+**/.eslintcache
+**/.cache
 
 # Python
 __pycache__/

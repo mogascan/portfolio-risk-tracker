@@ -140,7 +140,14 @@ python test_query.py "What is the price of Bitcoin?"
 - [ ] CI/CD GitHub Actions
 
 ---
+## Screenshots
 
+![Portfolio Summary](https://via.placeholder.com/400x225/3498db/FFFFFF?text=Portfolio+Summary)
+![Asset Allocation](https://via.placeholder.com/400x225/2ecc71/FFFFFF?text=Asset+Allocation)
+![AI Chat Interface](https://via.placeholder.com/400x225/9b59b6/FFFFFF?text=AI+Chat+Interface)
+![Wallet Management](https://via.placeholder.com/400x225/e74c3c/FFFFFF?text=Wallet+Management)
+
+---
 ## 👩‍💻 Contributors
 
 - **Sim D.** – Core Developer & AI Architect  
