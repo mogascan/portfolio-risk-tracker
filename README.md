@@ -2,7 +2,10 @@
 
 A unified dashboard and intelligent assistant for tracking your crypto assets across exchanges and wallets. This project combines real-time market data, News, Social, Research, AI-driven insights, tax flagging, and performance analytics—all in one platform.
 
-![Portfolio Dashboard](https://via.placeholder.com/800x450/3498db/FFFFFF?text=Crypto+Portfolio+Dashboard)
+![image](https://github.com/user-attachments/assets/8b07ceb2-4a57-4d5d-91c9-5a13448b59d2)
+![image](https://github.com/user-attachments/assets/6cbe384c-dc7c-4b9c-bb57-325dd5c9249a)
+
+![image](https://github.com/user-attachments/assets/9d189ddf-b555-4365-8323-ff1c21d98146)
 
 ---
 
@@ -141,16 +144,22 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 ## Screenshots
+![image](https://github.com/user-attachments/assets/6cbc7b6d-023e-477f-8197-42f561f08175)
 
-![Portfolio Summary](https://via.placeholder.com/400x225/3498db/FFFFFF?text=Portfolio+Summary)
-![Asset Allocation](https://via.placeholder.com/400x225/2ecc71/FFFFFF?text=Asset+Allocation)
-![AI Chat Interface](https://via.placeholder.com/400x225/9b59b6/FFFFFF?text=AI+Chat+Interface)
-![Wallet Management](https://via.placeholder.com/400x225/e74c3c/FFFFFF?text=Wallet+Management)
+![image](https://github.com/user-attachments/assets/b6489d1a-ca64-46ac-bf0c-c4a36759579c)
+
+![image](https://github.com/user-attachments/assets/3acd6c32-9eb3-4cf6-9c63-3f8435be410a)
+
+![image](https://github.com/user-attachments/assets/cacfe1ad-a8eb-4f77-be64-44c76b7c8bd8)
+
+![image](https://github.com/user-attachments/assets/0284b4d8-2a7b-45aa-bb74-129f08c3056b)
+
+
 
 ---
 ## 👩‍💻 Contributors
 
-- **Sim D.** – Core Developer & AI Architect  
+- **Mogas** – Core Developer & AI Architect  
 - **ChatGPT** – Assistant Developer, Prompt Engineer, QA  
 
 ---
