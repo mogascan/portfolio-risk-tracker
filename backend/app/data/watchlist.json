@@ -1,0 +1,50 @@
+{
+  "watchlist": [
+    {
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "id": "arbitrum",
+      "added_on": "2024-02-15T08:22:45Z",
+      "notification_price_above": 1.80,
+      "notification_price_below": 1.25,
+      "notes": "Layer 2 scaling solution with potential growth"
+    },
+    {
+      "symbol": "INJ",
+      "name": "Injective",
+      "id": "injective-protocol",
+      "added_on": "2024-03-01T14:37:12Z",
+      "notification_price_above": 40.00,
+      "notification_price_below": 25.00,
+      "notes": "Decentralized derivatives exchange showing consistent growth"
+    },
+    {
+      "symbol": "RUNE",
+      "name": "THORChain",
+      "id": "thorchain",
+      "added_on": "2024-02-28T09:15:33Z",
+      "notification_price_above": 6.50,
+      "notification_price_below": 4.00,
+      "notes": "Cross-chain liquidity protocol with increasing adoption"
+    },
+    {
+      "symbol": "AVAX",
+      "name": "Avalanche",
+      "id": "avalanche-2",
+      "added_on": "2024-01-12T11:22:45Z",
+      "notification_price_above": 40.00,
+      "notification_price_below": 26.00,
+      "notes": "Tracking for potential entry point"
+    },
+    {
+      "symbol": "SUI",
+      "name": "Sui",
+      "id": "sui",
+      "added_on": "2024-03-10T16:45:22Z",
+      "notification_price_above": 2.00,
+      "notification_price_below": 0.90,
+      "notes": "Layer 1 blockchain with interesting tokenomics"
+    }
+  ],
+  "last_updated": "2025-04-01T15:32:21Z"
+} 

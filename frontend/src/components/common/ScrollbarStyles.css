@@ -1,0 +1,135 @@
+/* Custom scrollbar styles for cross-browser compatibility */
+
+/* Base styles for both light and dark modes */
+.custom-scrollbar {
+  /* Firefox scrollbar styles */
+  scrollbar-width: thin;
+}
+
+/* Dark mode scrollbar */
+.dark-theme .custom-scrollbar {
+  /* Firefox */
+  scrollbar-color: #5C5F66 #2C2E33;
+}
+
+/* Active/dragging state for Firefox */
+.dark-theme .custom-scrollbar:active {
+  scrollbar-color: #228be6 #2C2E33; /* Blue color when active */
+}
+
+/* Light mode scrollbar */
+.light-theme .custom-scrollbar {
+  /* Firefox */
+  scrollbar-color: #CED4DA #F1F3F5;
+}
+
+/* Active/dragging state for Firefox */
+.light-theme .custom-scrollbar:active {
+  scrollbar-color: #228be6 #F1F3F5; /* Blue color when active */
+}
+
+/* Webkit (Chrome, Safari, Edge) scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Dark mode */
+.dark-theme .custom-scrollbar::-webkit-scrollbar-track {
+  background: #2C2E33; /* dark.6 */
+  border-radius: 4px;
+}
+
+.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #5C5F66; /* dark.3 */
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #909296; /* dark.2 */
+}
+
+/* Active/engaged state - blue color */
+.dark-theme .custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #228be6; /* blue */
+}
+
+/* Light mode */
+.light-theme .custom-scrollbar::-webkit-scrollbar-track {
+  background: #F1F3F5; /* gray.1 */
+  border-radius: 4px;
+}
+
+.light-theme .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #CED4DA; /* gray.4 */
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.light-theme .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ADB5BD; /* gray.5 */
+}
+
+/* Active/engaged state - blue color */
+.light-theme .custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #228be6; /* blue */
+}
+
+/* Fix for scrollbar corners */
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Using Mantine variables when available */
+@supports (color: var(--mantine-color-dark-6)) {
+  .dark-theme .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--mantine-color-dark-6);
+  }
+  
+  .dark-theme .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--mantine-color-dark-3);
+  }
+  
+  .dark-theme .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--mantine-color-dark-2);
+  }
+  
+  /* Active/engaged state - blue color */
+  .dark-theme .custom-scrollbar::-webkit-scrollbar-thumb:active {
+    background: var(--mantine-color-blue-6);
+  }
+  
+  .light-theme .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--mantine-color-gray-1);
+  }
+  
+  .light-theme .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--mantine-color-gray-4);
+  }
+  
+  .light-theme .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--mantine-color-gray-5);
+  }
+  
+  /* Active/engaged state - blue color */
+  .light-theme .custom-scrollbar::-webkit-scrollbar-thumb:active {
+    background: var(--mantine-color-blue-6);
+  }
+  
+  .dark-theme .custom-scrollbar {
+    scrollbar-color: var(--mantine-color-dark-3) var(--mantine-color-dark-6);
+  }
+  
+  .light-theme .custom-scrollbar {
+    scrollbar-color: var(--mantine-color-gray-4) var(--mantine-color-gray-1);
+  }
+  
+  /* Active state for Firefox using CSS variables */
+  .dark-theme .custom-scrollbar:active {
+    scrollbar-color: var(--mantine-color-blue-6) var(--mantine-color-dark-6);
+  }
+  
+  .light-theme .custom-scrollbar:active {
+    scrollbar-color: var(--mantine-color-blue-6) var(--mantine-color-gray-1);
+  }
+} 

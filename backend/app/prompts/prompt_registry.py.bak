@@ -1,0 +1,22 @@
+
+from app.prompts.system_prompt import system_prompt
+from app.prompts.asset_evaluation_prompt import asset_evaluation_prompt
+from app.prompts.tax_analysis_prompt import tax_analysis_prompt
+from app.prompts.news_summarization_prompt import news_summarization_prompt
+from app.prompts.portfolio_rebalancing_prompt import portfolio_rebalancing_prompt
+from app.prompts.performance_review_prompt import performance_review_prompt
+from app.prompts.trade_history_prompt import trade_history_prompt
+from app.prompts.risk_alert_prompt import risk_alert_prompt
+from app.prompts.wallet_analysis_prompt import wallet_analysis_prompt
+
+PROMPT_REGISTRY = {
+    "system": system_prompt,
+    "asset_evaluation": asset_evaluation_prompt,
+    "tax_analysis": tax_analysis_prompt,
+    "news_summarization": news_summarization_prompt,
+    "portfolio_rebalancing": portfolio_rebalancing_prompt,
+    "performance_review": performance_review_prompt,
+    "trade_history": trade_history_prompt,
+    "risk_alert": risk_alert_prompt,
+    "wallet_analysis": wallet_analysis_prompt,
+}

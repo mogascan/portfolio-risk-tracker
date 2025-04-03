@@ -1,0 +1,13 @@
+/* frontend/src/pages/Dashboard.css */
+.dashboard-page {
+  display: none; /* This page doesn't render directly - it's content for the AppLayout columns */
+}
+
+/* These styles are for the content that will be placed in respective columns */
+.left-column-content,
+.center-column-content,
+.right-column-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "tx-001",
+    "type": "buy",
+    "symbol": "BTC",
+    "amount": 0.5,
+    "price_usd": 65000.00,
+    "total_value": 32500.00,
+    "fee_usd": 12.50,
+    "timestamp": "2023-11-15T08:42:31Z",
+    "exchange": "Coinbase",
+    "notes": "Initial Bitcoin purchase",
+    "status": "completed"
+  },
+  {
+    "id": "tx-002",
+    "type": "buy",
+    "symbol": "BTC",
+    "amount": 0.35,
+    "price_usd": 71000.00,
+    "total_value": 24850.00,
+    "fee_usd": 9.75,
+    "timestamp": "2024-01-20T14:15:22Z",
+    "exchange": "Coinbase",
+    "notes": "Dollar-cost averaging",
+    "status": "completed"
+  },
+  {
+    "id": "tx-003",
+    "type": "buy",
+    "symbol": "ETH",
+    "amount": 3.5,
+    "price_usd": 1625.00,
+    "total_value": 5687.50,
+    "fee_usd": 7.85,
+    "timestamp": "2023-12-05T09:31:45Z",
+    "exchange": "Binance",
+    "notes": "Initial Ethereum purchase",
+    "status": "completed"
+  },
+  {
+    "id": "tx-004",
+    "type": "sell",
+    "symbol": "ETH",
+    "amount": 1.4,
+    "price_usd": 1850.00,
+    "total_value": 2590.00,
+    "fee_usd": 5.25,
+    "timestamp": "2024-02-18T16:22:33Z",
+    "exchange": "Binance",
+    "notes": "Partial profit taking",
+    "status": "completed"
+  },
+  {
+    "id": "tx-005",
+    "type": "buy",
+    "symbol": "SOL",
+    "amount": 10,
+    "price_usd": 58.20,
+    "total_value": 582.00,
+    "fee_usd": 1.75,
+    "timestamp": "2024-01-10T11:54:21Z",
+    "exchange": "Kraken",
+    "notes": "Adding Solana to portfolio",
+    "status": "completed"
+  },
+  {
+    "id": "tx-006",
+    "type": "buy",
+    "symbol": "DOT",
+    "amount": 150,
+    "price_usd": 12.50,
+    "total_value": 1875.00,
+    "fee_usd": 3.25,
+    "timestamp": "2023-11-28T10:12:43Z",
+    "exchange": "Kraken",
+    "notes": "Initial Polkadot position",
+    "status": "completed"
+  },
+  {
+    "id": "tx-007",
+    "type": "buy",
+    "symbol": "PEPE",
+    "amount": 15000000,
+    "price_usd": 0.00000185,
+    "total_value": 27.75,
+    "fee_usd": 0.85,
+    "timestamp": "2024-03-05T15:43:22Z",
+    "exchange": "Binance",
+    "notes": "Small position in meme coin",
+    "status": "completed"
+  }
+] 

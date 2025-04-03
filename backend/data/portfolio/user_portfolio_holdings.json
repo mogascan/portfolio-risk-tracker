@@ -1,0 +1,16 @@
+[
+  {
+    "symbol": "S",
+    "name": "Sonic",
+    "quantity": 91000,
+    "price_usd": 0,
+    "last_updated": "2025-04-03T11:06:29.028599"
+  },
+  {
+    "symbol": "EUL",
+    "name": "Euler",
+    "quantity": 5600,
+    "price_usd": 0,
+    "last_updated": "2025-04-03T11:06:29.028656"
+  }
+]

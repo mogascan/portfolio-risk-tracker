@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Pump.fun Token Surges to New Heights in DEX Trading",
+    "url": "https://example.com/news/pumpfun-token-surges",
+    "source": "Crypto Example News",
+    "summary": "The Pump.fun exchange token has experienced a significant price increase after new features were announced.",
+    "published_at": "2023-09-12T10:30:45Z",
+    "content": "Pump.fun, the meme coin creation platform, has seen its token surge by over 40% in the past 24 hours following the announcement of new platform features. The DEX aggregator continues to gain popularity among crypto enthusiasts.",
+    "image_url": "https://example.com/images/pumpfun-token.jpg",
+    "categories": ["DeFi", "Meme Coins"]
+  },
+  {
+    "title": "Cardano (ADA) Announces Major Protocol Upgrade for Q3",
+    "url": "https://example.com/news/cardano-ada-protocol-upgrade",
+    "source": "Crypto News Daily",
+    "summary": "Cardano's development team has announced a significant protocol upgrade scheduled for Q3 2023.",
+    "published_at": "2023-08-15T14:22:10Z",
+    "content": "Cardano (ADA) is preparing for a major protocol upgrade that will enhance smart contract functionality and improve scalability. The upgrade, part of the Cardano roadmap, is expected to significantly increase transaction throughput and reduce fees.",
+    "image_url": "https://example.com/images/cardano-upgrade.jpg",
+    "categories": ["Smart Contracts", "Blockchain"]
+  }
+] 

@@ -1,0 +1,853 @@
+.portfolio-summary {
+  padding: 1rem;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.portfolio-card {
+  margin-bottom: 0;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  overflow: hidden; /* Prevent content from overflowing */
+  word-break: break-word; /* Allow text to break to prevent overflow */
+}
+
+.portfolio-card:hover {
+  transform: none; /* Remove the transform effect */
+  box-shadow: none; /* Remove hover shadow effect */
+}
+
+.chart-container {
+  height: 300px;
+  margin: 1rem 0;
+}
+
+.asset-list {
+  margin-top: 1rem;
+}
+
+.asset-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.profit-loss-chart {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Performance metrics styling */
+.performance-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.performance-metric-header {
+  margin-bottom: 2px;
+}
+
+.performance-metric-value {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.performance-amount {
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  /* Adjust sizes for medium-large screens */
+  .portfolio-card h3.mantine-Title-root {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-metric-value {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  /* Adjust sizes for medium screens */
+  .portfolio-card h3.mantine-Title-root {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-metric-value {
+    font-size: 1rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-amount {
+    font-size: 0.85rem;
+  }
+  
+  .portfolio-card .mantine-Text-root {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-card {
+    padding: 0.75rem;
+  }
+  
+  .portfolio-card h3.mantine-Title-root {
+    font-size: 1rem;
+    margin-bottom: 8px !important;
+  }
+  
+  .portfolio-card .mantine-Text-root {
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-metric-value {
+    font-size: 0.95rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-amount {
+    font-size: 0.8rem;
+  }
+  
+  /* Make peformance metrics fit better */
+  .performance-metric {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .portfolio-card {
+    padding: 0.5rem;
+  }
+  
+  /* Ensure text is properly sized on mobile */
+  .portfolio-card h3.mantine-Title-root, 
+  .portfolio-card h4.mantine-Title-root {
+    font-size: 0.95rem;
+    margin-bottom: 6px !important;
+  }
+  
+  /* Make sure values don't overflow */
+  .portfolio-card .mantine-Text-root {
+    font-size: 0.85rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-metric-value {
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-amount {
+    font-size: 0.75rem;
+  }
+  
+  /* Improve spacing in performance metrics */
+  .performance-metric {
+    flex: 0 0 auto;
+    margin-right: 12px;
+    padding: 0 2px;
+  }
+  
+  /* Adjust spacing for risk analysis section */
+  .portfolio-card .mantine-Stack-root {
+    gap: 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small devices */
+  .portfolio-card h3.mantine-Title-root,
+  .portfolio-card h4.mantine-Title-root {
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-card .mantine-Text-root {
+    font-size: 0.8rem;
+  }
+  
+  .portfolio-card .mantine-Text-root.performance-metric-value {
+    font-size: 0.85rem;
+  }
+  
+  .performance-metric {
+    margin-right: 8px;
+  }
+  
+  /* Reduce padding further */
+  .portfolio-card {
+    padding: 0.4rem;
+  }
+}
+
+/* Specific component responsive styles */
+.asset-symbol {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.asset-price {
+  white-space: nowrap;
+}
+
+.asset-percentage {
+  white-space: nowrap;
+}
+
+.mover-symbol, .mover-percentage, .mover-amount {
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .asset-symbol {
+    font-size: 0.95rem;
+  }
+  
+  .asset-price {
+    font-size: 0.85rem;
+  }
+  
+  .asset-percentage {
+    font-size: 0.95rem;
+  }
+  
+  .mover-symbol {
+    font-size: 0.9rem;
+  }
+  
+  .mover-percentage {
+    font-size: 0.9rem;
+  }
+  
+  .mover-amount {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .asset-symbol {
+    font-size: 0.9rem;
+  }
+  
+  .asset-price {
+    font-size: 0.8rem;
+  }
+  
+  .asset-percentage {
+    font-size: 0.9rem;
+  }
+  
+  .mover-symbol {
+    font-size: 0.85rem;
+  }
+  
+  .mover-percentage {
+    font-size: 0.85rem;
+  }
+  
+  .mover-amount {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .asset-symbol {
+    font-size: 0.85rem;
+  }
+  
+  .asset-price {
+    font-size: 0.75rem;
+  }
+  
+  .asset-percentage {
+    font-size: 0.85rem;
+  }
+  
+  .mover-symbol {
+    font-size: 0.8rem;
+  }
+  
+  .mover-percentage {
+    font-size: 0.8rem;
+  }
+  
+  .mover-amount {
+    font-size: 0.7rem;
+  }
+}
+
+/* Risk Analysis responsive styles */
+.risk-label {
+  white-space: nowrap;
+}
+
+.risk-level {
+  white-space: nowrap;
+}
+
+.risk-description {
+  display: block;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.risk-asset {
+  white-space: nowrap;
+}
+
+.risk-value {
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .risk-label {
+    font-size: 0.85rem;
+  }
+  
+  .risk-level {
+    font-size: 1.1rem;
+  }
+  
+  .risk-description {
+    font-size: 0.8rem;
+  }
+  
+  .risk-asset {
+    font-size: 1.3rem;
+  }
+  
+  .risk-value {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .risk-label {
+    font-size: 0.8rem;
+  }
+  
+  .risk-level {
+    font-size: 1rem;
+  }
+  
+  .risk-description {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 2;
+  }
+  
+  .risk-asset {
+    font-size: 1.1rem;
+  }
+  
+  .risk-value {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .risk-label {
+    font-size: 0.75rem;
+  }
+  
+  .risk-level {
+    font-size: 0.95rem;
+  }
+  
+  .risk-description {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 1;
+  }
+  
+  .risk-asset {
+    font-size: 1rem;
+  }
+  
+  .risk-value {
+    font-size: 0.7rem;
+  }
+  
+  .portfolio-card .mantine-Badge-root {
+    font-size: 0.65rem;
+    padding: 0 4px;
+    height: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .risk-level {
+    font-size: 0.9rem;
+  }
+  
+  .risk-asset {
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-card .mantine-Group-root {
+    gap: 4px !important;
+  }
+  
+  .portfolio-card .mantine-Badge-root {
+    font-size: 0.65rem;
+    padding: 0 3px;
+    height: 1.05rem;
+  }
+}
+
+/* Total value responsive styles */
+.total-value-element {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 992px) {
+  .total-value-element {
+    font-size: 38px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .total-value-element {
+    font-size: 32px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .total-value-element {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .total-value-element {
+    font-size: 24px !important;
+  }
+  
+  /* Also adjust the position indicator for the small screens */
+  .portfolio-card .profit-loss-menu {
+    min-width: 130px !important;
+  }
+}
+
+/* Adjust styles for profit-loss-menu to ensure values fit */
+.profit-loss-menu {
+  box-shadow: none !important;
+  transform: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+.profit-loss-menu:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.profit-loss-menu .mantine-Text-root {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tooltip styling for responsive data */
+.mantine-Tooltip-tooltip {
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Risk asset pill styles to ensure risk badge and asset symbol stay together */
+.risk-asset-container {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.risk-asset {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.risk-level {
+  white-space: nowrap;
+}
+
+.risk-description {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.risk-asset {
+  white-space: nowrap;
+}
+
+.risk-value {
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .risk-label {
+    font-size: 0.85rem;
+  }
+  
+  .risk-level {
+    font-size: 1.1rem;
+  }
+  
+  .risk-description {
+    font-size: 0.8rem;
+  }
+  
+  .risk-asset {
+    font-size: 1.3rem;
+  }
+  
+  .risk-value {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .risk-label {
+    font-size: 0.8rem;
+  }
+  
+  .risk-level {
+    font-size: 1rem;
+  }
+  
+  .risk-description {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 2;
+  }
+  
+  .risk-asset {
+    font-size: 1.1rem;
+  }
+  
+  .risk-value {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .risk-label {
+    font-size: 0.75rem;
+  }
+  
+  .risk-level {
+    font-size: 0.95rem;
+  }
+  
+  .risk-description {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 1;
+  }
+  
+  .risk-asset {
+    font-size: 1rem;
+  }
+  
+  .risk-value {
+    font-size: 0.7rem;
+  }
+  
+  .portfolio-card .mantine-Badge-root {
+    font-size: 0.65rem;
+    padding: 0 4px;
+    height: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .risk-level {
+    font-size: 0.9rem;
+  }
+  
+  .risk-asset {
+    font-size: 0.9rem;
+  }
+  
+  .portfolio-card .mantine-Group-root {
+    gap: 4px !important;
+  }
+  
+  .portfolio-card .mantine-Badge-root {
+    font-size: 0.65rem;
+    padding: 0 3px;
+    height: 1.05rem;
+  }
+}
+
+/* Risk Monitor specific styles */
+.risk-monitor-value {
+  text-align: right !important;
+  margin-left: 16px !important;
+  white-space: nowrap !important;
+}
+
+.risk-monitor-label {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+.risk-monitor-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Override any responsive styles that might affect alignment */
+@media (max-width: 576px) {
+  .risk-monitor-value,
+  .risk-monitor-label {
+    font-size: inherit !important;
+  }
+  
+  .risk-monitor-row {
+    flex-wrap: nowrap !important;
+  }
+}
+
+/* Custom hover-based scrollbar */
+.hover-scroll::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+.hover-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hover-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.hover-scroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+/* Firefox scrollbar */
+.hover-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.hover-scroll:hover {
+  scrollbar-color: rgba(150, 150, 150, 0.5) transparent;
+}
+
+/* Remove all hover-scroll border overrides */
+.hover-scroll,
+.hover-scroll:hover,
+.hover-scroll > div,
+.hover-scroll > div:hover,
+.hover-scroll > .mantine-Box-root,
+.hover-scroll > .mantine-Box-root:hover {
+  border: inherit;
+  box-shadow: inherit;
+}
+
+/* Portfolio card hover states */
+.portfolio-card:hover,
+.seasonality-card:hover,
+.risk-monitor-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Calendar events card styles */
+.calendar-event {
+  padding: 4px 0;
+  transition: transform 0.2s ease;
+}
+
+.calendar-event:hover {
+  transform: translateX(2px);
+}
+
+.calendar-event .mantine-Badge-root {
+  font-size: 0.7rem;
+  padding: 0 6px;
+  height: 18px;
+  line-height: 18px;
+}
+
+@media (max-width: 768px) {
+  .calendar-event {
+    padding: 3px 0;
+  }
+  
+  .calendar-event .mantine-Text-root {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .calendar-event {
+    padding: 2px 0;
+  }
+  
+  .calendar-event .mantine-Text-root {
+    font-size: 0.75rem;
+  }
+  
+  .calendar-event .mantine-Badge-root {
+    font-size: 0.65rem;
+    padding: 0 4px;
+    height: 16px;
+    line-height: 16px;
+  }
+}
+
+/* Card highlight styles */
+.seasonality-card,
+.capital-protection-card,
+.risk-monitor-card {
+  transition: all 0.3s ease;
+}
+
+.seasonality-card.bullish,
+.capital-protection-card.secure {
+  border-left: 4px solid #4caf50 !important;
+}
+
+.seasonality-card.bearish,
+.capital-protection-card.at-risk,
+.risk-monitor-card.high-risk {
+  border-left: 4px solid #f44336 !important;
+}
+
+.risk-monitor-card.medium-risk {
+  border-left: 4px solid #ff9800 !important;
+}
+
+.risk-monitor-card.low-risk {
+  border-left: 4px solid #2196f3 !important;
+}
+
+.seasonality-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.seasonality-stat {
+  flex: 1;
+  min-width: 120px;
+  font-size: 12px;
+}
+
+@media (max-width: 992px) {
+  .seasonality-card {
+    border-left: 4px solid var(--mantine-color-green-6);
+  }
+}
+
+.mover-amount {
+  font-size: 10px;
+}
+
+/* Hover scrollbar effect */
+.hover-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.hover-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hover-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.hover-scroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+/* Firefox */
+.hover-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.hover-scroll:hover {
+  scrollbar-color: rgba(150, 150, 150, 0.5) transparent;
+}
+
+/* Media query for small screens */
+@media (max-width: 576px) {
+  .mover-amount {
+    font-size: 8px;
+  }
+}
+
+/* Add this to your Portfolio.css file */
+.portfolio-card,
+.seasonality-card,
+.risk-monitor-card,
+.hover-scroll {
+  transform: none !important;
+  box-shadow: none !important; /* Remove shadow */
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease !important;
+}
+
+/* Ensure hover states don't change these properties */
+.portfolio-card:hover,
+.seasonality-card:hover,
+.risk-monitor-card:hover,
+.hover-scroll:hover {
+  transform: none !important;
+  box-shadow: none !important; /* Remove shadow on hover */
+}
+
+/* Add these styles to remove borders on hover for scrollable content */
+.hover-scroll {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.hover-scroll:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Target the inner box that appears on hover */
+.hover-scroll > div,
+.hover-scroll > div:hover,
+.hover-scroll > .mantine-Box-root,
+.hover-scroll > .mantine-Box-root:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Also target the Box inside Portfolio Allocation card specifically */
+.portfolio-card .hover-scroll > div,
+.portfolio-card .hover-scroll > div:hover {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+} 
