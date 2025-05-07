@@ -1,0 +1,62 @@
+{
+    "type": {
+      "type": "select",
+      "options": [
+        "journal_entry",
+        "weekly_digest",
+        "market_snapshot",
+        "reflection"
+      ]
+    },
+    "tags": {
+      "type": "multi_select",
+      "options": [
+        "macro",
+        "sentiment",
+        "weekly",
+        "liquidity",
+        "riskon",
+        "riskoff",
+        "positioning",
+        "inflation"
+      ]
+    },
+    "conviction_level": {
+      "type": "select",
+      "options": [
+        "high",
+        "medium",
+        "low",
+        "uncertain"
+      ]
+    },
+    "macro_theme": {
+      "type": "multi_select",
+      "options": [
+        "inflation",
+        "liquidity",
+        "recession_risk",
+        "rate_hike",
+        "risk_on_rotation",
+        "mean_reversion",
+        "policy_shift",
+        "disinflation"
+      ]
+    },
+    "positioning_status": {
+      "type": "select",
+      "options": [
+        "100% cash",
+        "pause",
+        "risk-on",
+        "light deploy",
+        "fully deployed",
+        "hedged"
+      ]
+    },
+    "reviewed": {
+      "type": "select",
+      "options": ["yes", "no"]
+    }
+  }
+  

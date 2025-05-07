@@ -1,0 +1,89 @@
+/* TokenUnlockAnalyzer.css */
+
+.token-color-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-right: 8px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background-color: var(--mantine-color-blue-0);
+  color: var(--mantine-color-dark-9);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+}
+
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.data-table tr:hover td {
+  background-color: var(--mantine-color-blue-0);
+}
+
+[data-mantine-color-scheme="dark"] .data-table th {
+  background-color: var(--mantine-color-dark-6);
+  color: var(--mantine-color-gray-0);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+}
+
+[data-mantine-color-scheme="dark"] .data-table td {
+  border-bottom: 1px solid var(--mantine-color-dark-5);
+}
+
+[data-mantine-color-scheme="dark"] .data-table tr:hover td {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.text-success {
+  color: var(--mantine-color-green-6);
+}
+
+.text-danger {
+  color: var(--mantine-color-red-6);
+}
+
+.text-warning {
+  color: var(--mantine-color-yellow-7);
+}
+
+.analysis-text {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--mantine-color-gray-0);
+}
+
+[data-mantine-color-scheme="dark"] .analysis-text {
+  background-color: var(--mantine-color-dark-8);
+}
+
+.analysis-text strong {
+  color: var(--mantine-color-blue-7);
+}
+
+[data-mantine-color-scheme="dark"] .analysis-text strong {
+  color: var(--mantine-color-blue-4);
+}
+
+@media (max-width: 768px) {
+  .data-table {
+    font-size: 0.85rem;
+  }
+  
+  .data-table th, 
+  .data-table td {
+    padding: 8px 6px;
+  }
+} 

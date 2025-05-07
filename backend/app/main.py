@@ -15,6 +15,7 @@ from app.api.v1.market import router as market_router, get_market_service
 from app.api.v1.news import router as news_router
 from app.api.v1.ai import router as ai_router
 from app.api.v1.portfolio import router as portfolio_router
+from app.api.v1.social import router as social_router
 
 # Import services for direct initialization
 from app.services.news import crypto_news_service, macro_news_service, reddit_service
@@ -55,6 +56,7 @@ app.include_router(market_router, prefix="/api/v1", tags=["Market Data"])
 app.include_router(news_router, prefix="/api/v1", tags=["News"])
 app.include_router(ai_router, prefix="/api/v1", tags=["AI Analysis"])
 app.include_router(portfolio_router, prefix="/api/v1", tags=["Portfolio"])
+app.include_router(social_router, prefix="/api/v1", tags=["Social Media"])
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):

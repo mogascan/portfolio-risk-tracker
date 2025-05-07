@@ -111,11 +111,11 @@ const RedditFeedContainer = () => {
   }, [fetchPosts]);
 
   return (
-    <Box pos="relative">
+    <Box pos="relative" style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
       
       <Stack spacing="md">
-        <Group position="apart" align="center">
+        <Group position="apart" align="center" style={{ flexWrap: 'wrap' }}>
           <Title order={4}>Reddit</Title>
           <Group spacing="xs">
             <Text size="sm" color="dimmed">
@@ -134,8 +134,8 @@ const RedditFeedContainer = () => {
           </Group>
         </Group>
         
-        <Group position="apart" align="flex-end">
-          <Group align="flex-end" spacing="xs">
+        <Group position="apart" align="flex-end" style={{ flexWrap: 'wrap' }}>
+          <Group align="flex-end" spacing="xs" style={{ flexWrap: 'wrap' }}>
             <Select
               label="Subreddit"
               placeholder="Select subreddit"
@@ -145,14 +145,14 @@ const RedditFeedContainer = () => {
                 value: sub,
                 label: `r/${sub}`,
               }))}
-              style={{ width: 200 }}
+              style={{ width: '100%', maxWidth: 200 }}
             />
             <Select
               label="Sort by"
               value={sortBy}
               onChange={setSortBy}
               data={SORT_OPTIONS}
-              style={{ width: 120 }}
+              style={{ width: '100%', maxWidth: 120 }}
             />
           </Group>
         </Group>
@@ -176,33 +176,35 @@ const RedditFeedContainer = () => {
           }
         />
 
-        <ScrollArea h={423} offsetScrollbars>
-          {error ? (
-            <Box p="md" style={{ textAlign: 'center' }}>
-              <Text color="red" align="center" mb="xs">
-                {error}
+        <ScrollArea h={1000} offsetScrollbars style={{ width: '100%', overflow: 'hidden' }}>
+          <Box style={{ width: '100%', paddingBottom: '10px' }}>
+            {error ? (
+              <Box p="md" style={{ textAlign: 'center' }}>
+                <Text color="red" align="center" mb="xs">
+                  {error}
+                </Text>
+                <Text size="sm" color="dimmed" mb="md">
+                  Reddit's API might be experiencing issues or has rate limited our app.
+                </Text>
+                <Button 
+                  variant="outline" 
+                  color="blue" 
+                  size="sm" 
+                  onClick={fetchPosts} 
+                  disabled={isLoading}
+                  leftIcon={<IconRefresh size={14} />}
+                >
+                  Retry
+                </Button>
+              </Box>
+            ) : posts.length === 0 ? (
+              <Text color="dimmed" align="center">
+                No posts found.
               </Text>
-              <Text size="sm" color="dimmed" mb="md">
-                Reddit's API might be experiencing issues or has rate limited our app.
-              </Text>
-              <Button 
-                variant="outline" 
-                color="blue" 
-                size="sm" 
-                onClick={fetchPosts} 
-                disabled={isLoading}
-                leftIcon={<IconRefresh size={14} />}
-              >
-                Retry
-              </Button>
-            </Box>
-          ) : posts.length === 0 ? (
-            <Text color="dimmed" align="center">
-              No posts found.
-            </Text>
-          ) : (
-            posts.map((post) => <RedditPost key={post.id} post={post} />)
-          )}
+            ) : (
+              posts.map((post) => <RedditPost key={post.id} post={post} />)
+            )}
+          </Box>
         </ScrollArea>
       </Stack>
     </Box>

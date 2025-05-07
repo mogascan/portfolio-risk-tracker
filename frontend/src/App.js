@@ -36,6 +36,11 @@ import RiskAssessmentDashboard from './pages/RiskAssessment';
 import CryptoPortfolioMetrics from './pages/RiskAssessment2';
 import AssetEvaluation from './pages/AssetEvaluation';
 import News from './pages/News';
+import StrategicTimeline from './pages/StrategicTimeline';
+import FinancialCrises from './pages/FinancialCrises';
+import LeadershipHistoryPage from './pages/LeadershipHistory';
+import TokenUnlockAnalyzer from './pages/TokenUnlockAnalyzer';
+import FloatEvaluation from './pages/FloatEvaluation';
 
 // Create a base theme 
 const theme = createTheme({
@@ -219,6 +224,11 @@ function AppWithTheme() {
                           <Route path="risk2" element={<CryptoPortfolioMetrics />} />
                           <Route path="asset-evaluation" element={<AssetEvaluation />} />
                           <Route path="news" element={<News />} />
+                          <Route path="strategic-timeline" element={<StrategicTimeline />} />
+                          <Route path="financial-crises" element={<FinancialCrises />} />
+                          <Route path="leadership-history" element={<LeadershipHistoryPage />} />
+                          <Route path="token-unlock" element={<TokenUnlockAnalyzer />} />
+                          <Route path="float-evaluation" element={<FloatEvaluation />} />
                         </Route>
                       </Routes>
                     </CalendarProvider>

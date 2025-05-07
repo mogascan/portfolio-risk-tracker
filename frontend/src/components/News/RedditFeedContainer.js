@@ -189,13 +189,16 @@ function RedditFeedContainer() {
           border: `1px solid ${borderColor}`,
           borderRadius: '8px',
           marginBottom: '8px',
-          backgroundColor: isDark ? theme.colors.dark[6] : 'white'
+          backgroundColor: isDark ? theme.colors.dark[6] : 'white',
+          width: '100%', // Ensure card takes full width of container
+          maxWidth: '100%', // Prevent overflow
+          boxSizing: 'border-box' // Include padding in width calculation
         }}
         mb="md"
       >
-        <Group position="apart" mb="xs">
-          <Box>
-            <Text size="xs" c="dimmed" fw={500} tt="uppercase">
+        <Group position="apart" mb="xs" style={{ flexWrap: 'wrap' }}>
+          <Box style={{ minWidth: 0, flex: 1 }}>
+            <Text size="xs" c="dimmed" fw={500} tt="uppercase" truncate>
               r/{activeTab}
             </Text>
             <Badge 
@@ -207,7 +210,7 @@ function RedditFeedContainer() {
               {formatDate(post.published_at)}
             </Badge>
           </Box>
-          <Group spacing="xs">
+          <Group spacing="xs" noWrap>
             {post.sentiment && (
               <Badge 
                 color={getSentimentColor(post.sentiment)} 
@@ -219,26 +222,26 @@ function RedditFeedContainer() {
           </Group>
         </Group>
 
-        <Text fw={700} size="md" mb="xs" lineClamp={2} component="a" href={post.url} target="_blank" rel="noopener noreferrer">
+        <Text fw={700} size="md" mb="xs" lineClamp={2} component="a" href={post.url} target="_blank" rel="noopener noreferrer" style={{ wordBreak: 'break-word' }}>
           {post.title}
         </Text>
         
         {post.content && (
-          <Text size="sm" c="dimmed" lineClamp={2} mb="sm">
+          <Text size="sm" c="dimmed" lineClamp={2} mb="sm" style={{ wordBreak: 'break-word' }}>
             {post.content}
           </Text>
         )}
 
-        <Group position="apart" mt="md">
-          <Group spacing="xs">
+        <Group position="apart" mt="md" style={{ flexWrap: 'wrap' }}>
+          <Group spacing="xs" style={{ flexWrap: 'wrap' }}>
             <Text size="xs" weight={500}>↑ {post.score}</Text>
             <Text size="xs" color="dimmed">•</Text>
             <Text size="xs">{post.comments} comments</Text>
             <Text size="xs" color="dimmed">•</Text>
-            <Text size="xs" color="dimmed">Posted by u/{post.author}</Text>
+            <Text size="xs" color="dimmed" truncate>Posted by u/{post.author}</Text>
           </Group>
           
-          <Group>
+          <Group spacing={4}>
             {post.url && (
               <Tooltip 
                 label="View original post" 
@@ -295,24 +298,26 @@ function RedditFeedContainer() {
     }
 
     return (
-      <ScrollArea h={1000} mt="md">
-        {loading ? (
-          <Center h={300}>
-            <Loader size="sm" />
-          </Center>
-        ) : posts.length > 0 ? (
-          posts.map(post => renderPost(post))
-        ) : (
-          <Center h={300}>
-            <Text c="dimmed">No posts found in r/{activeTab}</Text>
-          </Center>
-        )}
+      <ScrollArea h={1000} mt="md" style={{ width: '100%', overflow: 'hidden' }}>
+        <Box style={{ width: '100%', maxWidth: '100%', paddingBottom: '10px' }}>
+          {loading ? (
+            <Center h={300}>
+              <Loader size="sm" />
+            </Center>
+          ) : posts.length > 0 ? (
+            posts.map(post => renderPost(post))
+          ) : (
+            <Center h={300}>
+              <Text c="dimmed">No posts found in r/{activeTab}</Text>
+            </Center>
+          )}
+        </Box>
       </ScrollArea>
     );
   };
 
   return (
-    <Box>
+    <Box style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
       <Group position="apart" mb="md">
         <Title order={4}>Reddit</Title>
         
@@ -346,7 +351,7 @@ function RedditFeedContainer() {
       </Group>
       
       <Tabs value={activeTab} onChange={setActiveTab}>
-        <Tabs.List>
+        <Tabs.List style={{ flexWrap: 'wrap' }}>
           {CRYPTO_SUBREDDITS.map(subreddit => (
             <Tabs.Tab key={subreddit} value={subreddit}>
               r/{subreddit}

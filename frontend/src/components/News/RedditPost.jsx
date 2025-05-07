@@ -137,11 +137,16 @@ const RedditPost = ({ post }) => {
   const validThumbnail = getValidThumbnail();
 
   return (
-    <Card shadow="sm" padding="md" radius="md" withBorder mb="md">
+    <Card shadow="sm" padding="md" radius="md" withBorder mb="md" style={{ 
+      width: '100%', 
+      maxWidth: '100%', 
+      boxSizing: 'border-box',
+      overflow: 'hidden' 
+    }}>
       <Stack spacing="xs">
-        <Group position="apart" align="flex-start" noWrap>
+        <Group position="apart" align="flex-start" noWrap style={{ minWidth: 0 }}>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Group spacing={4} mb={4}>
+            <Group spacing={4} mb={4} style={{ flexWrap: 'wrap' }}>
               <Text size="xs" c="dimmed" fw={500} tt="uppercase">r/{subreddit}</Text>
               <Text size="xs" c="dimmed">•</Text>
               <Text size="xs" c="dimmed" truncate>u/{author}</Text>
@@ -164,11 +169,12 @@ const RedditPost = ({ post }) => {
                 variant="light"
                 leftSection={sentimentIcons[sentiment?.toUpperCase() || 'NEUTRAL']}
                 ml="auto"
+                style={{ marginLeft: 'auto' }}
               >
                 {getSentimentText(sentiment)}
               </Badge>
             </Group>
-            <Text fw={700} size="md" mb="xs" lineClamp={2}>
+            <Text fw={700} size="md" mb="xs" lineClamp={2} style={{ wordBreak: 'break-word' }}>
               {title}
             </Text>
           </Box>
@@ -189,12 +195,12 @@ const RedditPost = ({ post }) => {
         </Group>
 
         {selftext && (
-          <Text size="sm" c="dimmed" lineClamp={2} mb="sm">
+          <Text size="sm" c="dimmed" lineClamp={2} mb="sm" style={{ wordBreak: 'break-word' }}>
             {selftext}
           </Text>
         )}
 
-        <Group position="apart" mt={4}>
+        <Group position="apart" mt={4} style={{ flexWrap: 'wrap' }}>
           <Group spacing="xs">
             <IconArrowUp size={14} />
             <Text size="xs">{formatScore(score || 0)}</Text>
