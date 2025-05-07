@@ -9,7 +9,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Connect Accounts**: Supports Binance, Coinbase, and Ethereum wallets - Future feature (MVP add account feature for manual entry of assets)
 - **Unified Portfolio View**: Track total value, P&L, and asset allocation  
@@ -21,7 +21,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Layer     | Technology                      |
 |-----------|----------------------------------|
@@ -34,7 +34,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 /frontend/            # React dashboard
@@ -47,7 +47,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 🧠 AI Assistant Capabilities
+## AI Assistant Capabilities
 
 The AI assistant supports natural language queries about:
 
@@ -68,7 +68,7 @@ The assistant uses:
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 ### 1. Install Dependencies
 
@@ -89,11 +89,11 @@ OPENAI_API_KEY=your_openai_key
 COINGECKO_API_KEY=your_coingecko_key
 ```
 
-✅ `.env` is ignored by Git (`.gitignore` covers it)
+`.env` is ignored by Git (`.gitignore` covers it)
 
 ---
 
-## 🚀 Running the App
+## Running the App
 
 ### Backend
 
@@ -119,7 +119,7 @@ Opens the dashboard at `http://localhost:3000`
 
 ---
 
-## 🧪 Testing Queries
+## Testing Queries
 
 ```bash
 cd backend
@@ -128,7 +128,7 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 
-## 🛡 Security
+## Security
 
 - All API keys are stored in `.env` and loaded via `load_dotenv()`
 - No API keys are committed to the repo
@@ -136,7 +136,7 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 
-## 📌 Roadmap
+## Roadmap
 
 - [ ] Token-based wallet auth
 - [ ] User-specific portfolio storage
@@ -156,17 +156,9 @@ python test_query.py "What is the price of Bitcoin?"
 
 ![image](https://github.com/user-attachments/assets/0284b4d8-2a7b-45aa-bb74-129f08c3056b)
 
-
-
----
-## 👩‍💻 Contributors
-
-- **Mogas** – Core Developer & AI Architect  
-- **ChatGPT** – Assistant Developer, Prompt Engineer, QA  
-
 ---
 
-## 📄 License
+## License
 
 MIT License © 2025
 
