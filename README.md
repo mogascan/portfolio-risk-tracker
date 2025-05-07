@@ -100,6 +100,7 @@ COINGECKO_API_KEY=your_coingecko_key
 ```bash
 cd backend
 ./scripts/start_services.sh
+ python3 -m uvicorn app.main:app  
 ```
 
 This will:
@@ -111,6 +112,7 @@ This will:
 ```bash
 cd frontend
 npm run dev
+npm start
 ```
 
 Opens the dashboard at `http://localhost:3000`

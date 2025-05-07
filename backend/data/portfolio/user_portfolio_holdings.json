@@ -4,13 +4,48 @@
     "name": "Sonic",
     "quantity": 91000,
     "price_usd": 0,
-    "last_updated": "2025-04-03T11:06:29.028599"
+    "last_updated": "2025-04-29T15:32:23.625393"
   },
   {
     "symbol": "EUL",
     "name": "Euler",
     "quantity": 5600,
     "price_usd": 0,
-    "last_updated": "2025-04-03T11:06:29.028656"
+    "last_updated": "2025-04-29T15:33:55.885526"
+  },
+  {
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "quantity": 2.5,
+    "price_usd": 0,
+    "last_updated": "2025-04-29T15:36:02.092333"
+  },
+  {
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "quantity": 10,
+    "price_usd": 0,
+    "last_updated": "2025-04-10T23:20:43.194831"
+  },
+  {
+    "symbol": "USDC",
+    "name": "USDC",
+    "quantity": 36200,
+    "price_usd": 0,
+    "last_updated": "2025-05-06T18:41:59.388659"
+  },
+  {
+    "symbol": "DOGE",
+    "name": "Dogecoin",
+    "quantity": 237046,
+    "price_usd": 0,
+    "last_updated": "2025-05-06T18:41:59.388520"
+  },
+  {
+    "symbol": "AI16Z",
+    "name": "ai16z",
+    "quantity": 18122,
+    "price_usd": 0,
+    "last_updated": "2025-05-01T11:01:14.015961"
   }
 ]

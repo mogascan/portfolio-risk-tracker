@@ -209,6 +209,78 @@ const Settings = () => {
     }
     return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
+
+  // Add this new function to reset the entry point
+  const resetEntryPoint = () => {
+    updateTakeProfitSettings({
+      ...takeProfit,
+      entryValue: totalValue,
+      entryDate: new Date().toISOString()
+    });
+    
+    // Update the local state to reflect the changes immediately
+    setSettings(prev => ({
+      ...prev,
+      risk: {
+        ...prev.risk,
+        takeProfitValue: totalValue * (1 + (prev.risk.takeProfitPercentage / 100))
+      }
+    }));
+    
+    // Show confirmation message
+    setSavedMessage('Entry point reset to current portfolio value!');
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      setSavedMessage(null);
+    }, 3000);
+  };
+  
+  // Add this function to handle the reset to defaults action
+  const handleResetToDefaults = () => {
+    // Reset max loss percentage to default
+    updateMaxLossPercentage(8.0);
+    
+    // Reset take profit settings to default with current portfolio value as entry point
+    updateTakeProfitSettings({
+      targetValue: totalValue * 1.2, // 20% profit target
+      targetPercentage: 20.0,
+      entryValue: totalValue,
+      entryDate: new Date().toISOString()
+    });
+    
+    // Reset local state
+    setSettings({
+      display: {
+        currency: 'USD',
+        theme: theme,
+        hideSmallBalances: false,
+        decimalsDisplay: 2
+      },
+      risk: {
+        maxLossPercentage: 8.0,
+        takeProfitValue: totalValue * 1.2,
+        takeProfitPercentage: 20.0
+      },
+      notifications: {
+        priceAlerts: false,
+        portfolioUpdates: false,
+        newsAlerts: false
+      },
+      tax: {
+        country: 'US',
+        taxMethod: 'FIFO'
+      }
+    });
+    
+    // Show confirmation message
+    setSavedMessage('Settings reset to defaults!');
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      setSavedMessage(null);
+    }, 3000);
+  };
   
   return (
     <Container size="xl" mb="xl">
@@ -456,6 +528,16 @@ const Settings = () => {
                       {formatEntryDate()}
                     </Text>
                   </Group>
+                  <Group position="right" mt={12}>
+                    <Button 
+                      variant="outline" 
+                      size="xs" 
+                      color="blue"
+                      onClick={resetEntryPoint}
+                    >
+                      Reset Entry Point
+                    </Button>
+                  </Group>
                   <Group position="apart" mt={8}>
                     <Text size="sm" color="dimmed">Take profit target:</Text>
                     <Text size="sm" fw={600} c="green">
@@ -623,7 +705,7 @@ const Settings = () => {
       )}
       
       <Group justify="flex-end" gap="md" mt="xl">
-        <Button variant="outline" color="gray">Reset to Defaults</Button>
+        <Button variant="outline" color="gray" onClick={handleResetToDefaults}>Reset to Defaults</Button>
         <Button onClick={handleSaveSettings}>Save Settings</Button>
       </Group>
       
