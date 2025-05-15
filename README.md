@@ -1,4 +1,4 @@
-# 🧠 AI-Powered Crypto Portfolio Tracker
+# 🧠 AI-Powered Portfolio Tracker
 
 A unified dashboard and intelligent assistant for tracking your crypto assets across exchanges and wallets. This project combines real-time market data, News, Social, Research, AI-driven insights, tax flagging, and performance analytics—all in one platform.
 
