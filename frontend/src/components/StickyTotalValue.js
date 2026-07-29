@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, useMantineColorScheme, Group } from '@mantine/core';
+import { Text, useMantineColorScheme } from '@mantine/core';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { formatDollarWithCommas, formatPercentage } from '../utils/formatters';
 

@@ -9,11 +9,21 @@ from dotenv import load_dotenv # type: ignore
 load_dotenv()
 
 # Database settings
+# Persistence is SQLite per the 2026-07-28 decision; JSON flat files are the
+# legacy path being migrated away from. The flag stays False until the
+# migration spec lands.
 USE_DATABASE = os.getenv("USE_DATABASE", "False").lower() in ("true", "1", "yes")
 
 # OpenAI API settings
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview")
+
+# CoinGecko API settings
+COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY") or None
+
+# Ethereum settings
+ETHEREUM_RPC_URL = os.getenv("ETHEREUM_RPC_URL", "")
+ETH_WALLET_ADDRESSES = os.getenv("ETH_WALLET_ADDRESSES", "")
 
 # App settings
 APP_NAME = "Crypto Portfolio Tracker"

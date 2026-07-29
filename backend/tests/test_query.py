@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 # Import needed modules
 from app.services.ai.openai_service import OpenAIService
 
-async def test_query(query: str) -> Dict[str, Any]:
+async def run_query(query: str) -> Dict[str, Any]:
     """Process a query with the OpenAI service and return the full response"""
     logger.info(f"Processing query: '{query}'")
     
@@ -72,7 +72,7 @@ async def main():
     query = sys.argv[1]
     
     try:
-        response = await test_query(query)
+        response = await run_query(query)
         display_response(response)
     except Exception as e:
         logger.error(f"Error processing query: {str(e)}")

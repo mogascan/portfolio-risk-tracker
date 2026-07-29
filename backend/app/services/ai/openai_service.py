@@ -21,14 +21,14 @@ from app.services.ai.utils.keyword_extractor import extract_keywords_from_query
 # Add correct paths for imports
 try:
     # Try absolute imports first
-    from app.config import settings
+    from app.core import settings
     from app.services.portfolio.portfolio_analysis import PortfolioAnalysis
     from app.services.ai.intent_classifier import IntentClassifier, IntentType
     from app.services.ai.prompt_templates import get_prompt_for_intent
 except ImportError:
     try:
         # Try relative imports next
-        from ....app.config import settings  # Relative import
+        from ...core import settings  # Relative import
         from ..portfolio.portfolio_analysis import PortfolioAnalysis
         from .intent_classifier import IntentClassifier, IntentType
         from .prompt_templates import get_prompt_for_intent
@@ -46,7 +46,7 @@ except ImportError:
                 sys.path.append(backend_dir)
             
             # Now try imports again
-            from app.config import settings
+            from app.core import settings
             from app.services.portfolio.portfolio_analysis import PortfolioAnalysis
             from app.services.ai.intent_classifier import IntentClassifier, IntentType
             from app.services.ai.prompt_templates import get_prompt_for_intent

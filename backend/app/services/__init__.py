@@ -16,13 +16,13 @@ logger = get_logger(__name__)
 market_data_service = MarketDataService()
 logger.info("Market data service initialized")
 
-# Initialize database service
-if USE_DATABASE:
-    logger.info("Database operations enabled, initializing database service")
-    db_service = DatabaseService()
-else:
-    logger.info("Database operations disabled, using mock database service")
-    db_service = DatabaseService()  # This will be the MockDatabaseService
+# Initialize database service. services.database already aliases DatabaseService
+# to MockDatabaseService when USE_DATABASE is False, so one call covers both.
+db_service = DatabaseService()
+logger.info(
+    "Database service initialized (%s)",
+    "enabled" if USE_DATABASE else "mock, USE_DATABASE=False",
+)
 
 # News services are initialized in their own module
 logger.info("News services loaded")

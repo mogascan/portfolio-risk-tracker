@@ -231,7 +231,12 @@ class TestOpenAIService:
     
     def test_openai_service_initialization(self):
         """Test OpenAIService initialization"""
-        with patch('app.services.ai.openai_service.settings', MagicMock(OPENAI_API_KEY='test_key')):
+        # OpenAIService reads os.getenv('OPENAI_API_KEY') before falling back to
+        # settings, and load_dotenv() puts the real key there — so os.environ has
+        # to be patched too. Without this the assertion compares against the live
+        # key and prints it into pytest output on failure.
+        with patch.dict(os.environ, {'OPENAI_API_KEY': 'test_key'}), \
+             patch('app.services.ai.openai_service.settings', MagicMock(OPENAI_API_KEY='test_key')):
             service = OpenAIService()
             assert service is not None
             assert service.api_key == 'test_key'
@@ -361,4 +366,3 @@ class TestAIPipelineIntegration:
             assert "answer" in result
             assert result["answer"] == "This is a test response from the AI."
             assert "metadata" in result
-``` 

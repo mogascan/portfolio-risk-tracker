@@ -1,8 +1,8 @@
 // frontend/src/components/Layout/AppLayout.js
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { AppShell, Burger, Group, NavLink, rem, Box, Drawer, ActionIcon, Tooltip, useMantineTheme, useMantineColorScheme } from '@mantine/core';
-import { IconDashboard, IconWallet, IconSettings, IconChartBar, IconChartCandle, IconStar, IconBookmark, IconCalendar, IconSun, IconMoon, IconAlertTriangle, IconFlask, IconBook, IconFileAnalytics, IconChartLine, IconNews, IconTimeline, IconCoins, IconPercentage } from '@tabler/icons-react';
+import { AppShell, Burger, Group, NavLink, rem, Drawer, ActionIcon, Tooltip, useMantineTheme, useMantineColorScheme } from '@mantine/core';
+import { IconDashboard, IconWallet, IconSettings, IconChartBar, IconChartCandle, IconStar, IconBookmark, IconCalendar, IconAlertTriangle, IconFlask, IconBook, IconFileAnalytics, IconNews, IconCoins, IconPercentage } from '@tabler/icons-react';
 import ThemeToggle from '../ThemeToggle';
 import DataRefresh from '../DataRefresh';
 import StickyTotalValue from '../StickyTotalValue';
@@ -112,18 +112,6 @@ function AppLayout() {
       icon: <IconAlertTriangle style={{ width: rem(16), height: rem(16) }} />, 
       path: "/risk2", 
       active: currentPath === 'risk2' 
-    },
-    { 
-      label: "Strategic Timeline", 
-      icon: <IconTimeline style={{ width: rem(16), height: rem(16) }} />, 
-      path: "/strategic-timeline", 
-      active: currentPath === 'strategic-timeline' 
-    },
-    { 
-      label: "Financial Crises", 
-      icon: <IconChartLine style={{ width: rem(16), height: rem(16) }} />, 
-      path: "/financial-crises", 
-      active: currentPath === 'financial-crises' 
     },
     {
       label: "Research",

@@ -140,17 +140,44 @@ def extract_keywords_from_query(query: str) -> List[str]:
                 if not token.is_stop and len(token.text) > 1:
                     keywords.append(token.lemma_)
         
-        # Check for cryptocurrency names and symbols
+        # Check for cryptocurrency names and symbols.
+        # Word-bounded: a plain substring test matches "sol" inside "resolution",
+        # "uni" inside "university" and "ada" inside "canada", which injected
+        # unrelated coins into the AI's context.
         crypto_keywords = []
         for name, symbol in CRYPTO_MAPPINGS.items():
-            if name.lower() in query.lower() or symbol.lower() in query.lower():
-                crypto_keywords.append(name.lower())
+            for variant in (name.lower(), symbol.lower()):
+                if re.search(rf"\b{re.escape(variant)}\b", query.lower()):
+                    crypto_keywords.append(name.lower())
+                    break
         
+        # Match SPECIAL_TERMS against the raw query. spaCy splits or mis-tags
+        # tokens containing punctuation, so "pump.fun" never survives POS
+        # filtering above. This table was defined for exactly that case but was
+        # never actually applied.
+        #
+        # Alphanumeric variants are matched on word boundaries so short aliases
+        # ('eth', 'sol', 'uni', 'ada') do not fire inside unrelated words like
+        # "resolution" or "unique". Variants containing punctuation are matched
+        # as substrings, since \b does not behave usefully around a dot.
+        special_keywords = []
+        query_lower = query.lower()
+        for canonical, aliases in SPECIAL_TERMS.items():
+            for variant in [canonical, *aliases]:
+                variant = variant.lower()
+                if variant.replace(' ', '').isalnum():
+                    matched = re.search(rf"\b{re.escape(variant)}\b", query_lower) is not None
+                else:
+                    matched = variant in query_lower
+                if matched:
+                    special_keywords.append(canonical.lower())
+                    break
+
         # Add time-related keywords
         time_keywords = extract_time_keywords(query)
-        
+
         # Combine all keywords
-        all_keywords = list(set(keywords + crypto_keywords + time_keywords))
+        all_keywords = list(set(keywords + crypto_keywords + special_keywords + time_keywords))
         
         logger.info(f"Extracted keywords: {all_keywords} from query: {query}")
         return all_keywords

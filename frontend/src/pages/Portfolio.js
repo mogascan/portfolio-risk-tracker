@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Title, Group, Button, Divider, Box } from '@mantine/core';
+import { Container, Title, Group, Button } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import AssetList from '../components/Portfolio/AssetList';
 import ProfitLossChart from '../components/Portfolio/ProfitLossChart';

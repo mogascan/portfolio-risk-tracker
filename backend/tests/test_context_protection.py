@@ -39,7 +39,7 @@ TEST_QUERIES = [
     "What's happening with Bitcoin?",  # Could be NEWS_QUERY or MARKET_PRICE
 ]
 
-async def test_context_fallback(query: str, service: OpenAIService) -> Dict[str, Any]:
+async def check_context_fallback(query: str, service: OpenAIService) -> Dict[str, Any]:
     """Test the context fallback protection for a query"""
     logger.info(f"Testing context fallback protection for: '{query}'")
     
@@ -77,7 +77,7 @@ async def test_context_fallback(query: str, service: OpenAIService) -> Dict[str,
             "context_text_sample": context_text[:100] + "..." if context_text else "No context text"
         }
     except Exception as e:
-        logger.error(f"Error in test_context_fallback: {str(e)}")
+        logger.error(f"Error in check_context_fallback: {str(e)}")
         return {
             "query": query,
             "error": str(e),
@@ -100,7 +100,7 @@ async def test_mock_provider_failure():
     
     try:
         # Try a market query that should now fail
-        result = await test_context_fallback("What is Bitcoin price?", service)
+        result = await check_context_fallback("What is Bitcoin price?", service)
         logger.info(f"Mock failure test result: {json.dumps(result, indent=2)}")
     except Exception as e:
         logger.error(f"Mock failure test error: {str(e)}")
@@ -116,7 +116,7 @@ async def main():
     results = []
     for query in TEST_QUERIES:
         try:
-            result = await test_context_fallback(query, service)
+            result = await check_context_fallback(query, service)
             results.append(result)
             logger.info(f"Test completed for: '{query}'")
             logger.info(f"Intent: {result.get('intent', 'unknown')}, Would fail: {result.get('would_fail', True)}")

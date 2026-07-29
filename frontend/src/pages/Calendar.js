@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Title, Group, Paper, Button, Modal, Text, useMantineColorScheme, useMantineTheme, Menu, Divider, Switch, Box, ActionIcon, Flex } from '@mantine/core';
+import { Container, Title, Group, Paper, Button, Modal, Text, useMantineColorScheme, useMantineTheme, Divider, Switch, Box, Flex } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { IconChevronLeft, IconChevronRight, IconPlus, IconUpload, IconDownload, IconDots, IconCalendar } from '@tabler/icons-react';
+import { IconChevronLeft, IconChevronRight, IconPlus, IconUpload, IconDownload, IconCalendar } from '@tabler/icons-react';
 import MonthlyCalendar from '../components/Calendar/MonthlyCalendar';
 import EventList from '../components/Calendar/EventList';
 import AddEventForm from '../components/Calendar/AddEventForm';
 import EventImporter from '../components/Calendar/EventImporter';
-import { parseISODate, isDateInMonth, formatToISODate } from '../utils/dateUtils';
+import { parseISODate, isDateInMonth } from '../utils/dateUtils';
 import { useCalendar } from '../contexts/CalendarContext';
 
 const months = [

@@ -350,17 +350,69 @@ export function PortfolioProvider({ children }) {
     });
   };
 
+  const addTransaction = (assetId, transaction) => {
+    setPortfolio(prev => {
+      const updatedAssets = prev.assets.map(asset => {
+        if (asset.id !== assetId) return asset;
+
+        const amount = parseFloat(transaction.amount) || 0;
+        const price = parseFloat(transaction.price) || 0;
+        const fee = parseFloat(transaction.fee) || 0;
+        const isBuy = transaction.type === 'buy';
+
+        // A buy grows the position and moves the cost basis to a weighted
+        // average; a sell only shrinks it, leaving the basis untouched so
+        // realised profit stays visible in the remaining holding.
+        const newAmount = isBuy
+          ? asset.amount + amount
+          : Math.max(0, asset.amount - amount);
+
+        let purchasePrice = asset.purchasePrice;
+        if (isBuy && newAmount > 0) {
+          purchasePrice =
+            (asset.amount * asset.purchasePrice + amount * price + fee) / newAmount;
+        }
+
+        return {
+          ...asset,
+          amount: newAmount,
+          purchasePrice,
+          value: newAmount * asset.currentPrice
+        };
+      });
+
+      const totalValue = updatedAssets.reduce((sum, asset) => sum + asset.value, 0);
+      const totalCost = calculateTotalCost(updatedAssets);
+      const absoluteProfit = calculateAbsoluteProfit(updatedAssets, totalValue);
+
+      return {
+        ...prev,
+        assets: updatedAssets,
+        totalValue,
+        totalCost,
+        absoluteProfit,
+        performance: {
+          ...prev.performance,
+          daily: calculateDailyPerformance(updatedAssets, totalValue),
+          weekly: calculateWeeklyPerformance(updatedAssets, totalValue),
+          monthly: calculateMonthlyPerformance(updatedAssets, totalValue),
+          overall: calculateOverallPerformance(updatedAssets, totalValue)
+        }
+      };
+    });
+  };
+
   const updateAsset = (assetId, updates) => {
     setPortfolio(prev => {
       const updatedAssets = prev.assets.map(asset => {
         if (asset.id === assetId) {
           const updatedAsset = { ...asset, ...updates };
-          
+
           // If amount is updated, recalculate value
           if (updates.amount) {
             updatedAsset.value = updatedAsset.amount * updatedAsset.currentPrice;
           }
-          
+
           return updatedAsset;
         }
         return asset;
@@ -421,6 +473,7 @@ export function PortfolioProvider({ children }) {
     addAsset,
     removeAsset,
     updateAsset,
+    addTransaction,
     clearPortfolio,
     getPortfolioCoins,
     fetchPortfolio,

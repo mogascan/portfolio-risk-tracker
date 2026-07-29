@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Title, TextInput, Stack, Text, Group, ActionIcon, ScrollArea, Button, Modal, Box } from '@mantine/core';
+import { Drawer, TextInput, Stack, Text, Group, ActionIcon, ScrollArea, Button, Modal, Box } from '@mantine/core';
 import { IconSearch, IconTrash, IconX } from '@tabler/icons-react';
 import { useAI } from '../../contexts/AIContext';
 import { format } from 'date-fns';

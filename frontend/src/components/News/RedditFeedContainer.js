@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Title, Tabs, ScrollArea, Loader, Center, Text, Alert, Button, Group, Stack, Code, Card, ActionIcon, Badge, Tooltip } from '@mantine/core';
 import { IconRefresh, IconAlertCircle, IconBug, IconBookmark, IconBookmarkFilled, IconExternalLink } from '@tabler/icons-react';
-import { fetchRedditPosts, searchRedditPosts } from '../../api/newsService';
+import { fetchRedditPosts } from '../../api/newsService';
 import { useBookmarks } from '../../contexts/BookmarkContext';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 
@@ -62,8 +62,8 @@ function RedditFeedContainer() {
         const mockRedditPosts = [
           {
             id: `reddit-mock-1-${Date.now()}`,
-            title: "Community Discussion: What\'s your crypto investment strategy for 2025?",
-            content: "I\'ve been DCAing into BTC and ETH for the past year, curious what others are doing.",
+            title: "Community Discussion: What's your crypto investment strategy for 2025?",
+            content: "I've been DCAing into BTC and ETH for the past year, curious what others are doing.",
             author: 'crypto_enthusiast',
             score: 142,
             comments: 87,

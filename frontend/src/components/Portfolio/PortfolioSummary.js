@@ -1,6 +1,6 @@
 // frontend/src/components/Portfolio/PortfolioSummary.js
 import React from 'react';
-import { Paper, Title, Text, Group, Stack, SimpleGrid, Badge, Tooltip, Image, useMantineTheme, useMantineColorScheme, Box } from '@mantine/core';
+import { Paper, Title, Text, Group, Stack, SimpleGrid, Badge, Tooltip, Image, useMantineTheme, useMantineColorScheme } from '@mantine/core';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { usePortfolio } from '../../contexts/PortfolioContext';
 import { useMarket } from '../../contexts/MarketContext';
@@ -56,7 +56,7 @@ function PortfolioSummary({ showTitle = true }) {
           border: '1px solid #ccc',
           borderRadius: '4px'
         }}>
-          <Text weight={500}>{data.name}</Text>
+          <Text fw={500}>{data.name}</Text>
           <Text size="sm">${formatValue(data.value)}</Text>
           <Text size="sm">{data.percentage}%</Text>
         </div>

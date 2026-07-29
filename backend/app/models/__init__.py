@@ -10,7 +10,7 @@ from app.models.ai import MarketPrediction, SentimentAnalysis, MarketInsight, Po
 
 # SQLAlchemy ORM models for database
 from app.models.entities import (
-    User, PortfolioEntity, HoldingEntity, TransactionEntity, WatchlistEntity, 
-    WatchlistItemEntity, AlertEntity, CryptoNewsEntity, MacroNewsEntity, 
+    User, PortfolioEntity, HoldingEntity, TransactionEntity, WatchlistEntity,
+    WatchlistItemEntity, AlertEntity, CryptoNewsEntity, MacroNewsEntity,
     SocialMediaEntity, MarketDataEntity
 ) 

@@ -5,9 +5,11 @@ import { useConfig } from '../../contexts/ConfigContext';
 import { useAI } from '../../contexts/AIContext';
 import { useMarket } from '../../contexts/MarketContext';
 import { fetchAssetAnalysis } from '../../api/ai';
-import { Table, Paper, Text, ActionIcon, Group, Tooltip, Badge, useMantineTheme, useMantineColorScheme } from '@mantine/core';
-import { IconTrash, IconInfoCircle, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
+import { Table, Paper, Text, ActionIcon, Group, Tooltip, useMantineTheme, useMantineColorScheme } from '@mantine/core';
+import { IconTrash, IconPencil, IconArrowsExchange } from '@tabler/icons-react';
 import { differenceInDays, differenceInMonths, differenceInYears, format } from 'date-fns';
+import EditAssetModal from './EditAssetModal';
+import AddTransactionModal from './AddTransactionModal';
 import './Portfolio.css';
 
 const AssetList = () => {
@@ -21,6 +23,8 @@ const AssetList = () => {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [assetAnalysis, setAssetAnalysis] = useState(null);
   const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [editingAsset, setEditingAsset] = useState(null);
+  const [transactionAsset, setTransactionAsset] = useState(null);
   const theme = useMantineTheme();
   const { colorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';
@@ -173,7 +177,7 @@ const AssetList = () => {
             <th style={{ cursor: 'pointer', textAlign: 'right', minWidth: '100px' }} onClick={() => handleSort('price_change_24h')}>24h Change</th>
             <th style={{ cursor: 'pointer', textAlign: 'center', minWidth: '100px' }} onClick={() => handleSort('purchaseDate')}>Age</th>
             <th style={{ textAlign: 'center', minWidth: '100px' }}>Actions</th>
-            <th style={{ textAlign: 'center', width: '60px' }}></th>
+            <th style={{ textAlign: 'center', minWidth: '120px' }}></th>
           </tr>
         </thead>
         <tbody>
@@ -220,7 +224,7 @@ const AssetList = () => {
                         </div>
                       );
                     })()}
-                    <Text weight={500}>{asset.symbol}</Text>
+                    <Text fw={500}>{asset.symbol}</Text>
                   </Group>
                 </td>
                 <td style={{ textAlign: 'center' }}>
@@ -284,14 +288,30 @@ const AssetList = () => {
                   </button>
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  <ActionIcon 
-                    color="red" 
-                    variant="subtle"
-                    onClick={() => handleDelete(asset.id)}
-                    title="Delete asset"
-                  >
-                    <IconTrash size={16} />
-                  </ActionIcon>
+                  <Group gap={4} justify="center" wrap="nowrap">
+                    <ActionIcon
+                      variant="subtle"
+                      onClick={() => setTransactionAsset(asset)}
+                      title="Add transaction"
+                    >
+                      <IconArrowsExchange size={16} />
+                    </ActionIcon>
+                    <ActionIcon
+                      variant="subtle"
+                      onClick={() => setEditingAsset(asset)}
+                      title="Edit asset"
+                    >
+                      <IconPencil size={16} />
+                    </ActionIcon>
+                    <ActionIcon
+                      color="red"
+                      variant="subtle"
+                      onClick={() => handleDelete(asset.id)}
+                      title="Delete asset"
+                    >
+                      <IconTrash size={16} />
+                    </ActionIcon>
+                  </Group>
                 </td>
               </tr>
             );
@@ -343,6 +363,18 @@ const AssetList = () => {
           <button className="close-button" onClick={() => setSelectedAsset(null)}>Close</button>
         </div>
       )}
+
+      <EditAssetModal
+        opened={Boolean(editingAsset)}
+        onClose={() => setEditingAsset(null)}
+        asset={editingAsset}
+      />
+
+      <AddTransactionModal
+        opened={Boolean(transactionAsset)}
+        onClose={() => setTransactionAsset(null)}
+        asset={transactionAsset}
+      />
     </Paper>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Title, Tabs, ScrollArea, Loader, Center, Text, Alert, Button, Group, Stack, Code } from '@mantine/core';
 import { IconRefresh, IconAlertCircle, IconBug } from '@tabler/icons-react';
 import NewsCard from './NewsCard';

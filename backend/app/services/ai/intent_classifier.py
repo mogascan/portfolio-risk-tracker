@@ -46,6 +46,10 @@ class IntentClassifier:
             r"(?:news|headline|article).*(?:about|on|for)\s+[a-zA-Z\s]+",
             r"what.*(?:happening|going\s+on|news).*(?:with|about|on)\s+[a-zA-Z\s]+",
             r"(?:latest|recent|today'?s?)\s+(?:news|headlines|updates|developments)",
+            # "what's the latest on ethereum" / "any recent news about btc" — here
+            # latest/recent is followed by a preposition rather than a news noun,
+            # which the pattern above cannot reach.
+            r"(?:latest|recent|newest)\s+(?:news\s+)?(?:on|about|for|with)\s+[a-zA-Z]",
             r"(?:messari|twitter|reddit).*(?:saying|posting|reporting|news)",
             r"news",
             r"headlines",
@@ -57,7 +61,10 @@ class IntentClassifier:
         
         # Patterns for portfolio related queries
         self.portfolio_patterns = [
-            r"(?:my|our)\s+(?:portfolio|holdings|coins|assets|investment)",
+            # Allow up to two qualifiers between the pronoun and the noun so
+            # "my crypto holdings" / "my top performing assets" match, not just
+            # the directly-adjacent "my holdings".
+            r"(?:my|our)\s+(?:\w+\s+){0,2}(?:portfolio|holdings|coins|assets|investment)",
             r"(?:how\s+(?:is|are))\s+(?:my|our)\s+(?:crypto|portfolio|holdings)",
             r"portfolio\s+(?:performance|value|worth|analysis|breakdown)",
             r"(?:best|worst)\s+(?:performing|coin|token|asset|holding)",

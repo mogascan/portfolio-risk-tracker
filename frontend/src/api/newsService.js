@@ -1,5 +1,4 @@
 import client from './client';
-import axios from 'axios';
 
 // Mock data for development
 const MOCK_CRYPTO_NEWS = [
@@ -591,10 +590,12 @@ export const updatePortfolioHoldings = async (holdings = []) => {
   }
 };
 
-export default {
+const newsService = {
   fetchMacroNews,
   fetchCryptoNews,
   fetchAssetNews,
   fetchPortfolioNews,
   updatePortfolioHoldings
-}; 
+};
+
+export default newsService; 
