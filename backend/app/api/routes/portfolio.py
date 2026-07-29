@@ -1,6 +1,8 @@
 # backend/app/api/routes/portfolio.py
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import List, Dict, Any, Optional
+from datetime import datetime
+from decimal import Decimal
 import logging
 
 from app.services.exchanges.coinbase import CoinbaseService
@@ -8,6 +10,14 @@ from app.services.exchanges.kraken import KrakenService
 from app.services.blockchain.eth import EthereumService
 from app.services.market_data.coingecko import CoinGeckoService
 from app.services.integrations import IntegrationError
+from app.services.tax.cost_basis import (
+    FIFO,
+    METHODS,
+    Disposal,
+    InsufficientLots,
+    Lot,
+    match_disposals,
+)
 
 # Mounted at /api/v1/accounts, not /api/v1/portfolio: app/api/v1/portfolio.py already
 # owns /transactions, and FastAPI would silently shadow one of the two. See
@@ -222,30 +232,116 @@ async def get_transactions(
 
 @router.get("/tax")
 async def get_tax_summary(
-    year: int = Query(2024, description="Tax year")
+    year: int = Query(2024, description="Tax year"),
+    method: str = Query(FIFO, description="Cost-basis method: fifo or lifo"),
 ):
+    """Realised gains and losses for a tax year, from tracked lots.
+
+    Previously returned hardcoded zeros — total_gains 0, estimated_tax 0, events [] — which
+    reads as "you owe nothing" rather than "this is not implemented". That is the worst
+    possible default for a tax figure, so it is gone.
+
+    Disposals are matched against acquisitions by the selected method. Because matching needs
+    the full acquisition history, the calculation covers every transaction available and then
+    reports the disposals falling in the requested year: a coin bought in 2023 and sold in 2024
+    has its basis in 2023.
     """
-    Get tax summary for a specific year
-    """
+    if method.lower() not in METHODS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown method '{method}'. Expected one of {list(METHODS)}.",
+        )
+
     try:
-        # This would integrate with a tax calculation service
-        # For MVP, we'll return a simplified structure
-        
-        # Get all transactions for the year
-        # In a real implementation, you would filter by date range
-        
+        transactions = []
+        unavailable = []
+        for source in SOURCES:
+            try:
+                transactions.extend(await source.get_transactions(limit=1000, offset=0))
+            except IntegrationError as exc:
+                unavailable.append(exc.to_payload())
+
+        lots, disposals, skipped = _to_lots_and_disposals(transactions)
+
+        try:
+            result = match_disposals(lots, disposals, method=method.lower())
+        except InsufficientLots as exc:
+            # Incomplete history. Say so rather than reporting a gain computed from a basis
+            # that was never established.
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "status": "incomplete_history",
+                    "asset": exc.asset,
+                    "shortfall": str(exc.shortfall),
+                    "detail": str(exc),
+                    "unavailable": unavailable,
+                },
+            )
+
+        in_year = [
+            d for d in result["disposals"]
+            if d["disposed_at"].startswith(str(year))
+        ]
+        gains = sum(Decimal(d["realised_gain"]) for d in in_year if Decimal(d["realised_gain"]) > 0)
+        losses = sum(Decimal(d["realised_gain"]) for d in in_year if Decimal(d["realised_gain"]) < 0)
+
         return {
             "year": year,
+            "method": result["method"],
             "summary": {
-                "total_gains": 0,
-                "total_losses": 0,
-                "net_profit_loss": 0,
-                "total_income": 0,
-                "estimated_tax": 0
+                "total_gains": str(gains),
+                "total_losses": str(losses),
+                "net_profit_loss": str(gains + losses),
+                "disposal_count": len(in_year),
             },
-            "events": []  # List of taxable events
+            "events": in_year,
+            "open_lots": result["open_lots"],
+            # Transactions that could not be interpreted as an acquisition or disposal.
+            # Reported rather than dropped: a silently ignored trade changes the answer.
+            "skipped_transactions": skipped,
+            "unavailable": unavailable,
+            "limitations": result["limitations"],
         }
-    
+
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error getting tax summary: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get tax summary: {str(e)}")
+
+
+def _to_lots_and_disposals(transactions):
+    """Split normalised transactions into acquisitions and disposals.
+
+    Anything that is neither a recognisable buy nor sell — a transfer between the user's own
+    accounts, a record missing a price or timestamp — is returned in `skipped` rather than
+    guessed at. Guessing here alters a tax figure.
+    """
+    lots, disposals, skipped = [], [], []
+
+    for tx in transactions:
+        side = (tx.get("side") or "").lower()
+        symbol = (tx.get("symbol") or "").split("/")[0].lower()
+        amount = tx.get("amount")
+        price = tx.get("price")
+        timestamp = tx.get("timestamp")
+
+        if not symbol or amount in (None, 0) or price is None or not timestamp:
+            skipped.append({"id": tx.get("id"), "reason": "missing symbol, amount, price or timestamp"})
+            continue
+
+        when = datetime.fromtimestamp(timestamp / 1000) if isinstance(timestamp, (int, float)) \
+            else datetime.fromisoformat(str(timestamp))
+
+        if side == "buy":
+            lots.append(Lot(symbol, amount, price, when, source=tx.get("source", "unknown")))
+        elif side == "sell":
+            disposals.append(Disposal(
+                symbol, amount, price, when,
+                fee=tx.get("fee") or 0, source=tx.get("source", "unknown"),
+            ))
+        else:
+            skipped.append({"id": tx.get("id"), "reason": f"unrecognised side {side!r}"})
+
+    return lots, disposals, skipped
