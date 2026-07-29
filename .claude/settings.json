@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "memsearch@memsearch-plugins": true,
+    "codex@openai-codex": true
+  }
+}
