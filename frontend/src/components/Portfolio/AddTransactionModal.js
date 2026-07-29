@@ -55,7 +55,7 @@ function AddTransactionModal({ opened, onClose, asset }) {
       <form onSubmit={handleSubmit}>
         <Stack>
           <Group>
-            <Text weight={500} size="lg">{asset.symbol} - {asset.name}</Text>
+            <Text fw={500} size="lg">{asset.symbol} - {asset.name}</Text>
           </Group>
           
           <Select
@@ -75,7 +75,7 @@ function AddTransactionModal({ opened, onClose, asset }) {
             placeholder="0.00"
             required
             min={0}
-            precision={8}
+            decimalScale={8}
             value={transactionData.amount}
             onChange={(val) => setTransactionData({ ...transactionData, amount: val })}
           />
@@ -85,7 +85,7 @@ function AddTransactionModal({ opened, onClose, asset }) {
             placeholder="0.00"
             required
             min={0}
-            precision={2}
+            decimalScale={2}
             value={transactionData.price}
             onChange={(val) => setTransactionData({ ...transactionData, price: val })}
           />
@@ -94,7 +94,7 @@ function AddTransactionModal({ opened, onClose, asset }) {
             label="Fee (USD)"
             placeholder="0.00"
             min={0}
-            precision={2}
+            decimalScale={2}
             value={transactionData.fee}
             onChange={(val) => setTransactionData({ ...transactionData, fee: val })}
           />

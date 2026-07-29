@@ -54,7 +54,7 @@ function EditAssetModal({ opened, onClose, asset }) {
       <form onSubmit={handleSubmit}>
         <Stack>
           <Group>
-            <Text weight={500} size="lg">{asset.symbol} - {asset.name}</Text>
+            <Text fw={500} size="lg">{asset.symbol} - {asset.name}</Text>
           </Group>
           
           <Select
@@ -74,7 +74,7 @@ function EditAssetModal({ opened, onClose, asset }) {
             placeholder="0.00"
             required
             min={0}
-            precision={8}
+            decimalScale={8}
             value={assetData.amount}
             onChange={(val) => setAssetData({ ...assetData, amount: val })}
           />
@@ -84,7 +84,7 @@ function EditAssetModal({ opened, onClose, asset }) {
             placeholder="0.00"
             required
             min={0}
-            precision={2}
+            decimalScale={2}
             value={assetData.purchasePrice}
             onChange={(val) => setAssetData({ ...assetData, purchasePrice: val })}
           />
@@ -93,7 +93,7 @@ function EditAssetModal({ opened, onClose, asset }) {
             label="Fee (USD)"
             placeholder="0.00"
             min={0}
-            precision={2}
+            decimalScale={2}
             value={assetData.fee}
             onChange={(val) => setAssetData({ ...assetData, fee: val })}
           />

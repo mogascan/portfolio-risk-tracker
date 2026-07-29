@@ -101,7 +101,7 @@ function AddAssetModal({ opened, onClose }) {
             placeholder="0.00"
             required
             min={0}
-            precision={8}
+            decimalScale={8}
             value={assetData.amount}
             onChange={(val) => setAssetData({ ...assetData, amount: val })}
           />
@@ -110,7 +110,7 @@ function AddAssetModal({ opened, onClose }) {
             placeholder="0.00"
             required
             min={0}
-            precision={2}
+            decimalScale={2}
             value={assetData.purchasePrice}
             onChange={(val) => setAssetData({ ...assetData, purchasePrice: val })}
           />
