@@ -64,34 +64,54 @@ async def get_portfolio_summary():
     try:
         all_assets, unavailable = await _gather_balances()
 
-        # Get current prices for all assets
+        # Get current prices. A pricing failure is reported, never papered over: prices
+        # multiply balances, so an invented price becomes an invented portfolio value.
+        # Balances are still returned — quantities are real even when their value is unknown.
+        prices = {}
         asset_ids = list(all_assets.keys())
-        prices = await market_data_service.get_prices(asset_ids) if asset_ids else {}
+        if asset_ids:
+            try:
+                prices = await market_data_service.get_prices(asset_ids)
+            except IntegrationError as exc:
+                unavailable.append(exc.to_payload())
 
-        # Calculate total portfolio value
+        # Calculate total portfolio value.
+        #
+        # Every held asset is listed, including any we could not price. The previous version
+        # only appended assets found in `prices`, so an unpriced holding vanished from the
+        # response — a user would see their balance disappear rather than see it unpriced.
+        # Unpriced assets carry price/value of None and are excluded from the total, which is
+        # why `priced_total` is reported separately from the count of what was priced.
         total_value = 0
         portfolio_items = []
+        unpriced = []
 
         for asset_id, amount in all_assets.items():
-            if asset_id in prices:
-                price = prices[asset_id]
-                value = amount * price
+            price = prices.get(asset_id)
+            value = amount * price if price is not None else None
+
+            if value is not None:
                 total_value += value
+            else:
+                unpriced.append(asset_id)
 
-                portfolio_items.append({
-                    "asset_id": asset_id,
-                    "symbol": asset_id.upper(),  # Simplified for now
-                    "amount": amount,
-                    "price": price,
-                    "value": value
-                })
+            portfolio_items.append({
+                "asset_id": asset_id,
+                "symbol": asset_id.upper(),  # Simplified for now
+                "amount": amount,
+                "price": price,
+                "value": value
+            })
 
-        # Sort by value (descending)
-        portfolio_items.sort(key=lambda x: x["value"], reverse=True)
+        # Sort by value, unpriced assets last rather than treated as worthless.
+        portfolio_items.sort(key=lambda x: (x["value"] is None, -(x["value"] or 0)))
 
         return {
             "total_value": total_value,
             "assets": portfolio_items,
+            # Assets held but not priced. total_value excludes them, so without this field the
+            # total would silently understate the portfolio.
+            "unpriced": unpriced,
             # Which sources could not be reached, and why. Present even when empty so clients
             # can rely on the field rather than testing for its existence.
             "unavailable": unavailable,

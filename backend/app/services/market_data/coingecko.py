@@ -7,6 +7,8 @@ from datetime import datetime
 import time
 import random
 
+from app.services.integrations import IntegrationUnavailable
+
 from app.core import settings
 
 logger = logging.getLogger(__name__)
@@ -74,12 +76,17 @@ class CoinGeckoService:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 429:
-                        logger.warning("CoinGecko API rate limit exceeded. Using mock data.")
-                        return self._get_mock_prices(asset_ids)
-                    
+                        # Never substitute invented prices. These multiply real balances,
+                        # so a fabricated price becomes a fabricated portfolio value — and
+                        # the free tier rate-limits routinely, so this is not a rare path.
+                        raise IntegrationUnavailable(
+                            "coingecko", "rate limit exceeded"
+                        )
+
                     if response.status != 200:
-                        logger.error(f"Error from CoinGecko API: {response.status}")
-                        return self._get_mock_prices(asset_ids)
+                        raise IntegrationUnavailable(
+                            "coingecko", f"API returned status {response.status}"
+                        )
                     
                     data = await response.json()
             
@@ -104,9 +111,11 @@ class CoinGeckoService:
             
             return result
         
+        except IntegrationUnavailable:
+            raise
         except Exception as e:
             logger.error(f"Error fetching prices from CoinGecko: {str(e)}")
-            return self._get_mock_prices(asset_ids)
+            raise IntegrationUnavailable("coingecko", str(e)) from e
     
     async def get_asset_details(self, asset_ids: List[str]) -> Dict[str, Any]:
         """
