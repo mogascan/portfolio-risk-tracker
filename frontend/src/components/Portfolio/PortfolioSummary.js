@@ -56,7 +56,7 @@ function PortfolioSummary({ showTitle = true }) {
           border: '1px solid #ccc',
           borderRadius: '4px'
         }}>
-          <Text weight={500}>{data.name}</Text>
+          <Text fw={500}>{data.name}</Text>
           <Text size="sm">${formatValue(data.value)}</Text>
           <Text size="sm">{data.percentage}%</Text>
         </div>

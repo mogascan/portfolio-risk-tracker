@@ -8,12 +8,16 @@ from dotenv import load_dotenv # type: ignore
 # Load environment variables from .env file
 load_dotenv()
 
-# Database settings
-USE_DATABASE = os.getenv("USE_DATABASE", "False").lower() in ("true", "1", "yes")
-
 # OpenAI API settings
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview")
+
+# CoinGecko API settings
+COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY") or None
+
+# Ethereum settings
+ETHEREUM_RPC_URL = os.getenv("ETHEREUM_RPC_URL", "")
+ETH_WALLET_ADDRESSES = os.getenv("ETH_WALLET_ADDRESSES", "")
 
 # App settings
 APP_NAME = "Crypto Portfolio Tracker"
@@ -40,7 +44,6 @@ def get_settings() -> Dict[str, Any]:
         "env": ENV,
         "debug": DEBUG,
         "log_level": LOG_LEVEL,
-        "use_database": USE_DATABASE,
         "openai_model": OPENAI_MODEL,
         "has_openai_key": bool(OPENAI_API_KEY),
         "base_dir": BASE_DIR,

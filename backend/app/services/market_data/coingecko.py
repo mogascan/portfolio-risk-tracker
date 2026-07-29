@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 import random
 
-from app.config import settings
+from app.core import settings
 
 logger = logging.getLogger(__name__)
 
