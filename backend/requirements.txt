@@ -31,6 +31,12 @@ nltk>=3.8.1
 spacy>=3.7.0
 # NOTE: also requires the model: python -m spacy download en_core_web_sm
 
+# Blockchain / on-chain
+# Added 2026-07-28 when Ethereum moved from facade to real integration. eth.py previously
+# had every web3 call commented out and web3 was absent here entirely, so the service
+# returned mock balances for a chain it never contacted.
+web3>=6.15.0
+
 # Data science
 # pandas removed 2026-07-28: nothing in app/ or tests/ imports it and no other
 # dependency requires it. The pin (2.2.0) predates Python 3.13 and has no cp313
