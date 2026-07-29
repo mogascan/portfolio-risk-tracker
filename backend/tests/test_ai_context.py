@@ -36,7 +36,7 @@ TEST_QUERIES = [
     "Analyze the current market trends"
 ]
 
-async def test_context_provider(query: str, service: OpenAIService) -> Dict[str, Any]:
+async def check_context_provider(query: str, service: OpenAIService) -> Dict[str, Any]:
     """Test the context providers for a query"""
     # First classify the intent
     intent_type, confidence = service.intent_classifier.classify(query)
@@ -89,7 +89,7 @@ async def main():
     results = []
     for query in TEST_QUERIES:
         try:
-            result = await test_context_provider(query, service)
+            result = await check_context_provider(query, service)
             results.append(result)
             logger.info(f"Test completed for: '{query}'")
             logger.info(f"Intent: {result['intent']}, Sources: {result['context_sources']}")
