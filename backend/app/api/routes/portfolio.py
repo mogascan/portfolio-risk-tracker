@@ -4,8 +4,10 @@ from typing import List, Dict, Any, Optional
 import logging
 
 from app.services.exchanges.coinbase import CoinbaseService
+from app.services.exchanges.kraken import KrakenService
 from app.services.blockchain.eth import EthereumService
 from app.services.market_data.coingecko import CoinGeckoService
+from app.services.integrations import IntegrationError
 
 # Mounted at /api/v1/accounts, not /api/v1/portfolio: app/api/v1/portfolio.py already
 # owns /transactions, and FastAPI would silently shadow one of the two. See
@@ -13,11 +15,45 @@ from app.services.market_data.coingecko import CoinGeckoService
 router = APIRouter(prefix="/accounts")
 logger = logging.getLogger(__name__)
 
-# Services. Binance is out of scope (product decision, 2026-07-28) — binance.py stays
-# on disk unwired. Kraken is not written yet.
+# Services. Supported exchanges are Coinbase and Kraken; Binance is out of scope by product
+# decision (2026-07-28) and binance.py stays on disk unwired.
 coinbase_service = CoinbaseService()
+kraken_service = KrakenService()
 ethereum_service = EthereumService()
 market_data_service = CoinGeckoService()
+
+# Every configured source. Adding one is a list entry, not a rewrite, because all of them
+# satisfy the same interface.
+SOURCES = [coinbase_service, kraken_service, ethereum_service]
+
+
+async def _gather_balances():
+    """Collect balances from every source, tolerating individual failures.
+
+    Returns (combined_balances, unavailable). A source that is unconfigured or failing is
+    reported in `unavailable` rather than aborting the request — a user with only Coinbase
+    connected should still see their Coinbase holdings.
+
+    Balances are summed across sources rather than merged with `{**a, **b}`, which the
+    previous implementation used: dict-unpacking silently DISCARDS the earlier value when two
+    sources hold the same asset, so holding 1 BTC on Coinbase and 1 BTC on Kraken reported
+    1 BTC, not 2. That understated the portfolio without any error.
+    """
+    combined: dict = {}
+    unavailable = []
+
+    for source in SOURCES:
+        try:
+            balances = await source.get_balances()
+        except IntegrationError as exc:
+            unavailable.append(exc.to_payload())
+            continue
+
+        for asset_id, amount in balances.items():
+            combined[asset_id] = combined.get(asset_id, 0) + amount
+
+    return combined, unavailable
+
 
 @router.get("/summary")
 async def get_portfolio_summary():
@@ -26,27 +62,22 @@ async def get_portfolio_summary():
     asset allocation, and profit/loss
     """
     try:
-        # Get balances from different sources
-        coinbase_assets = await coinbase_service.get_balances()
-        ethereum_assets = await ethereum_service.get_balances()
-        
-        # Combine assets from all sources
-        all_assets = {**coinbase_assets, **ethereum_assets}
-        
+        all_assets, unavailable = await _gather_balances()
+
         # Get current prices for all assets
         asset_ids = list(all_assets.keys())
-        prices = await market_data_service.get_prices(asset_ids)
-        
+        prices = await market_data_service.get_prices(asset_ids) if asset_ids else {}
+
         # Calculate total portfolio value
         total_value = 0
         portfolio_items = []
-        
+
         for asset_id, amount in all_assets.items():
             if asset_id in prices:
                 price = prices[asset_id]
                 value = amount * price
                 total_value += value
-                
+
                 portfolio_items.append({
                     "asset_id": asset_id,
                     "symbol": asset_id.upper(),  # Simplified for now
@@ -54,13 +85,16 @@ async def get_portfolio_summary():
                     "price": price,
                     "value": value
                 })
-        
+
         # Sort by value (descending)
         portfolio_items.sort(key=lambda x: x["value"], reverse=True)
-        
+
         return {
             "total_value": total_value,
             "assets": portfolio_items,
+            # Which sources could not be reached, and why. Present even when empty so clients
+            # can rely on the field rather than testing for its existence.
+            "unavailable": unavailable,
             "updated_at": market_data_service.last_updated
         }
     
@@ -103,27 +137,28 @@ async def get_portfolio_assets():
     Get detailed information about all assets in the portfolio
     """
     try:
-        # Get balances from different sources
-        coinbase_assets = await coinbase_service.get_balances()
-        ethereum_assets = await ethereum_service.get_balances()
-        
-        # Combine assets from all sources
-        all_assets = {**coinbase_assets, **ethereum_assets}
-        
+        all_assets, unavailable = await _gather_balances()
+
         # Get asset details
-        asset_details = await market_data_service.get_asset_details(list(all_assets.keys()))
-        
+        asset_details = (
+            await market_data_service.get_asset_details(list(all_assets.keys()))
+            if all_assets else {}
+        )
+
         # Combine with balances
-        result = []
+        assets = []
         for asset_id, details in asset_details.items():
             if asset_id in all_assets:
-                result.append({
+                assets.append({
                     **details,
                     "balance": all_assets[asset_id]
                 })
-        
-        return result
-    
+
+        # Returns an object rather than a bare list: a list has nowhere to report which
+        # sources failed, and silently omitting an unreachable exchange is how a user comes to
+        # believe holdings have vanished.
+        return {"assets": assets, "unavailable": unavailable}
+
     except Exception as e:
         logger.error(f"Error getting portfolio assets: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get portfolio assets: {str(e)}")
@@ -137,13 +172,18 @@ async def get_transactions(
     Get recent transactions across all wallets and exchanges
     """
     try:
-        # Get transactions from different sources
-        coinbase_txs = await coinbase_service.get_transactions(limit, offset)
-        ethereum_txs = await ethereum_service.get_transactions(limit, offset)
-        
-        # Combine and sort transactions by timestamp (descending)
-        all_txs = coinbase_txs + ethereum_txs
-        all_txs.sort(key=lambda x: x["timestamp"], reverse=True)
+        # Collect from every source, tolerating individual failures the same way /summary does
+        all_txs = []
+        unavailable = []
+        for source in SOURCES:
+            try:
+                all_txs.extend(await source.get_transactions(limit, offset))
+            except IntegrationError as exc:
+                unavailable.append(exc.to_payload())
+
+        # Sort newest first. `or 0` guards a missing timestamp, which would otherwise raise
+        # TypeError comparing None to int and fail the whole request over one bad record.
+        all_txs.sort(key=lambda x: x.get("timestamp") or 0, reverse=True)
         
         # Apply pagination
         paginated_txs = all_txs[offset:offset+limit]
@@ -152,7 +192,8 @@ async def get_transactions(
             "transactions": paginated_txs,
             "total": len(all_txs),
             "limit": limit,
-            "offset": offset
+            "offset": offset,
+            "unavailable": unavailable
         }
     
     except Exception as e:

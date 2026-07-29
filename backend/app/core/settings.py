@@ -21,6 +21,16 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview")
 # CoinGecko API settings
 COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY") or None
 
+# Exchange credentials. Supported exchanges are Coinbase and Kraken; Binance is out of scope
+# by product decision (2026-07-28). Create every key READ-ONLY — this application never
+# places orders, so trade or withdrawal permissions add risk with no benefit.
+COINBASE_API_KEY = os.getenv("COINBASE_API_KEY", "")
+COINBASE_API_SECRET = os.getenv("COINBASE_API_SECRET", "")
+COINBASE_PASSPHRASE = os.getenv("COINBASE_PASSPHRASE", "")
+
+KRAKEN_API_KEY = os.getenv("KRAKEN_API_KEY", "")
+KRAKEN_API_SECRET = os.getenv("KRAKEN_API_SECRET", "")
+
 # Ethereum settings
 ETHEREUM_RPC_URL = os.getenv("ETHEREUM_RPC_URL", "")
 ETH_WALLET_ADDRESSES = os.getenv("ETH_WALLET_ADDRESSES", "")
