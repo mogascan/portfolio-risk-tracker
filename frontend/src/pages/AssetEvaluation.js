@@ -373,7 +373,7 @@ const AssetEvaluation = () => {
           p="md"
           withBorder
           shadow="sm"
-          sx={{
+          style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -386,10 +386,10 @@ const AssetEvaluation = () => {
           }}
         >
           <Flex justify="space-between" align="center">
-            <Text weight={700} size="lg">
+            <Text fw={700} size="lg">
               {form.values.token ? `Asset: ${form.values.token}` : 'No Asset Selected'}
             </Text>
-            <Group spacing="lg">
+            <Group gap="lg">
               <Text>
                 {form.values.price ? `Price: $${form.values.price}` : 'Price: N/A'}
               </Text>
@@ -402,7 +402,7 @@ const AssetEvaluation = () => {
                   : 'Date: N/A'}
               </Text>
               {form.values.price && form.values.amount && (
-                <Text weight={700}>
+                <Text fw={700}>
                   Total: ${(parseFloat(form.values.price) * parseFloat(form.values.amount)).toFixed(2)}
                 </Text>
               )}
@@ -416,7 +416,7 @@ const AssetEvaluation = () => {
         <form onSubmit={form.onSubmit(handleSubmit)}>
           {/* OBJECTIVES AND RISKS SECTION */}
           <Box mb="md" ref={formHeaderRef}>
-            <Title order={4} mb="sm" sx={{ 
+            <Title order={4} mb="sm" style={{ 
               backgroundColor: isDark ? '#25262b' : '#e9ecef', 
               padding: '8px', 
               borderRadius: '4px',
@@ -580,7 +580,7 @@ const AssetEvaluation = () => {
           
           {/* TECHNICAL POSITION */}
           <Box mb="md">
-            <Title order={4} mb="sm" sx={{ 
+            <Title order={4} mb="sm" style={{ 
               backgroundColor: isDark ? '#25262b' : '#e9ecef', 
               padding: '8px', 
               borderRadius: '4px',
@@ -593,7 +593,7 @@ const AssetEvaluation = () => {
             
             <Grid>
               <Grid.Col span={{ base: 12, md: 4 }}>
-                <Text weight={500} mb="xs">Price action coin</Text>
+                <Text fw={500} mb="xs">Price action coin</Text>
                 <Box mb="md">
                   <Group mb={2}>
                     <Switch
@@ -638,7 +638,7 @@ const AssetEvaluation = () => {
               </Grid.Col>
               
               <Grid.Col span={{ base: 12, md: 4 }}>
-                <Text weight={500} mb="xs">Crypto Market</Text>
+                <Text fw={500} mb="xs">Crypto Market</Text>
                 <Box mb="md">
                   <Group mb={2}>
                     <Switch
@@ -683,7 +683,7 @@ const AssetEvaluation = () => {
               </Grid.Col>
               
               <Grid.Col span={{ base: 12, md: 4 }}>
-                <Text weight={500} mb="xs">Seasonality</Text>
+                <Text fw={500} mb="xs">Seasonality</Text>
                 <Box mb="md">
                   <TextInput
                     placeholder="Beginning of bull; Pre Election year; Small cap season Nov - Mar"
@@ -691,7 +691,7 @@ const AssetEvaluation = () => {
                   />
                 </Box>
                 
-                <Text weight={500} mb="xs" mt="md">Trend of market</Text>
+                <Text fw={500} mb="xs" mt="md">Trend of market</Text>
                 <Box mb="md">
                   <TextInput
                     placeholder="e.g., BTC low is in; Grayscale win over SEC on spot BTC ETF"
@@ -704,7 +704,7 @@ const AssetEvaluation = () => {
           
           {/* SELECTED YARDSTICKS */}
           <Box mb="md">
-            <Title order={4} mb="sm" sx={{ 
+            <Title order={4} mb="sm" style={{ 
               backgroundColor: isDark ? '#25262b' : '#e9ecef', 
               padding: '8px', 
               borderRadius: '4px',
@@ -715,7 +715,7 @@ const AssetEvaluation = () => {
               SELECTED YARDSTICKS
             </Title>
             
-            <Text weight={600} mb="md">Current Year: Price Range</Text>
+            <Text fw={600} mb="md">Current Year: Price Range</Text>
             <Grid mb="lg">
               <Grid.Col span={{ base: 12, md: 3 }}>
                 <NumberInput
@@ -751,7 +751,7 @@ const AssetEvaluation = () => {
               </Grid.Col>
             </Grid>
             
-            <Text weight={600} mb="md">Previous Year: Price Range</Text>
+            <Text fw={600} mb="md">Previous Year: Price Range</Text>
             <Grid mb="lg">
               <Grid.Col span={{ base: 12, md: 3 }}>
                 <NumberInput
@@ -787,7 +787,7 @@ const AssetEvaluation = () => {
               </Grid.Col>
             </Grid>
             
-            <Text weight={600} mb="md">Possibilities</Text>
+            <Text fw={600} mb="md">Possibilities</Text>
             <TextInput
               placeholder="Notes on possibilities"
               {...form.getInputProps('possibilities')}
@@ -814,7 +814,7 @@ const AssetEvaluation = () => {
               </Grid.Col>
             </Grid>
             
-            <Text weight={600} mb="md">Comments on Future</Text>
+            <Text fw={600} mb="md">Comments on Future</Text>
             <TextInput
               placeholder="Comments on future outlook"
               {...form.getInputProps('futureComments')}
@@ -825,7 +825,7 @@ const AssetEvaluation = () => {
           {/* PERIODIC RE-CHECKS */}
           <Box mb="md">
             <Flex justify="space-between" align="center">
-              <Title order={4} mb="sm" sx={{ 
+              <Title order={4} mb="sm" style={{ 
                 backgroundColor: isDark ? '#25262b' : '#e9ecef', 
                 padding: '8px', 
                 borderRadius: '4px',
@@ -911,7 +911,7 @@ const AssetEvaluation = () => {
           {/* COMPLETED TRANSACTIONS */}
           <Box mb="md">
             <Flex justify="space-between" align="center">
-              <Title order={4} mb="sm" sx={{ 
+              <Title order={4} mb="sm" style={{ 
                 backgroundColor: isDark ? '#25262b' : '#e9ecef', 
                 padding: '8px', 
                 borderRadius: '4px',

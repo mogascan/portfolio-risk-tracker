@@ -245,7 +245,7 @@ function DashboardSummary() {
           borderRadius: '8px'
         }}
       >
-        <Group position="apart" mb={16}>
+        <Group justify="space-between" mb={16}>
           <Title order={3} size="h4" style={{ color: textColor }}>Allocation</Title>
           <Badge color="blue" radius="sm">
             {assets.length} {assets.length === 1 ? 'asset' : 'assets'}
@@ -304,7 +304,7 @@ function DashboardSummary() {
                     <Text size="md" style={{ color: secondaryTextColor, marginBottom: '8px' }}>
                       {assetAllocation[0].name}
                     </Text>
-                    <Group spacing={8} noWrap>
+                    <Group gap={8} noWrap>
                       <Text size="lg" style={{ color: textColor }}>
                         ${assetAllocation[0].price !== undefined && assetAllocation[0].price !== null ? assetAllocation[0].price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                       </Text>
@@ -330,7 +330,7 @@ function DashboardSummary() {
               </Box>
             ) : assetAllocation.length === 2 ? (
               // Two assets stack centered and large
-              <Stack align="center" spacing={20} style={{ width: '90%', justifyContent: 'center' }}>
+              <Stack align="center" gap={20} style={{ width: '90%', justifyContent: 'center' }}>
                 {assetAllocation.slice(0, 2).map((asset, index) => {
                   const portfolioAsset = assets.find(a => a.symbol.toLowerCase() === asset.name.toLowerCase());
                   const priceChange = portfolioAsset?.price_change_24h || 0;
@@ -387,7 +387,7 @@ function DashboardSummary() {
                         <Text size="sm" style={{ color: secondaryTextColor, marginBottom: '4px' }}>
                           {asset.name}
                         </Text>
-                        <Group spacing={6} noWrap>
+                        <Group gap={6} noWrap>
                           <Text size="md" style={{ color: textColor }}>
                             ${asset.price !== undefined && asset.price !== null ? asset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                           </Text>
@@ -466,7 +466,7 @@ function DashboardSummary() {
                               <Text size="xs" style={{ color: secondaryTextColor, marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                 {asset.name}
                               </Text>
-                              <Group spacing={6} noWrap>
+                              <Group gap={6} noWrap>
                                 <Text size="sm" style={{ color: textColor }}>
                                   ${asset.price !== undefined && asset.price !== null ? asset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                                 </Text>
@@ -529,7 +529,7 @@ function DashboardSummary() {
           borderRadius: '8px'
         }}
       >
-        <Group position="apart" mb={24}>
+        <Group justify="space-between" mb={24}>
           <Title order={3} size="h4" style={{ color: textColor }}>Capital</Title>
           <Badge 
             size="sm" 
@@ -539,13 +539,13 @@ function DashboardSummary() {
           </Badge>
         </Group>
         
-        <Stack spacing="md" style={{ flex: 1, overflowY: 'auto' }} className="hover-scroll">
+        <Stack gap="md" style={{ flex: 1, overflowY: 'auto' }} className="hover-scroll">
           {/* Capital to Protect */}
           <Paper p="xs" withBorder={false} style={{ 
             backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.05)',
             borderRadius: '8px'
           }}>
-            <Group spacing={6} align="center">
+            <Group gap={6} align="center">
               <div style={{
                 width: 8,
                 height: 8,
@@ -554,7 +554,7 @@ function DashboardSummary() {
               }} />
               <Text fw={500} size="xs" mb={4} style={{ color: secondaryTextColor }}>Capital to Protect</Text>
             </Group>
-            <Group position="apart">
+            <Group justify="space-between">
               <Text size="md" fw={600} style={{ color: textColor }}>{formatCurrency(stopLossValue)}</Text>
               <Text size="sm" c="dimmed">{stopLossPercentage * 100}% of Entry</Text>
             </Group>
@@ -565,7 +565,7 @@ function DashboardSummary() {
             backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.05)',
             borderRadius: '8px'
           }}>
-            <Group spacing={6} align="center">
+            <Group gap={6} align="center">
               <div style={{
                 width: 8,
                 height: 8,
@@ -574,7 +574,7 @@ function DashboardSummary() {
               }} />
               <Text fw={500} size="xs" mb={4} style={{ color: secondaryTextColor }}>Capital at Risk</Text>
             </Group>
-            <Group position="apart">
+            <Group justify="space-between">
               <Text size="md" fw={600} style={{ color: textColor }}>{formatCurrency(deltaValue)}</Text>
               <Text size="sm" c="dimmed">{deltaPercentage}% Buffer</Text>
             </Group>
@@ -585,7 +585,7 @@ function DashboardSummary() {
             backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.05)',
             borderRadius: '8px'
           }}>
-            <Group spacing={6} align="center">
+            <Group gap={6} align="center">
               <div style={{
                 width: 8,
                 height: 8,
@@ -594,7 +594,7 @@ function DashboardSummary() {
               }} />
               <Text fw={500} size="xs" mb={4} style={{ color: secondaryTextColor }}>P/L from Entry</Text>
             </Group>
-            <Group position="apart">
+            <Group justify="space-between">
               <Text 
                 size="md" 
                 fw={600} 
@@ -616,7 +616,7 @@ function DashboardSummary() {
   };
 
   return (
-    <Stack spacing="md">
+    <Stack gap="md">
       <Paper 
         shadow="none"
         withBorder={false} 
@@ -697,7 +697,7 @@ function DashboardSummary() {
                 
                 return (
                   <>
-                    <Group position="apart" mb={5}>
+                    <Group justify="space-between" mb={5}>
                       <Text size="xs" fw={500} style={{ color: secondaryTextColor }}>Position Relative to Entry</Text>
                       <Text 
                         size="xs" 
@@ -829,10 +829,10 @@ function DashboardSummary() {
               zIndex: 10
             }}
           >
-            <Stack spacing={8}>
+            <Stack gap={8}>
               {/* Total Profit */}
               <div>
-                <Group position="apart" noWrap>
+                <Group justify="space-between" noWrap>
                   <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Total Profit</Text>
                   <Text size="sm" fw={700} style={{ 
                     color: performance.overall > 0 ? 
@@ -873,7 +873,7 @@ function DashboardSummary() {
                 
                 return (
                   <div>
-                    <Group position="apart" noWrap>
+                    <Group justify="space-between" noWrap>
                       <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Stop Loss</Text>
                       <Text size="sm" fw={700} style={{ color: isDark ? theme.colors.red[3] : theme.colors.red[7] }}>
                         {formatDollarResponsive(entryBaselineValue * entryStopLossPercentage, screenSize)}
@@ -906,7 +906,7 @@ function DashboardSummary() {
               {/* Take Profit Level - Only show if set */}
               {takeProfit.targetValue > 0 && (
                 <div>
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Take Profit</Text>
                     <Text size="sm" fw={700} style={{ color: isDark ? theme.colors.green[3] : theme.colors.green[7] }}>
                       {formatDollarResponsive(takeProfit.targetValue, screenSize)}
@@ -958,10 +958,10 @@ function DashboardSummary() {
               flexDirection: 'column'
             }}
           >
-            <Group position="apart" mb="md">
+            <Group justify="space-between" mb="md">
               <Title order={4} style={{ color: textColor }}>Seasonality</Title>
               <Badge color="green" size="sm">
-                <Group spacing={5}>
+                <Group gap={5}>
                   <IconAlertCircle size={14} />
                   <Text size="xs">BULLISH</Text>
                 </Group>
@@ -981,7 +981,7 @@ function DashboardSummary() {
                 Historical data indicates April tends to be a strong month for Bitcoin, with an average gain of 15.2% over the past 5 years.
               </Text>
               
-              <Stack spacing={8}>
+              <Stack gap={8}>
                 <Text size="xs" color="dimmed" className="seasonality-stat" style={{ lineClamp: 1, overflow: 'hidden' }}>Monthly S&P Correlation: -0.2</Text>
                 <Text size="xs" color="dimmed" className="seasonality-stat" style={{ lineClamp: 1, overflow: 'hidden' }}>Weekly Performance: +5.8%</Text>
                 <Text size="xs" color="dimmed" className="seasonality-stat" style={{ lineClamp: 1, overflow: 'hidden' }}>Yearly Avg. Q2: +11.7%</Text>
@@ -1007,10 +1007,10 @@ function DashboardSummary() {
               flexDirection: 'column'
             }}
           >
-            <Group position="apart" mb="md">
+            <Group justify="space-between" mb="md">
               <Title order={4} style={{ color: textColor }}>Today</Title>
               <Badge color="green" size="sm">
-                <Group spacing={5}>
+                <Group gap={5}>
                   <IconClock size={14} />
                   <Text size="xs">MARKET EVENTS</Text>
                 </Group>
@@ -1018,9 +1018,9 @@ function DashboardSummary() {
             </Group>
             
             <ScrollArea style={{ flex: 1 }} type="never">
-              <Stack spacing={4}>
+              <Stack gap={4}>
                 <Box className="calendar-event">
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text 
                       size={screenSize === 'xs' ? "xs" : "sm"} 
                       fw={500} 
@@ -1038,7 +1038,7 @@ function DashboardSummary() {
                 </Box>
                 
                 <Box className="calendar-event">
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text 
                       size={screenSize === 'xs' ? "xs" : "sm"} 
                       fw={500} 
@@ -1056,7 +1056,7 @@ function DashboardSummary() {
                 </Box>
                 
                 <Box className="calendar-event">
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text 
                       size={screenSize === 'xs' ? "xs" : "sm"} 
                       fw={500} 
@@ -1236,10 +1236,10 @@ function DashboardSummary() {
         >
           <Title order={3} size="h4" mb={8} style={{ color: textColor }}>24h Movers</Title>
           <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <Stack spacing={16} style={{ flex: 1, justifyContent: 'center' }}>
+            <Stack gap={16} style={{ flex: 1, justifyContent: 'center' }}>
               {best && (
-                <Group position="apart" noWrap>
-                  <Group spacing={6} noWrap>
+                <Group justify="space-between" noWrap>
+                  <Group gap={6} noWrap>
                     {best.image && (
                       <Image 
                         src={best.image} 
@@ -1263,7 +1263,7 @@ function DashboardSummary() {
                       {best.symbol}
                     </Text>
                   </Group>
-                  <Group spacing={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                  <Group gap={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
                     <Text 
                       className="mover-percentage" 
                       size={screenSize === 'xs' ? "xs" : "sm"} 
@@ -1293,8 +1293,8 @@ function DashboardSummary() {
               )}
               
               {worst && (
-                <Group position="apart" noWrap>
-                  <Group spacing={6} noWrap>
+                <Group justify="space-between" noWrap>
+                  <Group gap={6} noWrap>
                     {worst.image && (
                       <Image 
                         src={worst.image} 
@@ -1318,7 +1318,7 @@ function DashboardSummary() {
                       {worst.symbol}
                     </Text>
                   </Group>
-                  <Group spacing={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                  <Group gap={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
                     <Text 
                       className="mover-percentage" 
                       size={screenSize === 'xs' ? "xs" : "sm"} 
@@ -1351,7 +1351,7 @@ function DashboardSummary() {
         </Paper>
       </Group>
       
-      <Group grow spacing="xs">
+      <Group grow gap="xs">
         <AssetAllocation />
         <CapitalProtectionCard />
       </Group>

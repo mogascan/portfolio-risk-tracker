@@ -114,10 +114,10 @@ const RedditFeedContainer = () => {
     <Box pos="relative" style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
       
-      <Stack spacing="md">
-        <Group position="apart" align="center" style={{ flexWrap: 'wrap' }}>
+      <Stack gap="md">
+        <Group justify="space-between" align="center" style={{ flexWrap: 'wrap' }}>
           <Title order={4}>Reddit</Title>
-          <Group spacing="xs">
+          <Group gap="xs">
             <Text size="sm" color="dimmed">
               Updated {formatDistanceToNow(lastUpdated, { addSuffix: true })}
             </Text>
@@ -134,8 +134,8 @@ const RedditFeedContainer = () => {
           </Group>
         </Group>
         
-        <Group position="apart" align="flex-end" style={{ flexWrap: 'wrap' }}>
-          <Group align="flex-end" spacing="xs" style={{ flexWrap: 'wrap' }}>
+        <Group justify="space-between" align="flex-end" style={{ flexWrap: 'wrap' }}>
+          <Group align="flex-end" gap="xs" style={{ flexWrap: 'wrap' }}>
             <Select
               label="Subreddit"
               placeholder="Select subreddit"
@@ -180,7 +180,7 @@ const RedditFeedContainer = () => {
           <Box style={{ width: '100%', paddingBottom: '10px' }}>
             {error ? (
               <Box p="md" style={{ textAlign: 'center' }}>
-                <Text color="red" align="center" mb="xs">
+                <Text color="red" ta="center" mb="xs">
                   {error}
                 </Text>
                 <Text size="sm" color="dimmed" mb="md">
@@ -198,7 +198,7 @@ const RedditFeedContainer = () => {
                 </Button>
               </Box>
             ) : posts.length === 0 ? (
-              <Text color="dimmed" align="center">
+              <Text color="dimmed" ta="center">
                 No posts found.
               </Text>
             ) : (

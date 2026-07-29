@@ -196,7 +196,7 @@ function RedditFeedContainer() {
         }}
         mb="md"
       >
-        <Group position="apart" mb="xs" style={{ flexWrap: 'wrap' }}>
+        <Group justify="space-between" mb="xs" style={{ flexWrap: 'wrap' }}>
           <Box style={{ minWidth: 0, flex: 1 }}>
             <Text size="xs" c="dimmed" fw={500} tt="uppercase" truncate>
               r/{activeTab}
@@ -210,7 +210,7 @@ function RedditFeedContainer() {
               {formatDate(post.published_at)}
             </Badge>
           </Box>
-          <Group spacing="xs" noWrap>
+          <Group gap="xs" noWrap>
             {post.sentiment && (
               <Badge 
                 color={getSentimentColor(post.sentiment)} 
@@ -232,16 +232,16 @@ function RedditFeedContainer() {
           </Text>
         )}
 
-        <Group position="apart" mt="md" style={{ flexWrap: 'wrap' }}>
-          <Group spacing="xs" style={{ flexWrap: 'wrap' }}>
-            <Text size="xs" weight={500}>↑ {post.score}</Text>
+        <Group justify="space-between" mt="md" style={{ flexWrap: 'wrap' }}>
+          <Group gap="xs" style={{ flexWrap: 'wrap' }}>
+            <Text size="xs" fw={500}>↑ {post.score}</Text>
             <Text size="xs" color="dimmed">•</Text>
             <Text size="xs">{post.comments} comments</Text>
             <Text size="xs" color="dimmed">•</Text>
             <Text size="xs" color="dimmed" truncate>Posted by u/{post.author}</Text>
           </Group>
           
-          <Group spacing={4}>
+          <Group gap={4}>
             {post.url && (
               <Tooltip 
                 label="View original post" 
@@ -287,7 +287,7 @@ function RedditFeedContainer() {
     if (error) {
       return (
         <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red" mt="md" mb="md">
-          <Stack spacing="xs">
+          <Stack gap="xs">
             <Text>{error}</Text>
             {debugMode && errorDetail && (
               <Code block size="xs">{errorDetail}</Code>
@@ -318,10 +318,10 @@ function RedditFeedContainer() {
 
   return (
     <Box style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={4}>Reddit</Title>
         
-        <Group spacing="xs">
+        <Group gap="xs">
           {lastUpdated && (
             <Text size="xs" color="dimmed">
               Updated: {lastUpdated.toLocaleTimeString()}
@@ -361,7 +361,7 @@ function RedditFeedContainer() {
 
         {CRYPTO_SUBREDDITS.map(subreddit => (
           <Tabs.Panel key={subreddit} value={subreddit}>
-            <Group position="right" mb="md" mt="md">
+            <Group justify="flex-end" mb="md" mt="md">
               <Tabs value={sort} onChange={setSort}>
                 <Tabs.List>
                   <Tabs.Tab value="hot">Hot</Tabs.Tab>

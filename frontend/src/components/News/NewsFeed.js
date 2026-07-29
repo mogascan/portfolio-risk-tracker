@@ -11,7 +11,7 @@ function NewsFeed() {
   
   return (
     <Box>
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={3}>News & Research Feeds</Title>
       </Group>
       

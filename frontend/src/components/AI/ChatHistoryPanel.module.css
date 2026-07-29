@@ -1,0 +1,38 @@
+.conversationItem {
+  padding: 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  background-color: var(--mantine-color-white);
+  cursor: pointer;
+}
+
+.conversationItem:hover {
+  background-color: var(--mantine-color-gray-0);
+}
+
+.conversationItemActive {
+  border-color: var(--mantine-color-blue-3);
+  background-color: var(--mantine-color-blue-0);
+}
+
+.conversationItemActive:hover {
+  background-color: var(--mantine-color-blue-1);
+}
+
+.conversationItemDark {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--mantine-color-dark-7);
+}
+
+.conversationItemDark:hover {
+  background-color: var(--mantine-color-dark-5);
+}
+
+.conversationItemDark.conversationItemActive {
+  border-color: rgba(66, 99, 235, 0.3);
+  background-color: rgba(66, 99, 235, 0.22);
+}
+
+.conversationItemDark.conversationItemActive:hover {
+  background-color: rgba(66, 99, 235, 0.3);
+}

@@ -125,9 +125,9 @@ function WalletManager() {
         {wallets.length > 0 ? (
           wallets.map(wallet => (
             <Paper key={wallet.id} p="md" withBorder>
-              <Group position="apart">
+              <Group justify="space-between">
                 <div>
-                  <Text weight={500}>{wallet.name}</Text>
+                  <Text fw={500}>{wallet.name}</Text>
                   <Text size="sm" color="dimmed">{wallet.address}</Text>
                   <Text size="sm" color="dimmed">Type: {wallet.type}</Text>
                 </div>
@@ -152,9 +152,9 @@ function WalletManager() {
         {exchanges.length > 0 ? (
           exchanges.map(exchange => (
             <Paper key={exchange.id} p="md" withBorder>
-              <Group position="apart">
+              <Group justify="space-between">
                 <div>
-                  <Text weight={500}>{exchange.name}</Text>
+                  <Text fw={500}>{exchange.name}</Text>
                   <Text size="sm" color="dimmed">API Key: ••••••••{exchange.apiKey.slice(-4)}</Text>
                 </div>
                 <Button 

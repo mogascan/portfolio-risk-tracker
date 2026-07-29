@@ -166,7 +166,7 @@ function Markets() {
           padding: '8px 0'
         }}
       >
-        <Group position="left" spacing={5} style={{ flexWrap: 'nowrap' }}>
+        <Group justify="flex-start" gap={5} style={{ flexWrap: 'nowrap' }}>
           <Text size="sm" fw={500}>{label}</Text>
           <div style={iconContainerStyle}>
             {isActive ? (
@@ -317,7 +317,7 @@ function Markets() {
   if (loading) {
     return (
       <Container size="xl">
-        <Group position="center" mt="xl">
+        <Group justify="center" mt="xl">
           <Loader size="lg" />
         </Group>
       </Container>
@@ -328,7 +328,7 @@ function Markets() {
     return (
       <Container size="xl">
         <Paper p="md" withBorder>
-          <Text color="red" align="center">Error loading market data: {error}</Text>
+          <Text color="red" ta="center">Error loading market data: {error}</Text>
         </Paper>
       </Container>
     );
@@ -336,10 +336,10 @@ function Markets() {
 
   return (
     <Container size="xl">
-      <Group position="apart" align="center" mb="xl">
+      <Group justify="space-between" align="center" mb="xl">
         <Title order={2} style={{ textAlign: 'center' }}>Markets</Title>
         
-        <Group spacing="lg" align="center" position="center">
+        <Group gap="lg" align="center" justify="center">
           <Select
             value={coinLimit.toString()}
             onChange={handleCoinsLimitChange}
@@ -352,7 +352,7 @@ function Markets() {
             styles={{ input: { textAlign: 'center' } }}
           />
           
-          <Group spacing="xs" align="center" position="center">
+          <Group gap="xs" align="center" justify="center">
             <NumberInput
               placeholder="Rank"
               value={jumpToRank}
@@ -376,7 +376,7 @@ function Markets() {
             </ActionIcon>
           </Group>
           
-          <Stack spacing={0}>
+          <Stack gap={0}>
             <Text size="xs" color="dimmed" style={{ textAlign: 'center' }}>
               Last updated: {lastUpdate ? lastUpdate.toLocaleTimeString() : 'Never'}
             </Text>
@@ -409,7 +409,7 @@ function Markets() {
               <tr key={coin.id} id={`coin-${coin.id}`}>
                 <td style={{ ...columnStyles.rank, textAlign: 'center' }}>{coin.rank || 'N/A'}</td>
                 <td style={columnStyles.name}>
-                  <Group spacing="sm" noWrap>
+                  <Group gap="sm" noWrap>
                     <Image src={coin.image} width={24} height={24} radius="xs" />
                     <div>
                       <Tooltip label={coin.name} disabled={coin.name.length < 15}>
@@ -452,7 +452,7 @@ function Markets() {
         </Table>
       </Paper>
 
-      <Group position="center" mt="md">
+      <Group justify="center" mt="md">
         <Pagination total={totalPages} value={currentPage} onChange={handlePageChange} />
       </Group>
     </Container>

@@ -44,18 +44,18 @@ const CategoriesDebug = () => {
     <Paper p="xl" shadow="md" radius="md" withBorder>
       <Title order={3} mb="md">X Feed Categories Debug</Title>
       
-      <Stack spacing="lg">
+      <Stack gap="lg">
         <Box>
-          <Text weight={500} mb="xs">Current categories in localStorage:</Text>
+          <Text fw={500} mb="xs">Current categories in localStorage:</Text>
           <Code block style={{ maxHeight: '200px', overflow: 'auto' }}>
             {categories ? JSON.stringify(categories, null, 2) : 'No categories found'}
           </Code>
         </Box>
         
         <Box>
-          <Text weight={500} mb="xs">Fix Options:</Text>
+          <Text fw={500} mb="xs">Fix Options:</Text>
           
-          <Stack spacing="sm">
+          <Stack gap="sm">
             <Button 
               color="blue" 
               onClick={resetCategories}

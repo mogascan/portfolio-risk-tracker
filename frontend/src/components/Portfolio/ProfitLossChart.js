@@ -106,7 +106,7 @@ const ProfitLossChart = () => {
           <Text size="sm" color="dimmed" mb={4}>
             {format(date, 'MMM d, yyyy h:mm a')}
           </Text>
-          <Text size="md" weight={700}>
+          <Text size="md" fw={700}>
             {formatDollar(value)}
           </Text>
         </div>
@@ -146,10 +146,10 @@ const ProfitLossChart = () => {
 
   return (
     <Paper p="md" radius="md" withBorder>
-      <Stack spacing="xs">
-        <Group position="apart" align="flex-start" style={{ width: '100%' }}>
+      <Stack gap="xs">
+        <Group justify="space-between" align="flex-start" style={{ width: '100%' }}>
           <div style={{ flex: 1 }}>
-            <Text size="lg" weight={700} mb={6}>
+            <Text size="lg" fw={700} mb={6}>
               Performance
             </Text>
             <Text size="sm" color="dimmed">
@@ -157,7 +157,7 @@ const ProfitLossChart = () => {
             </Text>
           </div>
           <div>
-            <Group spacing={8}>
+            <Group gap={8}>
               {timeRanges.map((range) => (
                 <Button
                   key={range.value}

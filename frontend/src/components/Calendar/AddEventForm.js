@@ -84,7 +84,7 @@ function AddEventForm({ onSubmit, initialValues = {}, isEditing = false }) {
   
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack spacing="md">
+      <Stack gap="md">
         <TextInput
           label="Event Title"
           placeholder="Enter event title"
@@ -110,7 +110,7 @@ function AddEventForm({ onSubmit, initialValues = {}, isEditing = false }) {
           )}
         </Group>
         
-        <Group position="apart">
+        <Group justify="space-between">
           <Switch 
             label="Multi-day event"
             checked={isMultiDay}
@@ -154,7 +154,7 @@ function AddEventForm({ onSubmit, initialValues = {}, isEditing = false }) {
         />
         
         <Box>
-          <Text size="sm" weight={500} mb="xs">Event Color</Text>
+          <Text size="sm" fw={500} mb="xs">Event Color</Text>
           <SimpleGrid cols={6} spacing="xs">
             {colorOptions.map((color) => (
               <ColorSwatch
@@ -174,7 +174,7 @@ function AddEventForm({ onSubmit, initialValues = {}, isEditing = false }) {
           </SimpleGrid>
         </Box>
         
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button type="submit" color="blue">
             {isEditing ? 'Update Event' : 'Add Event'}
           </Button>

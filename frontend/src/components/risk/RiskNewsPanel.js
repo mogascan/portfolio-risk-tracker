@@ -4,6 +4,7 @@ import { IconExternalLink, IconAlertCircle, IconClock, IconBookmark, IconBookmar
 import { usePortfolio } from '../../contexts/PortfolioContext';
 import { useMarket } from '../../contexts/MarketContext';
 import { useBookmarks } from '../../contexts/BookmarkContext';
+import classes from './RiskNewsPanel.module.css';
 
 function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
   const { portfolio } = usePortfolio();
@@ -66,12 +67,12 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
   };
 
   return (
-    <Stack spacing="md" sx={(theme) => ({
+    <Stack gap="md" style={{
       backgroundColor: 'transparent',
       border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
       borderRadius: theme.radius.md,
       padding: theme.spacing.md,
-    })}>
+    }}>
       <Grid gutter="md">
         {/* Risk Metrics Card */}
         <Grid.Col span={{ base: 12, md: 4 }}>
@@ -79,7 +80,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
             p="md"
             radius="md"
             withBorder={false}
-            sx={(theme) => ({
+            style={{
               backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               borderLeft: `4px solid ${
                 volatility > 70 
@@ -89,10 +90,10 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                     : theme.colors[isDark ? 'green' : 'green'][isDark ? 4 : 6]
               }`,
               height: '100%'
-            })}
+            }}
           >
-            <Stack spacing="sm">
-              <Group position="apart">
+            <Stack gap="sm">
+              <Group justify="space-between">
                 <Title order={4}>Risk</Title>
                 <Badge size="sm" color={volatility > 70 ? "red" : volatility > 30 ? "yellow" : "green"}>
                   {getRiskLevel(volatility)}
@@ -101,21 +102,21 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
 
               <Box>
                 <Text size="sm" mb={4}>Portfolio Volatility:</Text>
-                <Text size="lg" weight={700}>{volatility}%</Text>
+                <Text size="lg" fw={700}>{volatility}%</Text>
               </Box>
 
               <Box>
                 <Box
-                  sx={(theme) => ({
+                  style={{
                     width: '100%',
                     height: 8,
                     backgroundColor: isDark ? theme.colors.dark[5] : theme.colors.gray[2],
                     borderRadius: theme.radius.sm,
                     overflow: 'hidden'
-                  })}
+                  }}
                 >
                   <Box
-                    sx={(theme) => ({
+                    style={{
                       width: `${volatility}%`,
                       height: '100%',
                       backgroundColor: volatility > 70 
@@ -124,20 +125,20 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                           ? theme.colors[isDark ? 'orange' : 'orange'][isDark ? 4 : 6]
                           : theme.colors[isDark ? 'green' : 'green'][isDark ? 4 : 6],
                       borderRadius: theme.radius.sm
-                    })}
+                    }}
                   />
                 </Box>
               </Box>
 
               {riskiestAsset && (
                 <Box>
-                  <Text size="sm" weight={500} mb={8}>Risk Assets:</Text>
-                  <Group spacing="xs">
+                  <Text size="sm" fw={500} mb={8}>Risk Assets:</Text>
+                  <Group gap="xs">
                     <Badge 
                       color="red" 
                       size="sm"
                       leftSection={
-                        <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: 'red' }} />
+                        <Box style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: 'red' }} />
                       }
                     >
                       {riskiestAsset.symbol}
@@ -147,8 +148,8 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
               )}
 
               <Box mt="auto">
-                <Text size="sm" weight={500} mb={8}>Additional Risk Metrics</Text>
-                <Group spacing="xs">
+                <Text size="sm" fw={500} mb={8}>Additional Risk Metrics</Text>
+                <Group gap="xs">
                   <Badge color="blue" variant="outline" size="sm">Market Correlation</Badge>
                   <Badge color="yellow" variant="outline" size="sm">Liquidity Risk</Badge>
                   <Badge color="cyan" variant="outline" size="sm">Event Risk</Badge>
@@ -164,17 +165,17 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
             p="md"
             radius="md"
             withBorder={false}
-            sx={(theme) => ({
+            style={{
               backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               height: 120,
               display: 'flex',
               flexDirection: 'column'
-            })}
+            }}
           >
-            <Group position="apart" mb="xs">
+            <Group justify="space-between" mb="xs">
               <Title order={4}>Risk-Related News</Title>
               <Badge color="red" size="sm">
-                <Group spacing={5} noWrap>
+                <Group gap={5} noWrap>
                   <IconAlertCircle size={14} />
                   <Text size="xs">{riskNews.length} ALERTS</Text>
                 </Group>
@@ -182,24 +183,22 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
             </Group>
 
             {loadingNews ? (
-              <Box py="sm" sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Box py="sm" style={{ display: 'flex', justifyContent: 'center' }}>
                 <Loader size="sm" />
               </Box>
             ) : riskNews.length > 0 ? (
-              <ScrollArea offsetScrollbars scrollbarSize={6} sx={{ flex: 1 }}>
-                <Stack spacing={6}>
+              <ScrollArea offsetScrollbars scrollbarSize={6} style={{ flex: 1 }}>
+                <Stack gap={6}>
                   {riskNews.slice(0, 3).map((item, index) => (
                     <Box
                       key={index}
                       p="xs"
-                      sx={(theme) => ({
+                      className={classes.newsItem}
+                      style={{
                         borderRadius: theme.radius.sm,
-                        '&:hover': {
-                          backgroundColor: isDark ? theme.colors.dark[5] : theme.colors.gray[0]
-                        }
-                      })}
+                      }}
                     >
-                      <Group position="apart" align="flex-start">
+                      <Group justify="space-between" align="flex-start">
                         <Box style={{ flex: 1 }}>
                           <Text
                             component="a"
@@ -207,20 +206,20 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                             target="_blank"
                             rel="noopener noreferrer"
                             size="sm"
-                            weight={500}
-                            sx={(theme) => ({
+                            fw={500}
+                            style={{
                               color: isDark ? theme.white : theme.black,
                               textDecoration: 'none',
                               display: 'block'
-                            })}
+                            }}
                           >
                             {item.title}
                             <IconExternalLink size={14} style={{ marginLeft: 5, verticalAlign: 'middle' }} />
                           </Text>
 
-                          <Group position="apart" mt={5}>
+                          <Group justify="space-between" mt={5}>
                             <Text size="xs" color="dimmed">{item.source || "Unknown source"}</Text>
-                            <Group spacing={4} noWrap>
+                            <Group gap={4} noWrap>
                               <IconClock size={12} />
                               <Text size="xs" color="dimmed">{formatNewsDate(item.publishedAt)}</Text>
                             </Group>

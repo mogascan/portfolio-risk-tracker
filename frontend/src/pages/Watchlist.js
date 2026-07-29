@@ -20,16 +20,20 @@ import {
   Divider,
   Grid,
   ThemeIcon,
-  Progress
+  Progress,
+  useMantineColorScheme
 } from '@mantine/core';
 import { IconSearch, IconTrash, IconStar, IconStarFilled, IconChevronUp, IconChevronDown, IconSelector, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { useMarket } from '../contexts/MarketContext';
 import axios from 'axios';
+import classes from './Watchlist.module.css';
 
 function Watchlist() {
   const { watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
   const { topCoins, loading, error, lastUpdate, fetchTopCoins } = useMarket();
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [sortBy, setSortBy] = useState('market_cap_rank');
@@ -267,7 +271,7 @@ function Watchlist() {
           padding: '8px 0'
         }}
       >
-        <Group position="left" spacing={5} style={{ flexWrap: 'nowrap' }}>
+        <Group justify="flex-start" gap={5} style={{ flexWrap: 'nowrap' }}>
           <Text size="sm" fw={500}>{label}</Text>
           <div style={iconContainerStyle}>
             {isActive ? (
@@ -599,7 +603,7 @@ function Watchlist() {
       return (
         <Box p="md" bg="rgba(0,0,0,0.03)" style={contentStyles}>
           <Center style={{ height: '260px' }}>
-            <Group spacing="xs">
+            <Group gap="xs">
               <Loader size="sm" />
               <Text>Loading detailed token data...</Text>
             </Group>
@@ -624,15 +628,15 @@ function Watchlist() {
     const MetricRow = ({ label, value, percentage, classification, description }) => {
       return (
         <Box mb="xs">
-          <Group position="apart" mb={2}>
-            <Text size="sm" weight={500}>{label}:</Text>
+          <Group justify="space-between" mb={2}>
+            <Text size="sm" fw={500}>{label}:</Text>
             <Badge color={classification.color} size="sm">
               {classification.label}
             </Badge>
           </Group>
-          <Group position="apart" spacing={5} mb={2}>
+          <Group justify="space-between" gap={5} mb={2}>
             <Text size="xs" color="dimmed">{description}</Text>
-            <Text size="xs" weight={500}>{value}{percentage ? ` (${percentage.toFixed(2)}%)` : ''}</Text>
+            <Text size="xs" fw={500}>{value}{percentage ? ` (${percentage.toFixed(2)}%)` : ''}</Text>
           </Group>
           <ProgressBar value={percentage} color={classification.color} />
         </Box>
@@ -643,7 +647,7 @@ function Watchlist() {
       <Box p="md" bg="rgba(0,0,0,0.03)" style={contentStyles}>
         <Grid>
           <Grid.Col span={7}>
-            <Text weight={600} mb="md">Tokenomics Analysis:</Text>
+            <Text fw={600} mb="md">Tokenomics Analysis:</Text>
             
             {/* Float vs Max Supply */}
             <MetricRow 
@@ -683,17 +687,19 @@ function Watchlist() {
           </Grid.Col>
           
           <Grid.Col span={5}>
-            <Box p="md" sx={theme => ({ 
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0], 
-              borderRadius: theme.radius.md,
-              height: '100%'
-            })}>
+            <Box
+              p="md"
+              className={[
+                classes.riskAssessmentPanel,
+                isDark ? classes.riskAssessmentPanelDark : '',
+              ].filter(Boolean).join(' ')}
+            >
               <Group mb="md">
                 <ThemeIcon color={riskData.color} variant="light" size="lg" radius="md">
                   <IconAlertTriangle size="1.5rem" />
                 </ThemeIcon>
                 <div>
-                  <Text weight={700} size="lg">Risk Assessment</Text>
+                  <Text fw={700} size="lg">Risk Assessment</Text>
                   <Badge color={riskData.color} size="lg" mt={5}>{riskData.level}</Badge>
                 </div>
               </Group>
@@ -701,36 +707,36 @@ function Watchlist() {
               <Divider mb="md" />
               
               <Box>
-                <Text weight={600} mb="xs">Key Metrics:</Text>
-                <Group spacing="xs" mb={8}>
+                <Text fw={600} mb="xs">Key Metrics:</Text>
+                <Group gap="xs" mb={8}>
                   <Text size="sm">Max Supply:</Text>
-                  <Text size="sm" weight={500}>{formatNumber(maxSupply) || 'Unknown'}</Text>
+                  <Text size="sm" fw={500}>{formatNumber(maxSupply) || 'Unknown'}</Text>
                 </Group>
-                <Group spacing="xs" mb={8}>
+                <Group gap="xs" mb={8}>
                   <Text size="sm">Circulating Supply:</Text>
-                  <Text size="sm" weight={500}>{formatNumber(circulatingSupply) || 'Unknown'}</Text>
+                  <Text size="sm" fw={500}>{formatNumber(circulatingSupply) || 'Unknown'}</Text>
                 </Group>
-                <Group spacing="xs" mb={8}>
+                <Group gap="xs" mb={8}>
                   <Text size="sm">Market Cap:</Text>
-                  <Text size="sm" weight={500}>{formatMarketCap(marketCap)}</Text>
+                  <Text size="sm" fw={500}>{formatMarketCap(marketCap)}</Text>
                 </Group>
-                <Group spacing="xs" mb={8}>
+                <Group gap="xs" mb={8}>
                   <Text size="sm">FDV:</Text>
-                  <Text size="sm" weight={500}>{formatMarketCap(fullyDilutedVal)}</Text>
+                  <Text size="sm" fw={500}>{formatMarketCap(fullyDilutedVal)}</Text>
                 </Group>
-                <Group spacing="xs" mb={8}>
+                <Group gap="xs" mb={8}>
                   <Text size="sm">24h Volume:</Text>
-                  <Text size="sm" weight={500}>{formatMarketCap(volume)}</Text>
+                  <Text size="sm" fw={500}>{formatMarketCap(volume)}</Text>
                 </Group>
               </Box>
               
               <Divider my="md" />
               
               <Box>
-                <Text weight={600} mb="xs">Risk Factors:</Text>
+                <Text fw={600} mb="xs">Risk Factors:</Text>
                 {riskData.factors.length > 0 ? (
                   riskData.factors.map((factor, index) => (
-                    <Group key={index} spacing="xs" mb={4}>
+                    <Group key={index} gap="xs" mb={4}>
                       <ThemeIcon color={riskData.color} variant="light" size="sm" radius="xl">
                         <IconInfoCircle size="0.8rem" />
                       </ThemeIcon>
@@ -771,7 +777,7 @@ function Watchlist() {
   if (loading) {
     return (
       <Container size="xl">
-        <Group position="center" mt="xl">
+        <Group justify="center" mt="xl">
           <Loader size="lg" />
         </Group>
       </Container>
@@ -831,7 +837,7 @@ function Watchlist() {
                     <tr key={coin.id}>
                       <td style={{...columnStyles.rank, paddingLeft: '10px'}}>{coin.market_cap_rank || 'N/A'}</td>
                       <td style={columnStyles.name}>
-                        <Group spacing="sm">
+                        <Group gap="sm">
                           {coin.image && (
                             <Image
                               src={coin.image}
@@ -911,7 +917,7 @@ function Watchlist() {
         )}
         
         <Paper p="md" withBorder>
-          <Text color="dimmed" align="center" mb="md">Your watchlist is empty. Use the search above or visit the Markets page to add coins.</Text>
+          <Text color="dimmed" ta="center" mb="md">Your watchlist is empty. Use the search above or visit the Markets page to add coins.</Text>
         </Paper>
       </Container>
     );
@@ -919,7 +925,7 @@ function Watchlist() {
 
   return (
     <Container size="xl" style={{ maxWidth: '1400px' }}>
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={1}>Watchlist</Title>
         <Group>
           <Text size="sm" color="dimmed">
@@ -970,7 +976,7 @@ function Watchlist() {
                   <tr key={coin.id}>
                     <td style={{...columnStyles.rank, paddingLeft: '10px'}}>{coin.market_cap_rank || 'N/A'}</td>
                     <td style={columnStyles.name}>
-                      <Group spacing="sm">
+                      <Group gap="sm">
                         {coin.image && (
                           <Image
                             src={coin.image}
@@ -1050,7 +1056,7 @@ function Watchlist() {
       )}
 
       <Paper withBorder p="xs" mb="md">
-        <Group position="right" spacing="xs">
+        <Group justify="flex-end" gap="xs">
           <Text size="sm">Rows per page:</Text>
           <Select
             value={pageSize.toString()}
@@ -1111,7 +1117,7 @@ function Watchlist() {
                     <tr>
                       <td style={{...columnStyles.rank, paddingLeft: '10px'}}>{coin.market_cap_rank || 'N/A'}</td>
                       <td style={columnStyles.name}>
-                        <Group spacing="sm">
+                        <Group gap="sm">
                           {coin.image && (
                             <Image
                               src={coin.image}
@@ -1192,7 +1198,7 @@ function Watchlist() {
           
           {/* Only show pagination if we have more than one page */}
           {totalPages > 1 && (
-            <Group position="center" mt="md">
+            <Group justify="center" mt="md">
               <Pagination
                 total={totalPages}
                 value={currentPage}

@@ -165,7 +165,7 @@ function EventImporter({ onImportEvents }) {
   };
   
   return (
-    <Stack spacing="md">
+    <Stack gap="md">
       <Alert 
         icon={<IconInfoCircle size={16} />} 
         title="Import Mode" 
@@ -187,7 +187,7 @@ function EventImporter({ onImportEvents }) {
       />
       
       <Box>
-        <Text size="sm" weight={500} mb="xs">Upload File</Text>
+        <Text size="sm" fw={500} mb="xs">Upload File</Text>
         <Dropzone
           onDrop={handleDrop}
           onReject={() => setError('File rejected')}
@@ -197,7 +197,7 @@ function EventImporter({ onImportEvents }) {
             'application/json': ['.json']
           }}
         >
-          <Group position="center" spacing="xl" style={{ minHeight: 100, pointerEvents: 'none' }}>
+          <Group justify="center" gap="xl" style={{ minHeight: 100, pointerEvents: 'none' }}>
             <Dropzone.Accept>
               <IconUpload size={32} stroke={1.5} />
             </Dropzone.Accept>
@@ -233,14 +233,14 @@ function EventImporter({ onImportEvents }) {
       
       {previewEvents.length > 0 && (
         <Box>
-          <Text size="sm" weight={500} mb="xs">Preview ({previewEvents.length} of {format === 'json' ? JSON.parse(fileContent).length : parseCSV(fileContent).length} events)</Text>
+          <Text size="sm" fw={500} mb="xs">Preview ({previewEvents.length} of {format === 'json' ? JSON.parse(fileContent).length : parseCSV(fileContent).length} events)</Text>
           <Paper withBorder p="sm">
             <Code block>{JSON.stringify(previewEvents, null, 2)}</Code>
           </Paper>
         </Box>
       )}
       
-      <Group position="right">
+      <Group justify="flex-end">
         <Button 
           onClick={resetState} 
           variant="outline" 

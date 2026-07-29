@@ -664,7 +664,7 @@ const TokenUnlockAnalyzer = () => {
       {/* Watchlist Token Selector */}
       <Paper shadow="sm" p="md" mb="md" withBorder>
         <Title order={3} mb="md">Select Token from Watchlist</Title>
-        <Group position="apart" align="flex-end">
+        <Group justify="space-between" align="flex-end">
           <Select
             label="Token"
             placeholder="Select a token from your watchlist"
@@ -694,23 +694,23 @@ const TokenUnlockAnalyzer = () => {
             <SimpleGrid cols={4}>
               <Paper p="xs" withBorder>
                 <Text size="sm" color="dimmed">Price</Text>
-                <Text weight={700} size="lg">{formatPrice(marketData.price || marketData.current_price)}</Text>
+                <Text fw={700} size="lg">{formatPrice(marketData.price || marketData.current_price)}</Text>
               </Paper>
               
               <Paper p="xs" withBorder>
                 <Text size="sm" color="dimmed">Market Cap</Text>
-                <Text weight={700} size="lg">{formatMarketValue(marketData.market_cap)}</Text>
+                <Text fw={700} size="lg">{formatMarketValue(marketData.market_cap)}</Text>
               </Paper>
               
               <Paper p="xs" withBorder>
                 <Text size="sm" color="dimmed">FDV</Text>
-                <Text weight={700} size="lg">{formatMarketValue(marketData.fully_diluted_valuation)}</Text>
+                <Text fw={700} size="lg">{formatMarketValue(marketData.fully_diluted_valuation)}</Text>
               </Paper>
               
               <Paper p="xs" withBorder>
                 <Text size="sm" color="dimmed">24h Change</Text>
                 <Text 
-                  weight={700} 
+                  fw={700} 
                   size="lg" 
                   color={(marketData.price_change_percentage_24h || 0) >= 0 ? 'green' : 'red'}
                 >
@@ -745,7 +745,7 @@ const TokenUnlockAnalyzer = () => {
       
       {/* AI Analysis */}
       <Paper shadow="sm" p="md" mb="md" withBorder>
-        <Group position="apart" mb="md">
+        <Group justify="space-between" mb="md">
           <Title order={3}>AI Analysis</Title>
           <Group>
             <Badge size="lg" color={getFloatBadgeColor()} variant="filled">
@@ -775,7 +775,7 @@ const TokenUnlockAnalyzer = () => {
         <Box className="analysis-text">
           {aiAnalysis.split('\n').map((line, index) => (
             line.startsWith('**') ? (
-              <Text key={index} weight={700} size="md" mb="xs" mt={index > 0 ? "sm" : 0}>
+              <Text key={index} fw={700} size="md" mb="xs" mt={index > 0 ? "sm" : 0}>
                 {line.replace(/\*\*/g, '')}
               </Text>
             ) : line.startsWith('• ') ? (
@@ -807,7 +807,7 @@ const TokenUnlockAnalyzer = () => {
           <>
             <SimpleGrid cols={3} mb="lg">
               <Box p="md">
-                <Text weight={500} size="lg">Market Price</Text>
+                <Text fw={500} size="lg">Market Price</Text>
                 <Title order={3}>{formatPrice(marketData.price || marketData.current_price)}</Title>
                 <Text size="sm" color={marketData.price_change_percentage_24h >= 0 ? 'green' : 'red'}>
                   {marketData.price_change_percentage_24h?.toFixed(2)}% (24h)
@@ -815,7 +815,7 @@ const TokenUnlockAnalyzer = () => {
               </Box>
               
               <Box p="md">
-                <Text weight={500} size="lg">Market Cap</Text>
+                <Text fw={500} size="lg">Market Cap</Text>
                 <Title order={3}>{formatMarketValue(marketData.market_cap)}</Title>
                 <Text size="sm" color="dimmed">
                   FDV: {formatMarketValue(marketData.fully_diluted_valuation)}
@@ -823,8 +823,8 @@ const TokenUnlockAnalyzer = () => {
               </Box>
               
               <Box p="md">
-                <Text weight={500} size="lg">Market Float</Text>
-                <Group position="apart">
+                <Text fw={500} size="lg">Market Float</Text>
+                <Group justify="space-between">
                   <Title order={3}>{((marketData.circulatingSupply / marketData.totalSupply) * 100).toFixed(2)}%</Title>
                   <Badge size="lg" color={getFloatBadgeColor()}>
                     {floatClassification ? floatClassification.toUpperCase() : ''} FLOAT
@@ -851,14 +851,14 @@ const TokenUnlockAnalyzer = () => {
                   const targetPrice = (marketData.price || marketData.current_price) * multiplier;
                   return (
                     <Paper key={multiplier} p="xs" withBorder>
-                      <Text size="sm" weight={500}>{multiplier}x Current Market Cap</Text>
-                      <Group position="apart">
+                      <Text size="sm" fw={500}>{multiplier}x Current Market Cap</Text>
+                      <Group justify="space-between">
                         <Text size="sm" color="dimmed">Market Cap:</Text>
                         <Text>{formatMarketValue(targetMarketCap)}</Text>
                       </Group>
-                      <Group position="apart">
+                      <Group justify="space-between">
                         <Text size="sm" color="dimmed">Price:</Text>
-                        <Text weight={700} color="blue">{formatPrice(targetPrice)}</Text>
+                        <Text fw={700} color="blue">{formatPrice(targetPrice)}</Text>
                       </Group>
                     </Paper>
                   );
@@ -872,9 +872,9 @@ const TokenUnlockAnalyzer = () => {
         
         <SimpleGrid cols={3}>
           <Box p="md">
-            <Text weight={500} size="lg">Circulating Supply</Text>
+            <Text fw={500} size="lg">Circulating Supply</Text>
             <Title order={3}>{formatNumber(circulatingSupply)}</Title>
-            <Group position="apart">
+            <Group justify="space-between">
               <Text size="sm" color="dimmed">{floatPercentage.toFixed(2)}% of Total Supply</Text>
               <Badge color={getFloatBadgeColor()}>
                 {floatClassification ? floatClassification.toUpperCase() : ''} FLOAT
@@ -884,14 +884,14 @@ const TokenUnlockAnalyzer = () => {
           </Box>
           
           <Box p="md">
-            <Text weight={500} size="lg">Locked Supply</Text>
+            <Text fw={500} size="lg">Locked Supply</Text>
             <Title order={3}>{formatNumber(totalSupply - circulatingSupply)}</Title>
             <Text size="sm" color="dimmed">{(100 - floatPercentage).toFixed(2)}% of Total Supply</Text>
             <Progress value={100 - floatPercentage} mt="sm" size="md" color="violet" />
           </Box>
           
           <Box p="md">
-            <Text weight={500} size="lg">Total Allocation</Text>
+            <Text fw={500} size="lg">Total Allocation</Text>
             <Title order={3}>{totalPercentage.toFixed(2)}%</Title>
             <Text 
               size="sm" 
@@ -915,14 +915,14 @@ const TokenUnlockAnalyzer = () => {
       
       {/* Token Allocations */}
       <Paper shadow="sm" p="md" mb="md" withBorder>
-        <Group position="apart" mb="md">
+        <Group justify="space-between" mb="md">
           <Title order={3}>Token Allocations</Title>
           <Button onClick={addAllocation}>+ Add Allocation</Button>
         </Group>
         
         {allocations.map((allocation) => (
           <Paper key={allocation.id} p="md" mb="sm" withBorder>
-            <Group position="apart" mb="xs">
+            <Group justify="space-between" mb="xs">
               <TextInput
                 label="Name"
                 value={allocation.name}
@@ -932,7 +932,7 @@ const TokenUnlockAnalyzer = () => {
               <NumberInput
                 label="Percentage (%)"
                 value={allocation.percentage}
-                precision={2}
+                decimalScale={2}
                 min={0}
                 max={100}
                 step={0.1}

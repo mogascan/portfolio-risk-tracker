@@ -185,10 +185,10 @@ function PortfolioSummary({ showTitle = true }) {
       >
         <Title order={3} size="h4" mb="sm">Risk Analysis</Title>
         
-        <Stack spacing="xs" style={{ flex: 1, justifyContent: 'space-between' }}>
+        <Stack gap="xs" style={{ flex: 1, justifyContent: 'space-between' }}>
           <div>
             {/* Risk Level */}
-            <Group position="apart" noWrap>
+            <Group justify="space-between" noWrap>
               <Text size="md" fw={500}>{getRiskLevel(volatility)}</Text>
               <Text size="md" fw={700}>{volatility}%</Text>
             </Group>
@@ -208,8 +208,8 @@ function PortfolioSummary({ showTitle = true }) {
                 borderColor: `${riskIndicator.color}40`
               }}>
                 <Text fw={500} size="sm" mb={8}>Highest Risk</Text>
-                <Group position="apart" style={{ width: '100%' }}>
-                  <Group spacing="xs" noWrap>
+                <Group justify="space-between" style={{ width: '100%' }}>
+                  <Group gap="xs" noWrap>
                     <div style={{ 
                       width: '14px', 
                       height: '14px', 
@@ -244,8 +244,8 @@ function PortfolioSummary({ showTitle = true }) {
                 borderColor: `${safeIndicator.color}40`
               }}>
                 <Text fw={500} size="sm" mb={8}>Lowest Risk</Text>
-                <Group position="apart" style={{ width: '100%' }}>
-                  <Group spacing="xs" noWrap>
+                <Group justify="space-between" style={{ width: '100%' }}>
+                  <Group gap="xs" noWrap>
                     <div style={{ 
                       width: '14px', 
                       height: '14px', 
@@ -355,9 +355,9 @@ function PortfolioSummary({ showTitle = true }) {
           marginTop: '-25px'
         }}
       >
-        <Stack spacing={4}>
-          <Group position="apart" align="center">
-            <Group spacing="xs">
+        <Stack gap={4}>
+          <Group justify="space-between" align="center">
+            <Group gap="xs">
               <div style={{
                 width: 8,
                 height: 8,
@@ -406,7 +406,7 @@ function PortfolioSummary({ showTitle = true }) {
       >
         <Title order={3} size="h4" mb="md">Asset Allocation</Title>
         {assetAllocation.length > 0 ? (
-          <Stack spacing="md" style={{ flex: 1 }}>
+          <Stack gap="md" style={{ flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
               <div style={{ width: '40%' }}>
                 <ResponsiveContainer width="100%" height={150}>
@@ -432,9 +432,9 @@ function PortfolioSummary({ showTitle = true }) {
                 </ResponsiveContainer>
               </div>
               <div style={{ width: '55%' }}>
-                <Stack spacing={10}>
+                <Stack gap={10}>
                   {assetAllocation.slice(0, 3).map((asset) => (
-                    <Group key={asset.name} spacing="xs" align="center" noWrap>
+                    <Group key={asset.name} gap="xs" align="center" noWrap>
                       <div style={{ 
                         width: 14, 
                         height: 14, 
@@ -442,7 +442,7 @@ function PortfolioSummary({ showTitle = true }) {
                         backgroundColor: asset.color,
                         flexShrink: 0
                       }} />
-                      <Group spacing={4} noWrap>
+                      <Group gap={4} noWrap>
                         <Text size="md">{asset.name}</Text>
                         <Text size="sm" style={{ color: secondaryTextColor }}>
                           (${asset.price ? asset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'})
@@ -526,7 +526,7 @@ function PortfolioSummary({ showTitle = true }) {
         borderRadius: '8px'
       }}
     >
-      <Stack spacing="sm">
+      <Stack gap="sm">
         {showTitle && <Title order={2} style={{ color: textColor }}>Portfolio Summary</Title>}
 
         <Paper 
@@ -609,7 +609,7 @@ function PortfolioSummary({ showTitle = true }) {
                   
                   return (
                     <>
-                      <Group position="apart" mb={5}>
+                      <Group justify="space-between" mb={5}>
                         <Text size="xs" fw={500} style={{ color: secondaryTextColor }}>Position Relative to Entry</Text>
                         <Text size="xs" fw={600} c={percentChange < 0 ? "red" : "green"}>
                           {!isNaN(percentChange) ? percentChange.toFixed(1) + '%' : '0.0%'}
@@ -737,10 +737,10 @@ function PortfolioSummary({ showTitle = true }) {
                 zIndex: 10
               }}
             >
-              <Stack spacing={8}>
+              <Stack gap={8}>
                 {/* Total Profit */}
                 <div>
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Total Profit</Text>
                     <Text size="sm" fw={700} style={{ 
                       color: absoluteProfit > 0 ? 
@@ -775,7 +775,7 @@ function PortfolioSummary({ showTitle = true }) {
                 
                 {/* Stop Loss Level */}
                 <div>
-                  <Group position="apart" noWrap>
+                  <Group justify="space-between" noWrap>
                     <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Stop Loss</Text>
                     <Text size="sm" fw={700} style={{ color: isDark ? theme.colors.red[3] : theme.colors.red[7] }}>
                       ${protectedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -806,7 +806,7 @@ function PortfolioSummary({ showTitle = true }) {
                 {/* Take Profit Level - Only show if set */}
                 {takeProfit.targetValue > 0 && (
                   <div>
-                    <Group position="apart" noWrap>
+                    <Group justify="space-between" noWrap>
                       <Text size="xs" fw={500} style={{ color: isDark ? 'rgba(255, 255, 255, 0.65)' : theme.colors.gray[6] }}>Take Profit</Text>
                       <Text size="sm" fw={700} style={{ color: isDark ? theme.colors.green[3] : theme.colors.green[7] }}>
                         ${takeProfit.targetValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -904,10 +904,10 @@ function PortfolioSummary({ showTitle = true }) {
             }}
           >
             <Title order={3} size="h4" mb={8} style={{ color: textColor }}>24h Movers</Title>
-            <Stack spacing={16} style={{ flex: 1, justifyContent: 'center' }}>
+            <Stack gap={16} style={{ flex: 1, justifyContent: 'center' }}>
               {best && (
-                <Group position="apart" noWrap>
-                  <Group spacing={6} noWrap>
+                <Group justify="space-between" noWrap>
+                  <Group gap={6} noWrap>
                     {best.image && (
                       <Image 
                         src={best.image} 
@@ -920,7 +920,7 @@ function PortfolioSummary({ showTitle = true }) {
                     )}
                     <Text size="sm" fw={500} style={{ color: textColor }}>{best.symbol}</Text>
                   </Group>
-                  <Group spacing={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                  <Group gap={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
                     <Text size="sm" fw={700} c="green" style={{ textAlign: 'right' }}>
                       {formatPercentage(best.price_change_24h)}
                     </Text>
@@ -932,8 +932,8 @@ function PortfolioSummary({ showTitle = true }) {
               )}
               
               {worst && (
-                <Group position="apart" noWrap>
-                  <Group spacing={6} noWrap>
+                <Group justify="space-between" noWrap>
+                  <Group gap={6} noWrap>
                     {worst.image && (
                       <Image 
                         src={worst.image} 
@@ -946,7 +946,7 @@ function PortfolioSummary({ showTitle = true }) {
                     )}
                     <Text size="sm" fw={500} style={{ color: textColor }}>{worst.symbol}</Text>
                   </Group>
-                  <Group spacing={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                  <Group gap={2} style={{ marginLeft: 'auto', textAlign: 'right' }}>
                     <Text size="sm" fw={700} c="red" style={{ textAlign: 'right' }}>
                       {formatPercentage(worst.price_change_24h)}
                     </Text>

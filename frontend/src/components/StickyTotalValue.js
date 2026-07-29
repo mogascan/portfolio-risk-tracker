@@ -34,7 +34,7 @@ function StickyTotalValue({ visible }) {
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Text
-          weight={800}
+          fw={800}
           style={{
             fontSize: '24px',
             color: '#339AF0',
@@ -56,7 +56,7 @@ function StickyTotalValue({ visible }) {
         }}>
           <Text
             size="sm"
-            weight={700}
+            fw={700}
             style={{
               whiteSpace: 'nowrap',
               color: changeColor,

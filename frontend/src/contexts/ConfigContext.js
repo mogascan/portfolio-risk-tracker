@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 
 // Create the context
 const ConfigContext = createContext();
@@ -8,22 +9,8 @@ export const useConfig = () => useContext(ConfigContext);
 
 // Provider component
 export const ConfigProvider = ({ children }) => {
-  // Get system preference for dark mode
-  const getSystemPreference = () => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return 'light'; // Default to light if not detectable
-  };
-
-  // Get saved theme from localStorage or use system preference as fallback
-  const getSavedTheme = () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      return savedTheme;
-    }
-    return getSystemPreference();
-  };
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
+  const theme = useComputedColorScheme('light', { getInitialValueInEffect: false });
   
   // Get saved max loss percentage from localStorage or use default
   const getSavedMaxLossPercentage = () => {
@@ -52,7 +39,7 @@ export const ConfigProvider = ({ children }) => {
     };
   };
   
-  // Initialize theme state
+  // Initialize app configuration state
   const [config, setConfig] = useState({
     // API base URL - can be overridden with environment variable
     apiBaseUrl: process.env.REACT_APP_API_URL || 'http://localhost:8000',
@@ -65,9 +52,6 @@ export const ConfigProvider = ({ children }) => {
     
     // Max items per API request
     maxItemsPerRequest: 250,
-    
-    // User preference for theme (light or dark)
-    theme: getSavedTheme(),
     
     // Maximum loss percentage (stop loss threshold)
     maxLossPercentage: getSavedMaxLossPercentage(),
@@ -84,14 +68,15 @@ export const ConfigProvider = ({ children }) => {
     }
   });
 
+  const setTheme = (value) => {
+    if (value === 'dark' || value === 'light' || value === 'auto') {
+      setColorScheme(value);
+    }
+  };
+
   // Function to toggle between light and dark themes
   const toggleTheme = () => {
-    const newTheme = config.theme === 'light' ? 'dark' : 'light';
-    setConfig({
-      ...config,
-      theme: newTheme
-    });
-    localStorage.setItem('theme', newTheme);
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
   
   // Function to update max loss percentage
@@ -125,49 +110,18 @@ export const ConfigProvider = ({ children }) => {
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light-theme', 'dark-theme');
-    root.classList.add(`${config.theme}-theme`);
+    root.classList.add(`${theme}-theme`);
     
     // Also set the data-theme attribute for CSS selectors
-    root.setAttribute('data-theme', config.theme);
-  }, [config.theme]);
-
-  // Listen for system preference changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleChange = (e) => {
-      // Only update if user hasn't explicitly set a preference
-      if (!localStorage.getItem('theme')) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        setConfig(prev => ({
-          ...prev,
-          theme: newTheme
-        }));
-      }
-    };
-    
-    // Add listener
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange);
-    } else {
-      // For older browsers
-      mediaQuery.addListener(handleChange);
-    }
-    
-    // Clean up
-    return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleChange);
-      } else {
-        // For older browsers
-        mediaQuery.removeListener(handleChange);
-      }
-    };
-  }, []);
+    root.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
     <ConfigContext.Provider value={{ 
       ...config, 
+      theme,
+      themePreference: colorScheme,
+      setTheme,
       toggleTheme, 
       updateMaxLossPercentage,
       updateTakeProfitSettings

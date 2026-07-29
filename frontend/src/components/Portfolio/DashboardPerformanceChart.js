@@ -98,10 +98,10 @@ function DashboardPerformanceChart() {
         backgroundColor: isDark ? theme.colors.dark[6] : 'white'
       }}
     >
-      <Stack spacing="xs" style={{ flex: 1 }}>
-        <Group position="apart" align="flex-start" style={{ width: '100%' }}>
+      <Stack gap="xs" style={{ flex: 1 }}>
+        <Group justify="space-between" align="flex-start" style={{ width: '100%' }}>
           <div>
-            <Text size="md" weight={700} style={{ lineHeight: 1.1 }}>
+            <Text size="md" fw={700} style={{ lineHeight: 1.1 }}>
               Performance
             </Text>
             <Text size="xs" color="dimmed">
@@ -109,7 +109,7 @@ function DashboardPerformanceChart() {
             </Text>
           </div>
           <div>
-            <Group spacing={4}>
+            <Group gap={4}>
               {timeRanges.map((range) => (
                 <Button
                   key={range.value}

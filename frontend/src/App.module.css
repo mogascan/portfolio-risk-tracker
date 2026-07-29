@@ -1,0 +1,105 @@
+.paperRoot,
+.cardRoot {
+  background-color: var(--mantine-color-white);
+  color: #1A1B1E;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.appShellMain {
+  background-color: var(--mantine-color-white);
+  transition: background-color 0.3s ease;
+}
+
+.tableTh {
+  background-color: var(--mantine-color-gray-0);
+  color: #1A1B1E;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tableTd {
+  background-color: var(--mantine-color-white);
+  color: #1A1B1E;
+  border-color: var(--mantine-color-gray-3);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.tableTr:hover .tableTd {
+  background-color: var(--mantine-color-gray-0);
+}
+
+.navLinkRoot[data-active] {
+  background-color: var(--mantine-color-blue-0);
+}
+
+.navLinkRoot:hover {
+  background-color: var(--mantine-color-blue-0);
+  color: #000000;
+}
+
+.navLinkRoot:hover svg {
+  color: #000000;
+}
+
+.tabsTab:hover {
+  background-color: #1c7ed6 !important;
+  color: #ffffff !important;
+  transition: background-color 0.2s ease;
+}
+
+.tabsTab[data-active] {
+  border-bottom-color: var(--mantine-color-blue-5) !important;
+}
+
+.tabsList {
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+}
+
+.tabsPanel {
+  padding: var(--mantine-spacing-md);
+}
+
+:global([data-mantine-color-scheme='dark']) .paperRoot,
+:global([data-mantine-color-scheme='dark']) .cardRoot {
+  background-color: var(--mantine-color-dark-7);
+  color: var(--mantine-color-dark-0);
+}
+
+:global([data-mantine-color-scheme='dark']) .appShellMain {
+  background-color: var(--mantine-color-dark-8);
+}
+
+:global([data-mantine-color-scheme='dark']) .tableTh {
+  background-color: var(--mantine-color-dark-6);
+  color: var(--mantine-color-dark-0);
+}
+
+:global([data-mantine-color-scheme='dark']) .tableTd {
+  background-color: var(--mantine-color-dark-7);
+  color: var(--mantine-color-dark-0);
+  border-color: var(--mantine-color-dark-5);
+}
+
+:global([data-mantine-color-scheme='dark']) .tableTr:hover .tableTd {
+  background-color: var(--mantine-color-dark-6);
+}
+
+:global([data-mantine-color-scheme='dark']) .navLinkRoot[data-active] {
+  background-color: var(--mantine-color-dark-6);
+}
+
+:global([data-mantine-color-scheme='dark']) .navLinkRoot:hover {
+  background-color: var(--mantine-color-blue-6);
+  color: #000000;
+}
+
+:global([data-mantine-color-scheme='dark']) .navLinkRoot:hover svg {
+  color: #000000;
+}
+
+:global([data-mantine-color-scheme='dark']) .tabsTab:hover {
+  color: #000000 !important;
+}
+
+:global([data-mantine-color-scheme='dark']) .tabsList {
+  border-bottom-color: var(--mantine-color-dark-5);
+}

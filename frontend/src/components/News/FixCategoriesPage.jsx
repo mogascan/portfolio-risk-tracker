@@ -115,7 +115,7 @@ const FixCategoriesPage = () => {
       <Title order={1} mb="lg">Fix Social Feed Categories</Title>
       
       <Paper shadow="md" p="md" withBorder mb="xl">
-        <Stack spacing="md">
+        <Stack gap="md">
           <Title order={3}>Quick Fix</Title>
           <Text>
             If you're experiencing issues with missing categories in the Social Feed, 
@@ -132,7 +132,7 @@ const FixCategoriesPage = () => {
       </Paper>
       
       <Paper shadow="md" p="md" withBorder mb="xl">
-        <Stack spacing="md">
+        <Stack gap="md">
           <Title order={3}>API Connectivity Test</Title>
           <Text>
             Test if your API credentials are working properly. This will attempt to
@@ -157,7 +157,7 @@ const FixCategoriesPage = () => {
           
           {/* Display Environment Variables Status */}
           <Box>
-            <Text weight={500} mb="xs">Environment Variables Status:</Text>
+            <Text fw={500} mb="xs">Environment Variables Status:</Text>
             {Object.entries(envVarsStatus).map(([key, value]) => (
               <Text key={key} color={value.includes('✓') ? 'green' : 'red'} size="sm">
                 {key}: {value}
@@ -227,9 +227,9 @@ Authorization: ${apiTestError.config.headers.hasAuthorization ? 'Present' : 'Mis
       <Box mt="xl">
         <Title order={3} mb="md">File Name Mismatch Resolution</Title>
         <Paper shadow="sm" p="md" withBorder>
-          <Stack spacing="md">
-            <Group position="apart">
-              <Text weight={500}>File Name and Component Name Mismatch</Text>
+          <Stack gap="md">
+            <Group justify="space-between">
+              <Text fw={500}>File Name and Component Name Mismatch</Text>
               <Button 
                 variant="subtle" 
                 compact

@@ -143,10 +143,10 @@ const RedditPost = ({ post }) => {
       boxSizing: 'border-box',
       overflow: 'hidden' 
     }}>
-      <Stack spacing="xs">
-        <Group position="apart" align="flex-start" noWrap style={{ minWidth: 0 }}>
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Group spacing={4} mb={4} style={{ flexWrap: 'wrap' }}>
+      <Stack gap="xs">
+        <Group justify="space-between" align="flex-start" noWrap style={{ minWidth: 0 }}>
+          <Box style={{ flex: 1, minWidth: 0 }}>
+            <Group gap={4} mb={4} style={{ flexWrap: 'wrap' }}>
               <Text size="xs" c="dimmed" fw={500} tt="uppercase">r/{subreddit}</Text>
               <Text size="xs" c="dimmed">•</Text>
               <Text size="xs" c="dimmed" truncate>u/{author}</Text>
@@ -200,15 +200,15 @@ const RedditPost = ({ post }) => {
           </Text>
         )}
 
-        <Group position="apart" mt={4} style={{ flexWrap: 'wrap' }}>
-          <Group spacing="xs">
+        <Group justify="space-between" mt={4} style={{ flexWrap: 'wrap' }}>
+          <Group gap="xs">
             <IconArrowUp size={14} />
             <Text size="xs">{formatScore(score || 0)}</Text>
             <Text size="xs" c="dimmed">•</Text>
             <IconMessageCircle2 size={14} />
             <Text size="xs">{numComments || 0}</Text>
           </Group>
-          <Group spacing="xs">
+          <Group gap="xs">
             <Tooltip 
               label={bookmarked ? "Remove bookmark" : "Add bookmark"} 
               color="blue" 

@@ -309,10 +309,10 @@ function PortfolioNewsFeed() {
   
   return (
     <Box>
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={4}>Portfolio News</Title>
         
-        <Group spacing="xs">
+        <Group gap="xs">
           {lastUpdated && (
             <Text size="xs" color="dimmed">
               Updated: {lastUpdated.toLocaleTimeString()}
@@ -359,7 +359,7 @@ function PortfolioNewsFeed() {
             No relevant news found for your portfolio holdings. Try adding more assets or check back later.
           </Alert>
         ) : (
-          <Stack spacing="md">
+          <Stack gap="md">
             {newsItems.map((item, index) => (
               <NewsCard 
                 key={`${item.id || item.title}-${index}`} 

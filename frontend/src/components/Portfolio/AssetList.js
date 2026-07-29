@@ -188,7 +188,7 @@ const AssetList = () => {
             return (
               <tr key={asset.id}>
                 <td style={{ textAlign: 'left' }}>
-                  <Group spacing="xs" noWrap>
+                  <Group gap="xs" noWrap>
                     {(() => {
                       const coin = topCoins.find(c => 
                         c.id === asset.coinId || 

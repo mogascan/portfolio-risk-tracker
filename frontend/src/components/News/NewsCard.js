@@ -201,7 +201,7 @@ function NewsCard({ item, portfolioCoins = [], watchlistCoins = [], showPortfoli
         backgroundColor: isDark ? theme.colors.dark[6] : 'white'
       }}
     >
-      <Group position="apart" mb="xs">
+      <Group justify="space-between" mb="xs">
         <Box>
           {normalizedItem.source && (
             <Text size="xs" c="dimmed" fw={500} tt="uppercase">
@@ -224,7 +224,7 @@ function NewsCard({ item, portfolioCoins = [], watchlistCoins = [], showPortfoli
             </Badge>
           )}
         </Box>
-        <Group spacing="xs">
+        <Group gap="xs">
           {isInPortfolio && (
             <Tooltip 
               label="In Your Portfolio" 
@@ -291,7 +291,7 @@ function NewsCard({ item, portfolioCoins = [], watchlistCoins = [], showPortfoli
         {normalizedItem.summary || 'No summary available'}
       </Text>
 
-      <Group position="right" mt="md">
+      <Group justify="flex-end" mt="md">
         {normalizedItem.url && (
           <Tooltip 
             label="View original article" 

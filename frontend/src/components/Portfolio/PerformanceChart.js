@@ -89,17 +89,17 @@ function PerformanceChart() {
 
   return (
     <Paper p="md" radius="md" withBorder>
-      <Stack spacing="md">
-        <Group position="apart" style={{ width: '100%' }}>
+      <Stack gap="md">
+        <Group justify="space-between" style={{ width: '100%' }}>
           <div>
-            <Text size="xl" weight={700} style={{ fontSize: '36px', lineHeight: 1.2, marginBottom: '4px' }}>
+            <Text size="xl" fw={700} style={{ fontSize: '36px', lineHeight: 1.2, marginBottom: '4px' }}>
               Performance
             </Text>
             <Text size="md" color="dimmed" style={{ fontSize: '16px' }}>
               {format(new Date(), 'MMM d yyyy')}
             </Text>
           </div>
-          <Group spacing={16}>
+          <Group gap={16}>
             {timeRanges.map((range) => (
               <Button
                 key={range.value}

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Drawer, TextInput, Stack, Text, Group, ActionIcon, ScrollArea, Button, Modal, Box } from '@mantine/core';
+import { Drawer, TextInput, Stack, Text, Group, ActionIcon, ScrollArea, Button, Modal, Box, useMantineColorScheme } from '@mantine/core';
 import { IconSearch, IconTrash, IconX } from '@tabler/icons-react';
 import { useAI } from '../../contexts/AIContext';
 import { format } from 'date-fns';
+import classes from './ChatHistoryPanel.module.css';
 
 function ChatHistoryPanel({ opened, onClose }) {
   const { conversations, activeConversationId, setActiveConversation, deleteConversation, searchQuery, searchConversations, clearChatHistory } = useAI();
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isClearAllModalOpen, setIsClearAllModalOpen] = useState(false);
   const [conversationToDelete, setConversationToDelete] = useState(null);
@@ -44,7 +47,7 @@ function ChatHistoryPanel({ opened, onClose }) {
         position="left"
         size="md"
       >
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <TextInput
             placeholder="Search conversations..."
             value={searchQuery}
@@ -74,31 +77,23 @@ function ChatHistoryPanel({ opened, onClose }) {
           </Text>
 
           <ScrollArea style={{ height: 'calc(100vh - 200px)' }}>
-            <Stack spacing="xs">
+            <Stack gap="xs">
               {filteredConversations.map((conversation) => (
                 <Box
                   key={conversation.id}
-                  sx={(theme) => ({
-                    padding: '10px 15px',
-                    borderRadius: '4px',
-                    backgroundColor: conversation.id === activeConversationId ? theme.colors.blue[0] : 'white',
-                    cursor: 'pointer',
-                    border: '1px solid',
-                    borderColor: conversation.id === activeConversationId ? 
-                      theme.colorScheme === 'dark' ? 'rgba(66, 99, 235, 0.3)' : theme.colors.blue[3] 
-                      : theme.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                    '&:hover': {
-                      backgroundColor: conversation.id === activeConversationId ? theme.colors.blue[1] : theme.colors.gray[0],
-                    }
-                  })}
+                  className={[
+                    classes.conversationItem,
+                    isDark ? classes.conversationItemDark : '',
+                    conversation.id === activeConversationId ? classes.conversationItemActive : '',
+                  ].filter(Boolean).join(' ')}
                   onClick={() => {
                     setActiveConversation(conversation.id);
                     onClose();
                   }}
                 >
-                  <Group position="apart" align="flex-start" noWrap>
+                  <Group justify="space-between" align="flex-start" noWrap>
                     <div style={{ flex: 1, overflow: 'hidden' }}>
-                      <Text weight={500} lineClamp={1} size="sm">
+                      <Text fw={500} lineClamp={1} size="sm">
                         {conversation.title}
                       </Text>
                       <Text size="xs" color="dimmed">
@@ -132,7 +127,7 @@ function ChatHistoryPanel({ opened, onClose }) {
               ))}
               
               {filteredConversations.length === 0 && (
-                <Text color="dimmed" align="center" mt="xl">
+                <Text color="dimmed" ta="center" mt="xl">
                   {searchQuery ? 'No conversations match your search.' : 'No conversations yet.'}
                 </Text>
               )}
@@ -149,7 +144,7 @@ function ChatHistoryPanel({ opened, onClose }) {
         size="sm"
       >
         <Text size="sm">Are you sure you want to delete this conversation? This action cannot be undone.</Text>
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)}>Cancel</Button>
           <Button color="red" onClick={confirmDelete}>Delete</Button>
         </Group>
@@ -163,7 +158,7 @@ function ChatHistoryPanel({ opened, onClose }) {
         size="sm"
       >
         <Text size="sm">Are you sure you want to delete all conversations? This action cannot be undone.</Text>
-        <Group position="right" mt="md">
+        <Group justify="flex-end" mt="md">
           <Button variant="outline" onClick={() => setIsClearAllModalOpen(false)}>Cancel</Button>
           <Button color="red" onClick={confirmClearAll}>Clear All</Button>
         </Group>

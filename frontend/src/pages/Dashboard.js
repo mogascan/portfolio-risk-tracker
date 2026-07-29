@@ -38,12 +38,12 @@ function Dashboard() {
         
         <Grid.Col span={{ base: 12, md: 5 }} order={{ base: 3, md: 2 }}>
           {/* AI Assistant */}
-          <Stack spacing="md" h={735}>
+          <Stack gap="md" h={735}>
             <Paper 
               p="md" 
               shadow="none" 
               withBorder={false} 
-              sx={{ 
+              style={{ 
                 backgroundColor: cardBgColor, 
                 flex: 1,
               }}
@@ -54,13 +54,13 @@ function Dashboard() {
         </Grid.Col>
         
         <Grid.Col span={{ base: 12, md: 3 }} order={{ base: 2, md: 3 }}>
-          <Stack spacing="md" h={735}>
+          <Stack gap="md" h={735}>
             {/* Performance Chart */}
             <Paper 
               p="md" 
               shadow="sm" 
               withBorder 
-              sx={{ backgroundColor: cardBgColor, flex: 1 }}
+              style={{ backgroundColor: cardBgColor, flex: 1 }}
             >
               <Title order={3} mb="md" style={{ color: textColor }}>
                 Performance
@@ -73,7 +73,7 @@ function Dashboard() {
               p="md" 
               shadow="sm" 
               withBorder 
-              sx={{ backgroundColor: cardBgColor, flex: 1 }}
+              style={{ backgroundColor: cardBgColor, flex: 1 }}
             >
               <Title order={3} mb="md" style={{ color: textColor }}>
                 AI Insights
@@ -87,7 +87,7 @@ function Dashboard() {
       {/* Second row with News feed */}
       <Grid gutter="md">
         <Grid.Col span={12}>
-          <Paper p="md" shadow="sm" withBorder sx={{ backgroundColor: cardBgColor }}>
+          <Paper p="md" shadow="sm" withBorder style={{ backgroundColor: cardBgColor }}>
             <Title order={3} mb="md" style={{ color: textColor }}>
               Latest News
             </Title>

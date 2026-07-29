@@ -161,7 +161,7 @@ function ChatInterface({ height = '550px' }) {
     }}>
       <Stack 
         h="100%" 
-        spacing="xs"
+        gap="xs"
         style={{ 
           overflow: 'hidden',
           display: 'flex',

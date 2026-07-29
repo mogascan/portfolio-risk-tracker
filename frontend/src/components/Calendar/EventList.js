@@ -69,7 +69,7 @@ function EventList({ events, onEditEvent, onDeleteEvent }) {
   // Render event group function
   const renderEventGroup = (dateEvents, date) => (
     <Box key={date} mb="md">
-      <Group position="apart" mb="xs">
+      <Group justify="space-between" mb="xs">
         <Group>
           <IconCalendar size={16} color={theme.colors.blue[6]} />
           <Text fw={600}>{date}</Text>
@@ -77,7 +77,7 @@ function EventList({ events, onEditEvent, onDeleteEvent }) {
         <Badge color="blue" variant="light">{dateEvents.length} event{dateEvents.length !== 1 ? 's' : ''}</Badge>
       </Group>
       
-      <Stack spacing="xs">
+      <Stack gap="xs">
         {dateEvents.map(event => (
           <Paper
             key={event.id}
@@ -90,7 +90,7 @@ function EventList({ events, onEditEvent, onDeleteEvent }) {
                 : (event.color ? theme.colors[event.color][0] : theme.colors.gray[0])
             }}
           >
-            <Group position="apart" noWrap>
+            <Group justify="space-between" noWrap>
               <div style={{ flex: 1 }}>
                 <Text fw={600}>{event.title}</Text>
                 {event.description && (
@@ -101,7 +101,7 @@ function EventList({ events, onEditEvent, onDeleteEvent }) {
                 )}
               </div>
               
-              <Group spacing={4}>
+              <Group gap={4}>
                 <ActionIcon 
                   size="sm" 
                   color="blue" 

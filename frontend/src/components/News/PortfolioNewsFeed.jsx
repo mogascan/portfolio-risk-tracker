@@ -171,9 +171,9 @@ function PortfolioNewsFeed() {
   
   return (
     <Box pos="relative">
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={4}>Portfolio News Feed</Title>
-        <Group spacing="xs">
+        <Group gap="xs">
           <Text size="sm" color="dimmed">
             {lastUpdated && `Updated ${new Date(lastUpdated).toLocaleTimeString()}`}
           </Text>
@@ -190,7 +190,7 @@ function PortfolioNewsFeed() {
         </Group>
       </Group>
       
-      <Group mb="md" position="apart">
+      <Group mb="md" justify="space-between">
         <Text size="sm" color="dimmed">
           {combinedNews.length} news items related to your assets
         </Text>
@@ -217,7 +217,7 @@ function PortfolioNewsFeed() {
           </Center>
         ) : combinedNews.length === 0 ? (
           <Center style={{ height: 200 }}>
-            <Stack align="center" spacing="xs">
+            <Stack align="center" gap="xs">
               <Text color="dimmed">No relevant news found for your portfolio assets</Text>
               <Button variant="light" onClick={handleRefresh} leftIcon={<IconRefresh size={14} />}>
                 Refresh News
@@ -225,7 +225,7 @@ function PortfolioNewsFeed() {
             </Stack>
           </Center>
         ) : (
-          <Stack spacing="md">
+          <Stack gap="md">
             {combinedNews.map((item, index) => renderNewsItem(item, index))}
           </Stack>
         )}

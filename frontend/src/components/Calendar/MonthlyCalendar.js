@@ -143,7 +143,7 @@ function CalendarDay({ day, month, year, events, isToday, sentimentValue, onSent
       
       <Box mt={18}>
         {dayEvents.length > 0 && (
-          <Group direction="column" spacing={4} mt={4}>
+          <Group direction="column" gap={4} mt={4}>
             {dayEvents.slice(0, 3).map(event => (
               <Tooltip
                 key={event.id}

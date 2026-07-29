@@ -278,7 +278,7 @@ function Calendar() {
             </Text>
             
             <Box mt="lg">
-              <Group spacing={4} position="center">
+              <Group gap={4} justify="center">
                 <Text size="xs" c="red.6">Bear</Text>
                 <Text size="xs" mx="xs">•</Text>
                 <Text size="xs" c="dimmed">Neutral</Text>

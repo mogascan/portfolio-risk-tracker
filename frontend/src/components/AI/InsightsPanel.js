@@ -352,7 +352,7 @@ function InsightsPanel({ showRiskCard = true }) {
         type="never"
         scrollbarSize={6}
       >
-        <Stack spacing="md">
+        <Stack gap="md">
           {/* Performance Overview Card */}
           <Paper 
             shadow="none" 

@@ -10,7 +10,7 @@ import './Settings.css';
 
 const Settings = () => {
   const { user } = useAuth();
-  const { theme, toggleTheme, maxLossPercentage, updateMaxLossPercentage, takeProfit, updateTakeProfitSettings, apiBaseUrl } = useConfig();
+  const { theme, setTheme, maxLossPercentage, updateMaxLossPercentage, takeProfit, updateTakeProfitSettings, apiBaseUrl } = useConfig();
   const { portfolio } = usePortfolio();
   const { totalValue, totalCost, absoluteProfit } = portfolio;
   
@@ -72,21 +72,24 @@ const Settings = () => {
   };
   
   // Handle select change
-  const handleSelectChange = (e, section, setting) => {
-    const { value } = e.target;
+  const handleSelectChange = (value, section, setting, parser = (nextValue) => nextValue) => {
+    if (value === null) {
+      return;
+    }
+
     setSettings(prev => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [setting]: value
+        [setting]: parser(value)
       }
     }));
   };
   
   // Handle theme change
   const handleThemeChange = (value) => {
-    if (value !== theme) {
-      toggleTheme();
+    if (value && value !== theme) {
+      setTheme(value);
     }
   };
 
@@ -313,11 +316,21 @@ const Settings = () => {
         <SimpleGrid cols={1}>
           <Paper withBorder p="md" mb="md">
             <Title order={2} mb="md">Appearance</Title>
-            <Stack spacing="md">
+            <Stack gap="md">
               <Group justify="space-between">
                 <Text>Theme</Text>
                 <Group>
                   <Text size="sm" color="dimmed">{theme === 'dark' ? 'Dark' : 'Light'} Mode</Text>
+                  <Select
+                    value={settings.display.theme}
+                    onChange={handleThemeChange}
+                    allowDeselect={false}
+                    data={[
+                      { value: 'light', label: 'Light' },
+                      { value: 'dark', label: 'Dark' }
+                    ]}
+                    style={{ width: 120 }}
+                  />
                   <ThemeToggle size="lg" />
                 </Group>
               </Group>
@@ -328,10 +341,7 @@ const Settings = () => {
                 <Text>Currency</Text>
                 <Select
                   value={settings.display.currency}
-                  onChange={(value) => setSettings(prev => ({
-                    ...prev,
-                    display: { ...prev.display, currency: value }
-                  }))}
+                  onChange={(value) => handleSelectChange(value, 'display', 'currency')}
                   data={[
                     { value: 'USD', label: 'USD ($)' },
                     { value: 'EUR', label: 'EUR (€)' },
@@ -356,10 +366,12 @@ const Settings = () => {
                 <Text>Decimal Places</Text>
                 <Select
                   value={settings.display.decimalsDisplay.toString()}
-                  onChange={(value) => setSettings(prev => ({
-                    ...prev,
-                    display: { ...prev.display, decimalsDisplay: parseInt(value) }
-                  }))}
+                  onChange={(value) => handleSelectChange(
+                    value,
+                    'display',
+                    'decimalsDisplay',
+                    (nextValue) => parseInt(nextValue, 10)
+                  )}
                   data={[
                     { value: '2', label: '2 places' },
                     { value: '3', label: '3 places' },
@@ -375,10 +387,10 @@ const Settings = () => {
           
           <Paper withBorder p="md" mb="md">
             <Title order={2} mb="md">Risk Management</Title>
-            <Stack spacing="md">
+            <Stack gap="md">
               <div>
                 <Title order={4} mb="xs">Stop Loss</Title>
-                <Group position="apart" mb="xs">
+                <Group justify="space-between" mb="xs">
                   <div>
                     <Text>Maximum Loss Percentage</Text>
                     <Text size="sm" color="dimmed">Set the maximum percentage loss you're willing to accept (Stop Loss)</Text>
@@ -389,7 +401,7 @@ const Settings = () => {
                     min={1}
                     max={20}
                     step={0.5}
-                    precision={1}
+                    decimalScale={1}
                     rightSection="%"
                     styles={{
                       input: { textAlign: 'right', paddingRight: '30px', width: '65px' },
@@ -418,7 +430,7 @@ const Settings = () => {
                   })}
                 />
                 <Box mt={20}>
-                  <Group position="apart">
+                  <Group justify="space-between">
                     <Text size="sm" color="dimmed">
                       Stop loss will trigger at {(100 - settings.risk.maxLossPercentage).toFixed(1)}% of total value
                     </Text>
@@ -426,7 +438,7 @@ const Settings = () => {
                       ${formatValue(calculateStopLossValue())}
                     </Text>
                   </Group>
-                  <Group position="apart" mt={4}>
+                  <Group justify="space-between" mt={4}>
                     <Text size="sm" color="dimmed">Protected value:</Text>
                     <Text size="sm" fw={600} c="teal">
                       ${formatValue(calculateProtectedValue())}
@@ -439,7 +451,7 @@ const Settings = () => {
               
               <div>
                 <Title order={4} mb="xs">Take Profit</Title>
-                <Group position="apart" mb="xs">
+                <Group justify="space-between" mb="xs">
                   <div>
                     <Text>Take Profit Target</Text>
                     <Text size="sm" color="dimmed">Set the portfolio value at which you want to take profits</Text>
@@ -449,7 +461,7 @@ const Settings = () => {
                     onChange={handleTakeProfitValueChange}
                     min={totalValue > 0 ? totalValue : 0}
                     step={100}
-                    precision={2}
+                    decimalScale={2}
                     leftSection="$"
                     styles={{
                       input: { textAlign: 'right', width: '130px' },
@@ -457,7 +469,7 @@ const Settings = () => {
                     }}
                   />
                 </Group>
-                <Group position="apart" mb="xs">
+                <Group justify="space-between" mb="xs">
                   <div>
                     <Text>Target Percentage</Text>
                     <Text size="sm" color="dimmed">Profit percentage target</Text>
@@ -468,7 +480,7 @@ const Settings = () => {
                     min={1}
                     max={100}
                     step={1}
-                    precision={1}
+                    decimalScale={1}
                     rightSection="%"
                     styles={{
                       input: { textAlign: 'right', paddingRight: '30px', width: '63px' },
@@ -498,7 +510,7 @@ const Settings = () => {
                   })}
                 />
                 <Box mt={20}>
-                  <Group position="apart">
+                  <Group justify="space-between">
                     <Tooltip 
                       label={`Portfolio value when take profit was set`}
                       withArrow
@@ -513,7 +525,7 @@ const Settings = () => {
                       ${formatValue(takeProfit.entryValue || 0)}
                     </Text>
                   </Group>
-                  <Group position="apart" mt={4}>
+                  <Group justify="space-between" mt={4}>
                     <Tooltip 
                       label={`Date when take profit was set`}
                       withArrow
@@ -528,7 +540,7 @@ const Settings = () => {
                       {formatEntryDate()}
                     </Text>
                   </Group>
-                  <Group position="right" mt={12}>
+                  <Group justify="flex-end" mt={12}>
                     <Button 
                       variant="outline" 
                       size="xs" 
@@ -538,13 +550,13 @@ const Settings = () => {
                       Reset Entry Point
                     </Button>
                   </Group>
-                  <Group position="apart" mt={8}>
+                  <Group justify="space-between" mt={8}>
                     <Text size="sm" color="dimmed">Take profit target:</Text>
                     <Text size="sm" fw={600} c="green">
                       ${formatValue(settings.risk.takeProfitValue)}
                     </Text>
                   </Group>
-                  <Group position="apart" mt={4}>
+                  <Group justify="space-between" mt={4}>
                     <Text size="sm" color="dimmed">Target percentage:</Text>
                     <Text size="sm" fw={600} c="green">
                       +{Number(settings.risk.takeProfitPercentage).toFixed(1)}%
@@ -558,19 +570,19 @@ const Settings = () => {
               <div>
                 <Title order={4} mb="xs">Portfolio Summary</Title>
                 <Box>
-                  <Group position="apart" mt={8}>
+                  <Group justify="space-between" mt={8}>
                     <Text size="sm" color="dimmed">Total cost (purchase value):</Text>
                     <Text size="sm" fw={600} c="gray">
                       ${formatValue(totalCost)}
                     </Text>
                   </Group>
-                  <Group position="apart" mt={8}>
+                  <Group justify="space-between" mt={8}>
                     <Text size="sm" color="dimmed">Current portfolio value:</Text>
                     <Text size="sm" fw={600} c="blue">
                       ${formatValue(totalValue)}
                     </Text>
                   </Group>
-                  <Group position="apart" mt={8}>
+                  <Group justify="space-between" mt={8}>
                     <Text size="sm" color="dimmed">Total profit/loss:</Text>
                     <Text size="sm" fw={600} c={absoluteProfit > 0 ? "teal" : "red"}>
                       ${formatValue(absoluteProfit)}
@@ -583,7 +595,7 @@ const Settings = () => {
           
           <Paper withBorder p="md" mb="md">
             <Title order={2} mb="md">Notifications</Title>
-            <Stack spacing="md">
+            <Stack gap="md">
               <Group justify="space-between">
                 <div>
                   <Text>Price Alerts</Text>
@@ -622,7 +634,7 @@ const Settings = () => {
           {/* Privacy section commented out
           <Paper withBorder p="md" mb="md">
             <Title order={2} mb="md">Privacy</Title>
-            <Stack spacing="md">
+            <Stack gap="md">
               <Group justify="space-between">
                 <div>
                   <Text>Share Anonymized Data</Text>
@@ -650,15 +662,12 @@ const Settings = () => {
           
           <Paper withBorder p="md" mb="md">
             <Title order={2} mb="md">Tax Settings</Title>
-            <Stack spacing="md">
+            <Stack gap="md">
               <Group justify="space-between">
                 <Text>Country</Text>
                 <Select
                   value={settings.tax.country}
-                  onChange={(value) => setSettings(prev => ({
-                    ...prev,
-                    tax: { ...prev.tax, country: value }
-                  }))}
+                  onChange={(value) => handleSelectChange(value, 'tax', 'country')}
                   data={[
                     { value: 'US', label: 'United States' },
                     { value: 'CA', label: 'Canada' },
@@ -680,10 +689,7 @@ const Settings = () => {
                 </div>
                 <Select
                   value={settings.tax.taxMethod}
-                  onChange={(value) => setSettings(prev => ({
-                    ...prev,
-                    tax: { ...prev.tax, taxMethod: value }
-                  }))}
+                  onChange={(value) => handleSelectChange(value, 'tax', 'taxMethod')}
                   data={[
                     { value: 'FIFO', label: 'First In, First Out (FIFO)' },
                     { value: 'LIFO', label: 'Last In, First Out (LIFO)' },

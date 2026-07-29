@@ -1,0 +1,7 @@
+.newsItem:hover {
+  background-color: var(--mantine-color-gray-0);
+}
+
+:global([data-mantine-color-scheme='dark']) .newsItem:hover {
+  background-color: var(--mantine-color-dark-5);
+}

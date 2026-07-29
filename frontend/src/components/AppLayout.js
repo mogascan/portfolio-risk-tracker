@@ -68,7 +68,7 @@ export default function AppLayout() {
       }}
     >
       <AppShell.Header>
-        <Group h="100%" px="md" position="apart">
+        <Group h="100%" px="md" justify="space-between">
           <Group>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -78,7 +78,7 @@ export default function AppLayout() {
                 color={theme.colors.gray[6]}
               />
             </MediaQuery>
-            <Text size="lg" weight={700}>Crypto Portfolio Tracker</Text>
+            <Text size="lg" fw={700}>Crypto Portfolio Tracker</Text>
           </Group>
           
           <Group>

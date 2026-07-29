@@ -335,7 +335,7 @@ function CryptoNewsFeed() {
     if (error) {
       return (
         <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red" mt="md" mb="md">
-          <Stack spacing="xs">
+          <Stack gap="xs">
             <Text>{error}</Text>
             {debugMode && errorDetail && (
               <Code block size="xs">{errorDetail}</Code>
@@ -399,10 +399,10 @@ function CryptoNewsFeed() {
 
   return (
     <Box>
-      <Group position="apart" mb="md">
+      <Group justify="space-between" mb="md">
         <Title order={4}>Crypto News</Title>
         
-        <Group spacing="xs">
+        <Group gap="xs">
           {lastUpdated && (
             <Text size="xs" color="dimmed">
               Updated: {lastUpdated.toLocaleTimeString()}

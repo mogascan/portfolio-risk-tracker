@@ -13,7 +13,7 @@ function CardTitle({ children, ...props }) {
   return (
     <Text 
       size="md" 
-      weight={700}  
+      fw={700}  
       style={{ 
         lineHeight: 1.1,
         marginBottom: '4px',
