@@ -21,9 +21,15 @@ Classification: **live** / **half-built** / **facade** / **dead**.
 | Status | Count | Meaning |
 |---|---|---|
 | live | 5 | reachable, real data, working |
-| half-built | 4 | reachable but incomplete, or complete but unwired |
+| half-built | 6 | reachable but incomplete, or complete but unwired |
 | facade | 2 | real-looking code, no working integration behind it |
-| dead | 3 | unreachable; ~330 lines |
+| dead | 2 | unreachable; ~85 lines |
+
+**The dominant finding is not dead code — it is written-and-switched-off code.** Roughly 900
+lines across `api/routes/`, `routes/`, `services/exchanges/` and `services/blockchain/` are
+the portfolio-aggregation capability from the planning documents. They are unreachable only
+because no router is registered in `main.py`. Per plan line 570 this is **spec work, not
+cleanup**: finishing it is a wiring problem, materially cheaper than a greenfield build.
 
 ---
 
@@ -36,7 +42,8 @@ Classification: **live** / **half-built** / **facade** / **dead**.
 | `api/v1/ai` | **live** | Registered. Intent classification and keyword extraction both fixed and tested. |
 | `api/v1/portfolio` | **live** | Registered. Reads/writes JSON under `backend/data/`. |
 | `api/v1/social` | **live** | Registered via `social/__init__.py`. |
-| **`app/routes/`** | **dead** | **194 lines.** `ai.py` (51) and `crypto_data.py` (143) both define `APIRouter`, neither is imported anywhere. A *third* parallel route tree — `app/api/routes/` was already deleted this session for the same reason. |
+| **`app/api/routes/`** | **half-built** — *do not delete* | **344 lines.** `portfolio.py` (190) imports `BinanceService`, `CoinbaseService`, `EthereumService` and `CoinGeckoService` and exposes `/summary`, `/performance`, `/assets`, `/transactions`, `/tax` — this **is** the documented MVP acceptance test. `auth.py` (154) alongside it. Unregistered in `main.py`, which is the only reason it does nothing. Deleted in error earlier this session and restored; plan line 570 names it explicitly as spec work, not cleanup. |
+| **`app/routes/`** | **half-built** — *do not delete* | **194 lines.** `ai.py` (51) and `crypto_data.py` (143) both define `APIRouter`, neither imported. A third parallel route tree. Covered by the same plan line 570 reclassification as the pair above — unregistered, not dead. |
 
 ## Backend — models
 
@@ -87,12 +94,24 @@ Three items are newly discovered and were not in the plan's list:
 - **`services/exchanges/`** — genuinely working ccxt code, disabled only by two commented-out
   import lines. Closer to shipping than anything else in the dead/facade set.
 
-Two corrections to the plan's own inventory:
+One correction to the plan's inventory:
 
-- The plan lists "4 unregistered routers". After deleting `app/api/routes/`, the remaining
-  unregistered routers are the 2 in `app/routes/`.
 - The plan describes `eth.py`'s web3 as "commented out" — accurate, and additionally `web3` is
-  absent from `requirements.txt`, so it could not run even uncommented.
+  absent from `requirements.txt`, so it could not run even uncommented. The CEX half
+  (`binance.py`, `coinbase.py`) is genuinely functional; the on-chain half is not.
 
-**Nothing here has been deleted.** Removal of the ~330 dead lines is a separate change, and
-the exchange facade is a product decision — that code works and is two lines from being live.
+## A deletion that should not have happened
+
+`app/api/routes/` was deleted earlier in this session as "a dead parallel route tree." The
+reasoning was locally correct — nothing imported it — but it contradicted plan line 570,
+which names those routers explicitly:
+
+> **Do not delete — reclassified.** These are not dead code, they are the half-built
+> portfolio-aggregation capability. This is spec work, not cleanup work.
+
+Restored in full, 344 lines, byte-identical. Verified after restoring: flake8 0, 23 passed,
+`app.main` imports.
+
+The lesson generalises, and belongs in the spec: **"nothing imports it" is not sufficient
+evidence for deletion in this repository**, because being unimported is the defining symptom
+of its main defect rather than a sign of redundancy.
