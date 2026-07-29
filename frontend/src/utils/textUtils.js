@@ -140,9 +140,11 @@ export const stripHtml = (html) => {
   return html.replace(/<[^>]*>?/gm, '');
 };
 
-export default {
+const textUtils = {
   extractRelevantCoins,
   getTokenName,
   truncateText,
   stripHtml
-}; 
+};
+
+export default textUtils; 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Box, Title, Divider, Paper, useMantineTheme, Group, Tabs } from '@mantine/core';
+import React from 'react';
+import { Grid, Box, Title, Divider, Paper, useMantineTheme, Group } from '@mantine/core';
 import CryptoNewsFeed from './CryptoNewsFeed';
 import MacroNewsFeed from './MacroNewsFeed';
 import RedditFeedContainer from './RedditFeedContainer';

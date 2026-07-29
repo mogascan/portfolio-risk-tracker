@@ -1,7 +1,6 @@
 // frontend/src/components/AI/InsightsPanel.js
 import React, { useState, useEffect } from 'react';
-import { Paper, Title, Text, Stack, useMantineColorScheme, useMantineTheme, Loader, Group, Badge, Box, ScrollArea } from '@mantine/core';
-import { IconExternalLink, IconAlertCircle } from '@tabler/icons-react';
+import { Paper, Title, Text, Stack, useMantineColorScheme, useMantineTheme, ScrollArea } from '@mantine/core';
 import { usePortfolio } from '../../contexts/PortfolioContext';
 import { useMarket } from '../../contexts/MarketContext';
 import { useConfig } from '../../contexts/ConfigContext';

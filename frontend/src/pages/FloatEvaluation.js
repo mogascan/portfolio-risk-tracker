@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Text, Group, Button, TextInput, NumberInput, Table, Badge, Tooltip, Divider, ScrollArea, Select, Loader, Box } from '@mantine/core';
-import { IconPlus, IconTrash, IconAlertTriangle, IconInfoCircle, IconCheck, IconArrowsUpDown, IconSearch } from '@tabler/icons-react';
-import axios from 'axios';
+import { Card, Text, Group, Button, TextInput, NumberInput, Table, Badge, Divider, ScrollArea, Loader, Box } from '@mantine/core';
+import { IconPlus, IconTrash, IconArrowsUpDown, IconSearch } from '@tabler/icons-react';
 import coinGeckoService from '../api/coinGeckoService';
 
 // Define default tokens as a constant

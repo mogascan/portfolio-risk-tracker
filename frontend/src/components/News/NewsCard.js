@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Text, Group, ActionIcon, Badge, Box, Tooltip, Stack, Anchor, Indicator, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { Card, Text, Group, ActionIcon, Badge, Box, Tooltip, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { IconBookmark, IconBookmarkFilled, IconExternalLink, IconCoinBitcoin, IconWallet, IconEye } from '@tabler/icons-react';
 import { useBookmarks } from '../../contexts/BookmarkContext';
 import { formatTimeAgo } from '../../utils/dateUtils';

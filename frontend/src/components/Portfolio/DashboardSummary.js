@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Title, Text, Group, Stack, Badge, Image, useMantineTheme, useMantineColorScheme, Box, Avatar, Tooltip, Grid, ScrollArea } from '@mantine/core';
+import { Paper, Title, Text, Group, Stack, Badge, Image, useMantineTheme, useMantineColorScheme, Box, Tooltip, Grid, ScrollArea } from '@mantine/core';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { usePortfolio } from '../../contexts/PortfolioContext';
 import { useMarket } from '../../contexts/MarketContext';
 import { useConfig } from '../../contexts/ConfigContext';
-import { formatPercentage, formatDollarWithCommas, formatDollarResponsive, formatPercentageResponsive, getScreenSize } from '../../utils/formatters';
+import { formatDollarResponsive, formatPercentageResponsive, getScreenSize } from '../../utils/formatters';
 import './Portfolio.css';
 import { IconAlertCircle, IconClock } from '@tabler/icons-react';
 
