@@ -9,7 +9,7 @@ import logging
 from datetime import datetime, timedelta
 import random
 
-from app.models.market import MarketOverview, CryptoPrice, CryptoPriceHistory, TechnicalIndicator
+from app.models.market import CryptoPriceHistory, TechnicalIndicator
 from app.core.logging import get_logger
 from app.services.market.market_data_service import MarketDataService
 
@@ -184,58 +184,6 @@ async def search_coins(
     except Exception as e:
         logger.error(f"Error searching coins: {e}")
         raise HTTPException(status_code=500, detail=f"Error searching coins: {str(e)}")
-
-@router.get("/price/{symbol}", response_model=CryptoPrice)
-async def get_crypto_price(
-    symbol: str = Path(..., description="Cryptocurrency symbol")
-):
-    """
-    Get price data for a specific cryptocurrency
-    """
-    try:
-        # Load market data from file
-        market_data = load_mock_data(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), "market_data.json"))
-        
-        if not market_data or "prices" not in market_data:
-            raise HTTPException(status_code=404, detail="Cryptocurrency price data not found")
-        
-        # Find the specific cryptocurrency
-        price_data = next(
-            (p for p in market_data["prices"] if p.get("symbol", "").upper() == symbol.upper()),
-            None
-        )
-        
-        if not price_data:
-            raise HTTPException(status_code=404, detail=f"Price data for {symbol} not found")
-        
-        # Convert to Pydantic model
-        ath_date = None
-        if "athDate" in price_data and price_data["athDate"]:
-            try:
-                ath_date = datetime.fromisoformat(price_data["athDate"].replace("Z", "+00:00"))
-            except Exception:
-                ath_date = None
-        
-        return CryptoPrice(
-            symbol=price_data.get("symbol", ""),
-            name=price_data.get("name", ""),
-            price_usd=price_data.get("priceUsd", 0.0),
-            market_cap_usd=price_data.get("marketCapUsd"),
-            volume_24h_usd=price_data.get("volume24hUsd"),
-            change_24h=price_data.get("change24h"),
-            change_7d=price_data.get("change7d"),
-            change_30d=price_data.get("change30d"),
-            ath_usd=price_data.get("athUsd"),
-            ath_date=ath_date,
-            rank=price_data.get("rank"),
-            last_updated=datetime.fromisoformat(price_data.get("lastUpdated", datetime.now().isoformat()))
-        )
-    
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error fetching price data for {symbol}: {e}")
-        raise HTTPException(status_code=500, detail=f"Error fetching price data: {str(e)}")
 
 @router.get("/history/{symbol}", response_model=CryptoPriceHistory)
 async def get_price_history(
