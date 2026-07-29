@@ -3,9 +3,15 @@
 import json
 import os
 
+# Resolve data relative to this file, not the working directory, so the test
+# passes whether pytest is run from backend/ or the repo root.
+DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         os.pardir, 'data', 'crypto_news.json')
+
+
 def test_keyword_search():
     # Load the news data
-    with open('data/crypto_news.json', 'r') as f:
+    with open(DATA_FILE, 'r') as f:
         data = json.load(f)
     
     print(f"Total news items: {len(data)}")
