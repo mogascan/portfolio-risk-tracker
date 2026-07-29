@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+// App pulls in @mantine/core/styles.css, so it must be imported BEFORE
+// index.css. At equal specificity the later stylesheet wins, and our own
+// styles should be the ones overriding Mantine, not the other way round.
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
 import startMockServer from './MockBackend';
 

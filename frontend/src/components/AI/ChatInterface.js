@@ -273,23 +273,23 @@ function ChatInterface({ height = '550px' }) {
                   styles={(theme) => ({
                     root: {
                       backgroundColor: message.sender === 'user' 
-                        ? theme.colorScheme === 'dark' 
+                        ? isDark 
                           ? '#1a73e8' 
                           : '#1a73e8'
                         : message.isError
-                          ? theme.colorScheme === 'dark'
+                          ? isDark
                             ? theme.colors.red[9]
                             : theme.colors.red[1]
-                          : theme.colorScheme === 'dark'
+                          : isDark
                             ? '#353940'
                             : '#f0f2f5',
                       color: message.sender === 'user' 
                         ? '#ffffff'
                         : message.isError
-                          ? theme.colorScheme === 'dark'
+                          ? isDark
                             ? theme.colors.red[2]
                             : theme.colors.red[9]
-                          : theme.colorScheme === 'dark'
+                          : isDark
                             ? '#ffffff'
                             : '#1a1b1e',
                       maxWidth: '80%',
@@ -387,8 +387,8 @@ function ChatInterface({ height = '550px' }) {
                 p="xs"
                 styles={(theme) => ({
                   root: {
-                    border: `1px solid ${theme.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)'}`,
-                    backgroundColor: theme.colorScheme === 'dark' ? '#2C2E33' : theme.white,
+                    border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)'}`,
+                    backgroundColor: isDark ? '#2C2E33' : theme.white,
                     position: 'relative',
                     borderRadius: '16px',
                     display: 'flex',
@@ -396,7 +396,7 @@ function ChatInterface({ height = '550px' }) {
                     gap: '6px',
                     padding: '6px',
                     '& textarea': {
-                      backgroundColor: theme.colorScheme === 'dark' ? '#2C2E33' : theme.white
+                      backgroundColor: isDark ? '#2C2E33' : theme.white
                     }
                   }
                 })}
@@ -406,7 +406,7 @@ function ChatInterface({ height = '550px' }) {
                   position="right"
                   styles={(theme) => ({
                     tooltip: {
-                      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : '#1A1B1E',
+                      backgroundColor: isDark ? theme.colors.dark[9] : '#1A1B1E',
                       color: 'white',
                       borderRadius: '8px',
                       padding: '6px 10px',
@@ -426,10 +426,10 @@ function ChatInterface({ height = '550px' }) {
                       root: {
                         padding: '6px',
                         borderRadius: '50%',
-                        border: `1px solid ${theme.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)'}`,
-                        backgroundColor: theme.colorScheme === 'dark' ? '#2C2E33' : theme.white,
+                        border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)'}`,
+                        backgroundColor: isDark ? '#2C2E33' : theme.white,
                         '&:hover': {
-                          backgroundColor: theme.colorScheme === 'dark' ? '#353940' : theme.colors.gray[0]
+                          backgroundColor: isDark ? '#353940' : theme.colors.gray[0]
                         }
                       }
                     })}
@@ -450,23 +450,23 @@ function ChatInterface({ height = '550px' }) {
                   styles={(theme) => ({
                     input: {
                       border: 'none',
-                      backgroundColor: theme.colorScheme === 'dark' ? '#2C2E33' : theme.white,
+                      backgroundColor: isDark ? '#2C2E33' : theme.white,
                       padding: '6px 12px',
                       fontSize: '15px',
-                      color: theme.colorScheme === 'dark' ? theme.colors.gray[0] : theme.black,
+                      color: isDark ? theme.colors.gray[0] : theme.black,
                       '&:focus': {
                         border: 'none',
                         outline: 'none'
                       },
                       '&::placeholder': {
-                        color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.gray[6]
+                        color: isDark ? theme.colors.gray[5] : theme.colors.gray[6]
                       },
                       borderRadius: '12px'
                     },
                     wrapper: {
                       width: '100%',
                       borderRadius: '12px',
-                      backgroundColor: theme.colorScheme === 'dark' ? '#2C2E33' : theme.white
+                      backgroundColor: isDark ? '#2C2E33' : theme.white
                     }
                   })}
                   onKeyDown={(e) => {

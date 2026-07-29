@@ -1,11 +1,13 @@
 import React from 'react';
-import { Grid, Box, Title, Divider, Paper, useMantineTheme, Group } from '@mantine/core';
+import { Grid, Box, Title, Divider, Paper, useMantineTheme, useMantineColorScheme, Group } from '@mantine/core';
 import CryptoNewsFeed from './CryptoNewsFeed';
 import MacroNewsFeed from './MacroNewsFeed';
 import RedditFeedContainer from './RedditFeedContainer';
 
 function NewsFeed() {
   const theme = useMantineTheme();
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
   
   return (
     <Box>
@@ -24,7 +26,7 @@ function NewsFeed() {
             style={{ 
               height: '100%',
               minHeight: '1100px',
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               overflow: 'hidden'
             }}
           >
@@ -40,7 +42,7 @@ function NewsFeed() {
             style={{ 
               height: '100%',
               minHeight: '1100px',
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               overflow: 'hidden'
             }}
           >
@@ -56,7 +58,7 @@ function NewsFeed() {
             style={{ 
               height: '100%',
               minHeight: '1100px', 
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               overflow: 'hidden'
             }}
           >

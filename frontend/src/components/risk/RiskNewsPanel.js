@@ -68,7 +68,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
   return (
     <Stack spacing="md" sx={(theme) => ({
       backgroundColor: 'transparent',
-      border: `1px solid ${theme.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
+      border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
       borderRadius: theme.radius.md,
       padding: theme.spacing.md,
     })}>
@@ -80,13 +80,13 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
             radius="md"
             withBorder={false}
             sx={(theme) => ({
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               borderLeft: `4px solid ${
                 volatility > 70 
-                  ? theme.colors[theme.colorScheme === 'dark' ? 'red' : 'red'][theme.colorScheme === 'dark' ? 4 : 6]
+                  ? theme.colors[isDark ? 'red' : 'red'][isDark ? 4 : 6]
                   : volatility > 40 
-                    ? theme.colors[theme.colorScheme === 'dark' ? 'orange' : 'orange'][theme.colorScheme === 'dark' ? 4 : 6]
-                    : theme.colors[theme.colorScheme === 'dark' ? 'green' : 'green'][theme.colorScheme === 'dark' ? 4 : 6]
+                    ? theme.colors[isDark ? 'orange' : 'orange'][isDark ? 4 : 6]
+                    : theme.colors[isDark ? 'green' : 'green'][isDark ? 4 : 6]
               }`,
               height: '100%'
             })}
@@ -109,7 +109,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                   sx={(theme) => ({
                     width: '100%',
                     height: 8,
-                    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+                    backgroundColor: isDark ? theme.colors.dark[5] : theme.colors.gray[2],
                     borderRadius: theme.radius.sm,
                     overflow: 'hidden'
                   })}
@@ -119,10 +119,10 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                       width: `${volatility}%`,
                       height: '100%',
                       backgroundColor: volatility > 70 
-                        ? theme.colors[theme.colorScheme === 'dark' ? 'red' : 'red'][theme.colorScheme === 'dark' ? 4 : 6]
+                        ? theme.colors[isDark ? 'red' : 'red'][isDark ? 4 : 6]
                         : volatility > 40 
-                          ? theme.colors[theme.colorScheme === 'dark' ? 'orange' : 'orange'][theme.colorScheme === 'dark' ? 4 : 6]
-                          : theme.colors[theme.colorScheme === 'dark' ? 'green' : 'green'][theme.colorScheme === 'dark' ? 4 : 6],
+                          ? theme.colors[isDark ? 'orange' : 'orange'][isDark ? 4 : 6]
+                          : theme.colors[isDark ? 'green' : 'green'][isDark ? 4 : 6],
                       borderRadius: theme.radius.sm
                     })}
                   />
@@ -165,7 +165,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
             radius="md"
             withBorder={false}
             sx={(theme) => ({
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              backgroundColor: isDark ? theme.colors.dark[6] : theme.white,
               height: 120,
               display: 'flex',
               flexDirection: 'column'
@@ -195,7 +195,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                       sx={(theme) => ({
                         borderRadius: theme.radius.sm,
                         '&:hover': {
-                          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]
+                          backgroundColor: isDark ? theme.colors.dark[5] : theme.colors.gray[0]
                         }
                       })}
                     >
@@ -209,7 +209,7 @@ function RiskNewsPanel({ riskNews, loadingNews, formatNewsDate }) {
                             size="sm"
                             weight={500}
                             sx={(theme) => ({
-                              color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+                              color: isDark ? theme.white : theme.black,
                               textDecoration: 'none',
                               display: 'block'
                             })}
