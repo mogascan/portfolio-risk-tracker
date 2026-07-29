@@ -32,8 +32,14 @@ spacy>=3.7.0
 # NOTE: also requires the model: python -m spacy download en_core_web_sm
 
 # Data science
-pandas==2.2.0
-numpy==1.26.4
+# pandas removed 2026-07-28: nothing in app/ or tests/ imports it and no other
+# dependency requires it. The pin (2.2.0) predates Python 3.13 and has no cp313
+# wheel, so CI tried to build it from source and the Cython output failed under
+# GCC. It built locally only because Apple clang is more permissive.
+#
+# numpy is required by spacy, but is left unpinned for the same reason —
+# 1.26.4 has no cp313 wheel either. Let the resolver pick one that does.
+numpy>=1.26.4
 
 # Document parsing
 PyPDF2>=3.0.1
