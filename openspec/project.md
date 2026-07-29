@@ -18,6 +18,11 @@ From the planning documents, verbatim:
 > holdings, trend graph, provides basic P/L tracking, allows quick AI queries… and helps with
 > basic tax estimates."
 
+**Amended 2026-07-28 — read "Coinbase and Kraken" for "Binance and Coinbase".** Binance is
+dropped from scope. This is the only edit to the acceptance test; everything else in it stands
+as written, and "basic tax estimates" is being met *above* its stated bar, by a real
+cost-basis engine.
+
 **This does not currently pass.** The reason matters: it is not unbuilt. The aggregation layer
 exists, is largely written, and is switched off — see [The central pattern](#the-central-pattern).
 
@@ -157,16 +162,25 @@ Closed. Do not re-litigate in a proposal; to revisit one, say so and get a decis
 
 ---
 
-## Open product decisions
+## Product decisions — resolved 2026-07-28
 
-Not yet answered, and each changes what gets specified:
+All four answered. The MVP acceptance test is to be met in full, not narrowed.
 
-1. **CEX integration** — register the aggregation router and enable the working ccxt code, or
-   drop the ambition? It is the cheapest large win available.
-2. **On-chain** — build the Ethereum half for real (`web3` is not even a dependency), or cut
-   it from the MVP and revise the acceptance test?
-3. **Specific coins** — build the four missing backend routes, or remove the client calls?
-4. **Tax** — a genuine cost-basis engine, or drop to "estimates" and say so plainly?
+| # | Decision | Consequence |
+|---|---|---|
+| 1 | **CEX integration — build, Coinbase + Kraken only.** | Register the aggregation router; enable the existing Coinbase ccxt code. **Binance is dropped** (see below). **Kraken must be written** — no implementation exists. |
+| 2 | **On-chain — build Ethereum for real.** | A genuine build, not wiring: `web3` must be added to `requirements.txt`, `eth.py`'s commented-out calls implemented, and `scanner.py` (0 bytes) written. Needs `ETHEREUM_RPC_URL`. |
+| 3 | **Specific coins — build the backend routes.** | Four routes the frontend already calls. Backend lands first, then the client. |
+| 4 | **Tax — real cost-basis engine.** | FIFO **and** LIFO, with disposal matching against tracked lots. Not "estimates". |
+
+Scope explicitly **dropped**, not deferred:
+
+- **Twitter/X** — see non-goals.
+- **Binance** — supported exchanges are Coinbase and Kraken only. Note the cost:
+  `services/exchanges/binance.py` is 180 lines of *working* ccxt code, referenced in ten
+  backend files, with `python-binance==1.0.19` pinned in `requirements.txt`. It is left on
+  disk and unwired. This was a product choice, not the removal of something broken — a future
+  audit must not reclassify it as a half-built capability to finish.
 
 ---
 

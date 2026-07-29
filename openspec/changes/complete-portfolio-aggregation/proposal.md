@@ -11,6 +11,10 @@ The MVP acceptance test from the planning documents does not pass:
 > holdings, trend graph, provides basic P/L tracking, allows quick AI queries… and helps with
 > basic tax estimates."
 
+**Amended 2026-07-28:** read "Coinbase and Kraken" for "Binance and Coinbase" — Binance is out
+of scope. Everything else stands, and the tax clause is being exceeded rather than met: a real
+cost-basis engine, not estimates.
+
 The Phase 0c audit found that it fails for an unusual reason: **most of it is already written
 and switched off.** `app/api/routes/portfolio.py` imports all four services and exposes
 `/summary`, `/performance`, `/assets`, `/transactions` and `/tax`. Every method it calls
@@ -24,7 +28,8 @@ looks. That is the case for doing it now rather than deferring it.
 | Capability | Today | After |
 |---|---|---|
 | Aggregation router | 190 lines, unregistered | Registered under its own prefix, reachable |
-| CEX (Binance, Coinbase) | 374 lines of real ccxt, imports commented out | Live when keys are configured; explicit error when not |
+| CEX — **Coinbase + Kraken** | Coinbase written (ccxt, imports commented out); Kraken **does not exist** | Both live when keys are configured; explicit error when not |
+| CEX — Binance | 180 lines of working ccxt | **Dropped from scope** — see below |
 | On-chain (Ethereum) | Facade — `web3` uncommented nowhere, absent from requirements | Real `web3` integration, or explicitly descoped (see Open questions) |
 | Specific coins | Frontend calls 4 routes that do not exist | Routes implemented server-side |
 | Tax | Prompt text plus an unregistered `/tax` | Real cost-basis engine (FIFO/LIFO) |
@@ -39,6 +44,16 @@ the accepted baseline — nothing in this change re-flows the UI.
 **No Twitter/X feed.** Dropped from scope 2026-07-28. `services/news/twitter_service.py` and
 the registered `/api/v1/news/twitter/user/{handle}` route are not extended, not configured,
 and not counted as a capability by this change. Reddit stays the social source.
+
+**No Binance.** Dropped from scope 2026-07-28. Supported exchanges are **Coinbase and Kraken**
+only. Note what this costs: `services/exchanges/binance.py` is 180 lines of *working* ccxt
+code — this is a deliberate product choice, not a cleanup of something broken. Binance is
+referenced in 10 backend files, and `python-binance==1.0.19` in `requirements.txt` becomes
+unused. Removing that code is a separate change; this one stops it being wired in.
+
+**Kraken must be built.** There is no Kraken implementation anywhere in the repository. ccxt
+supports it, so `kraken.py` can mirror `coinbase.py`, but it is new code rather than the
+wiring job the rest of the CEX work is.
 
 ## The rule this change is held to
 
@@ -63,16 +78,18 @@ This change removes that behaviour. With no credentials the endpoints must retur
 data survives only behind an explicit flag, recorded in `backend/tests/mock_data_log.md` with
 an expiry, per `AGENTS.md`.
 
-## Open questions — need a decision before the tasks they gate
+## Decisions — resolved 2026-07-28
 
-1. **On-chain scope.** `web3` is not installed and not in `requirements.txt`, and an Ethereum
-   RPC endpoint requires a provider URL the user must supply. Options: implement it properly,
-   or descope Ethereum from the MVP and amend the acceptance test. **This blocks the
-   `blockchain` tasks and nothing else.**
-2. **Tax depth.** "Basic tax estimates" in the documents vs. the architecture diagram's
-   first-class Tax Calculator. A real engine means cost-basis tracking, FIFO/LIFO, and
-   disposal matching. Options: full engine, or unrealised P/L only with the limitation stated
-   in the UI.
+Both previously-open questions are answered, and both were answered in the more ambitious
+direction. The MVP acceptance test is to be met in full.
+
+1. **On-chain: build Ethereum for real.** Not descoped. This is the one genuinely greenfield
+   part of the change — `web3` is absent from `requirements.txt`, every call in `eth.py` is
+   commented out, and `scanner.py` is 0 bytes. Estimate accordingly: this is not the wiring
+   job the rest of the change is.
+2. **Tax: a real cost-basis engine.** FIFO **and** LIFO, with disposal matching against
+   tracked lots. Not "estimates". This is the largest single unit of work here and depends on
+   transaction history, so it is sequenced last.
 
 ## Credentials the user must supply
 

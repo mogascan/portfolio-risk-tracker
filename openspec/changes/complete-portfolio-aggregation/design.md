@@ -23,28 +23,43 @@ Reconciling the two into one view is explicitly **out of scope** here and gets i
 They are two sources of truth today; naming them separately makes that visible rather than
 hiding it behind a merged endpoint.
 
+## Exchanges: Coinbase and Kraken
+
+Decided 2026-07-28: **Coinbase and Kraken only. No Binance.**
+
+`coinbase.py` exists (173 lines, real ccxt) and needs its imports uncommented and the mock
+fallback removed. `kraken.py` **does not exist** and must be written — ccxt exposes `kraken`,
+so it mirrors `coinbase.py` against the same `base.py` interface.
+
+`binance.py` stays on disk, untouched and unwired. It is 180 lines of *working* code, so this
+is a product decision, not a cleanup of something broken. Removing it, its ten file
+references, and the now-unused `python-binance==1.0.19` pin is a separate change.
+
+All services conform to `base.py` (`get_balances`, `get_transactions`), so adding or dropping
+a source is a registration change rather than a rewrite of the aggregator.
+
 ## Credentials: fail loudly, never mock
 
-Current behaviour in `binance.py` / `coinbase.py` is to return mock balances when keys are
-unset. This must go.
+Current behaviour in `coinbase.py` is to return mock balances when keys are unset. This must
+go.
 
 Contract for every integration:
 
 ```
 credentials absent  → 503, {"status": "not_configured",
-                            "integration": "binance",
-                            "required": ["BINANCE_API_KEY", "BINANCE_API_SECRET"]}
+                            "integration": "kraken",
+                            "required": ["KRAKEN_API_KEY", "KRAKEN_API_SECRET"]}
 credentials present but rejected → 502, {"status": "auth_failed", "integration": ...}
 credentials present and working  → 200, real data
 ```
 
-Typed and machine-readable so the frontend can render "connect your Binance account" rather
+Typed and machine-readable so the frontend can render "connect your Kraken account" rather
 than a number the user might act on. A fabricated balance in a financial tool is worse than an
 error — it is the one failure mode that could cause real loss.
 
 `/summary` aggregates across sources, so it degrades per source rather than all-or-nothing: it
 returns the sources that worked plus an explicit `unavailable` list. A user with only Coinbase
-configured sees their Coinbase holdings and a clear statement that Binance and Ethereum are not
+configured sees their Coinbase holdings and a clear statement that Kraken and Ethereum are not
 connected.
 
 ## Settings
@@ -57,31 +72,59 @@ No credential may be logged, and none may reach an error payload. The `required`
 lists variable *names* only, never values. The suite already proved this matters:
 `test_openai_service_initialization` was printing a live key into pytest output.
 
-## On-chain — blocked, and deliberately isolated
+## On-chain — build for real
 
-`web3` is not installed and not in `requirements.txt`; `eth.py`'s calls are commented out;
-`scanner.py` is 0 bytes. This cannot be built without a decision and an RPC URL.
+Decided 2026-07-28: **implement Ethereum properly.** Not descoped.
 
-The design isolates it: `EthereumService` conforms to the same interface as the CEX services
-(`get_balances`, `get_transactions`), so `/summary` treats "Ethereum not configured" exactly
-like "Binance not configured". Everything else in this change ships whether or not the on-chain
-question is answered.
+This is the one genuinely greenfield part of the change. `web3` is not installed and not in
+`requirements.txt`, every call in `eth.py` is commented out, and `scanner.py` is 0 bytes — so
+"finish the wiring" does not apply here. Scope it as new work:
+
+- Add `web3` to `requirements.txt`. It ships wheels for Python 3.13, unlike the `pandas` pin
+  that broke CI, but verify that in CI rather than assuming it.
+- Implement `get_balances` against `ETHEREUM_RPC_URL` for each address in
+  `ETH_WALLET_ADDRESSES` — native ETH first, then ERC-20 via balance calls.
+- Implement `get_transactions`. An RPC node alone cannot answer "all transactions for an
+  address" efficiently; that needs either log scanning over a block range (`scanner.py`) or an
+  indexing API. **Prefer scanning a bounded recent range** over adding a second provider
+  dependency, and state the range limit in the response rather than implying completeness.
+- Public addresses only. Never accept a private key or seed phrase.
+
+`EthereumService` keeps the same interface as the CEX services (`get_balances`,
+`get_transactions`), so `/summary` treats "Ethereum unavailable" exactly like "Kraken not
+configured", and an RPC outage degrades one source rather than the endpoint.
 
 ## Tax engine
 
 The `/tax` endpoint exists but there is no cost-basis engine — no lot tracking, no disposal
 matching, no FIFO/LIFO.
 
-Design, pending the depth decision:
+Decided 2026-07-28: **a real cost-basis engine.** FIFO and LIFO, with disposal matching. Not
+"estimates".
 
 - A `Lot` record per acquisition: asset, quantity, unit cost, timestamp, source
-- Disposals consume lots by the configured method (FIFO default, LIFO selectable)
-- Output: realised gain/loss per disposal with holding period, plus unrealised P/L on open lots
-- Explicitly **estimates**: no wash-sale handling, no jurisdiction rules, no Form 8949
-  generation. The UI must say so.
+- Disposals consume lots by the configured method — **FIFO default, LIFO selectable**
+- Output per disposal: realised gain/loss, holding period, and which lots were consumed
+- Plus unrealised P/L on lots still open
 
-This depends on transaction history, so it is ordered after the exchange integrations. It is
-the largest single unit of work in the change and the most reasonable thing to descope.
+Design constraints that follow from doing it properly:
+
+- **Deterministic and pure.** The matcher takes lots plus disposals and returns results — no
+  network, no clock. That is what makes it testable, and it is the one part of this change
+  that can be verified exactly rather than approximately.
+- **Ordering matters.** Disposals must be applied in timestamp order; out-of-order input
+  silently changes which lots are consumed and therefore the realised figure.
+- **Insufficient lots is an error, not a zero.** Disposing more than was acquired means the
+  history is incomplete — say so rather than inventing a basis.
+- **Precision.** Use `Decimal`, not float. Repeated float arithmetic over many lots drifts,
+  and this output is what a user files taxes from.
+
+Still out of scope, and the UI must say so: no wash-sale handling, no jurisdiction-specific
+rules, no Form 8949 generation. "Real engine" means the arithmetic is correct and auditable,
+not that it constitutes tax advice.
+
+Depends on transaction history, so it sequences after the exchange and on-chain integrations.
+It is the largest single unit of work in this change.
 
 ## Specific coins
 

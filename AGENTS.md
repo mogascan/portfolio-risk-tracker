@@ -100,6 +100,11 @@ imported **after** `App` in `index.js` or Mantine wins every tie.
 - **No Twitter/X feed** — dropped from scope 2026-07-28. `services/news/twitter_service.py`
   and `GET /api/v1/news/twitter/user/{handle}` still exist and are reachable, but must not be
   built on, configured, or treated as unfinished work to complete. Reddit is the social source.
+- **No Binance** — dropped from scope 2026-07-28. Supported exchanges are **Coinbase and
+  Kraken**. `services/exchanges/binance.py` holds 180 lines of *working* ccxt code and stays
+  on disk unwired; `python-binance` in `requirements.txt` is now unused. Do not wire it in,
+  and do not file it as a half-built capability — this was a product decision.
+  `services/exchanges/kraken.py` does not exist yet and has to be written.
 - API errors return **clear user-facing messages**, not silent fallbacks to mock data.
 - Mock data is for explicit testing only, must be recorded in
   `backend/tests/mock_data_log.md` with an expiry, and deleted when done.
