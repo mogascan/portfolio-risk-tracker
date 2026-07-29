@@ -3,16 +3,18 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import List, Dict, Any, Optional
 import logging
 
-from app.services.exchanges.binance import BinanceService
 from app.services.exchanges.coinbase import CoinbaseService
 from app.services.blockchain.eth import EthereumService
 from app.services.market_data.coingecko import CoinGeckoService
 
-router = APIRouter()
+# Mounted at /api/v1/accounts, not /api/v1/portfolio: app/api/v1/portfolio.py already
+# owns /transactions, and FastAPI would silently shadow one of the two. See
+# openspec/changes/complete-portfolio-aggregation/design.md.
+router = APIRouter(prefix="/accounts")
 logger = logging.getLogger(__name__)
 
-# Services
-binance_service = BinanceService()
+# Services. Binance is out of scope (product decision, 2026-07-28) — binance.py stays
+# on disk unwired. Kraken is not written yet.
 coinbase_service = CoinbaseService()
 ethereum_service = EthereumService()
 market_data_service = CoinGeckoService()
@@ -25,12 +27,11 @@ async def get_portfolio_summary():
     """
     try:
         # Get balances from different sources
-        binance_assets = await binance_service.get_balances()
         coinbase_assets = await coinbase_service.get_balances()
         ethereum_assets = await ethereum_service.get_balances()
         
         # Combine assets from all sources
-        all_assets = {**binance_assets, **coinbase_assets, **ethereum_assets}
+        all_assets = {**coinbase_assets, **ethereum_assets}
         
         # Get current prices for all assets
         asset_ids = list(all_assets.keys())
@@ -103,12 +104,11 @@ async def get_portfolio_assets():
     """
     try:
         # Get balances from different sources
-        binance_assets = await binance_service.get_balances()
         coinbase_assets = await coinbase_service.get_balances()
         ethereum_assets = await ethereum_service.get_balances()
         
         # Combine assets from all sources
-        all_assets = {**binance_assets, **coinbase_assets, **ethereum_assets}
+        all_assets = {**coinbase_assets, **ethereum_assets}
         
         # Get asset details
         asset_details = await market_data_service.get_asset_details(list(all_assets.keys()))
@@ -138,12 +138,11 @@ async def get_transactions(
     """
     try:
         # Get transactions from different sources
-        binance_txs = await binance_service.get_transactions(limit, offset)
         coinbase_txs = await coinbase_service.get_transactions(limit, offset)
         ethereum_txs = await ethereum_service.get_transactions(limit, offset)
         
         # Combine and sort transactions by timestamp (descending)
-        all_txs = binance_txs + coinbase_txs + ethereum_txs
+        all_txs = coinbase_txs + ethereum_txs
         all_txs.sort(key=lambda x: x["timestamp"], reverse=True)
         
         # Apply pagination

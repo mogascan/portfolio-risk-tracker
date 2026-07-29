@@ -16,6 +16,9 @@ from app.api.v1.news import router as news_router
 from app.api.v1.ai import router as ai_router
 from app.api.v1.portfolio import router as portfolio_router
 from app.api.v1.social import router as social_router
+# Aggregation across connected exchange accounts and on-chain wallets. Distinct from
+# portfolio_router above, which serves the user's hand-entered holdings.
+from app.api.routes.portfolio import router as accounts_router
 
 # Import services for direct initialization
 from app.services.news import crypto_news_service, macro_news_service, reddit_service
@@ -57,6 +60,7 @@ app.include_router(news_router, prefix="/api/v1", tags=["News"])
 app.include_router(ai_router, prefix="/api/v1", tags=["AI Analysis"])
 app.include_router(portfolio_router, prefix="/api/v1", tags=["Portfolio"])
 app.include_router(social_router, prefix="/api/v1", tags=["Social Media"])
+app.include_router(accounts_router, prefix="/api/v1", tags=["Accounts"])
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
