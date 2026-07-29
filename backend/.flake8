@@ -1,0 +1,45 @@
+[flake8]
+# The gate is deliberately narrow: it must be GREEN so that a red build always
+# means "you broke something", never "this repo has always been noisy".
+#
+# Baseline when this was written: 3,972 findings, of which 3,780 were pure
+# whitespace and line length. Those are formatter territory, not review
+# territory, and blocking CI on them would train everyone to ignore CI.
+#
+# What stays enabled is the part that finds real defects — the pyflakes F
+# checks minus the two noisy ones, plus E7 (syntax-adjacent mistakes like bare
+# except and `== None`) and E9 (parse/IO errors). F811 caught a genuine bug the
+# day this was added: api/v1/ai.py defined extract_keywords twice, so a
+# 60-line helper was silently shadowed by a route handler.
+
+max-line-length = 120
+
+exclude =
+    venv,
+    __pycache__,
+    .pytest_cache,
+    build,
+    dist,
+    *.egg-info,
+    node_modules
+
+extend-ignore =
+    # --- formatting only; a formatter should own these ---
+    E501,
+    W291, W292, W293,
+    E302, E303, E305,
+    E128, E129, E131,
+    E261, E262, E265,
+    # Deliberate: several modules append to sys.path before importing.
+    E402,
+    # --- backlog, tracked but not blocking ---
+    # 181 unused imports. Worth clearing, too large to bundle with CI setup.
+    F401,
+    # 8 f-strings with no placeholders. Cosmetic.
+    F541,
+    # 2 assigned-but-unused locals. Both look like half-finished work, so they
+    # are left visible rather than deleted on a guess.
+    F841
+
+per-file-ignores =
+    __init__.py: F401

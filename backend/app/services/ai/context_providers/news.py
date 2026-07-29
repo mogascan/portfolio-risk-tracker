@@ -53,7 +53,7 @@ class NewsContextProvider(BaseContextProvider):
         
         logger.info(f"News context provider initialized with data directory: {self.data_dir}")
 
-    async def get_context(self, query: str, token_budget: int = 3000, intent_type = None) -> Dict[str, Any]:
+    async def get_context(self, query: str, token_budget: int = 3000, intent_type=None) -> Dict[str, Any]:
         """
         Retrieve and format news context based on the query.
         

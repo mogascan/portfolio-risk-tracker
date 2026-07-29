@@ -57,8 +57,10 @@ except ImportError:
             class PortfolioAnalysis:
                 async def get_portfolio_context(self):
                     return "Portfolio data unavailable due to import error."
+
                 async def get_asset_analysis(self, symbol):
                     return f"Analysis for {symbol} unavailable due to import error."
+
                 async def get_market_overview(self):
                     return "Market overview unavailable due to import error."
             

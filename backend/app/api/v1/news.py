@@ -707,7 +707,7 @@ async def get_user_tweets(
                 if isinstance(created_at, str):
                     try:
                         created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
-                    except:
+                    except (ValueError, TypeError):
                         created_at = datetime.now()  # Fallback
                 
                 # Create a post with data from tweet

@@ -141,66 +141,6 @@ class ChatResponse(BaseModel):
     answer: str
     metadata: Dict[str, Any]
 
-def extract_keywords(query: str) -> List[str]:
-    """Extract keywords from user query to improve news search results."""
-    
-    # Convert query to lowercase for case-insensitive matching
-    query_lower = query.lower()
-    
-    # Initialize keywords list
-    keywords = []
-    
-    # Check for special terms that should be preserved exactly as written
-    special_terms = [
-        "bitcoin", "btc", "ethereum", "eth", "solana", "sol", 
-        "binance", "coinbase", "ftx", "kraken", "gemini",
-        "defi", "nft", "dao", "stablecoin", "metaverse", 
-        "airdrop", "ico", "ido", "ieo", "sto",
-        "pump.fun", "ai", "grayscale", "gbtc", "ethe"
-    ]
-    
-    # Log the special terms being checked
-    logger.info(f"Checking query for special terms: {special_terms}")
-    
-    # Check each special term
-    for term in special_terms:
-        # Use word boundary check for more accurate matching
-        pattern = r'\b' + re.escape(term) + r'\b'
-        if re.search(pattern, query_lower):
-            keywords.append(term)
-            logger.info(f"Found special term in query: '{term}'")
-    
-    # Additional entity extraction using simple patterns
-    
-    # Find tokens that could be cryptocurrency symbols (all caps, 2-5 letters)
-    crypto_symbols = re.findall(r'\b[A-Z]{2,5}\b', query)
-    for symbol in crypto_symbols:
-        if symbol.lower() not in [k.lower() for k in keywords]:
-            keywords.append(symbol.lower())
-            logger.info(f"Found potential crypto symbol: {symbol.lower()}")
-    
-    # Extract potential named entities (capitalized words)
-    potential_entities = re.findall(r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b', query)
-    for entity in potential_entities:
-        if entity.lower() not in [k.lower() for k in keywords]:
-            keywords.append(entity.lower())
-            logger.info(f"Found potential named entity: {entity.lower()}")
-    
-    # If no keywords were found, extract nouns as a fallback
-    if not keywords:
-        # Simple noun extraction - words that are not common stop words
-        stop_words = {"a", "an", "the", "and", "but", "or", "for", "nor", "on", "at", "to", "from", "by", "about", "in", "me", "you", "he", "she", "it", "we", "they", "is", "am", "are", "was", "were"}
-        words = re.findall(r'\b[a-zA-Z]{3,}\b', query_lower)
-        for word in words:
-            if word not in stop_words and word not in keywords:
-                keywords.append(word)
-                logger.info(f"Added noun as fallback keyword: {word}")
-    
-    # Log the final keywords
-    logger.info(f"Extracted keywords from query: {keywords}")
-    
-    return keywords
-
 def extract_keywords_from_news_query(query):
     """Extract keywords for news search from a user query."""
     keywords = []
