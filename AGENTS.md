@@ -82,10 +82,19 @@ looks fine and does nothing.
 Nested selectors (`'&:hover'`, `'& thead tr th'`) do **not** work in `style` or `styles`
 objects — Mantine 7 dropped emotion. Use a CSS module.
 
-**Known outstanding debt** (roughly 285 sites): `spacing=` 98, `position=` 90,
-`Text weight/align` 51, `sx=` 22, `theme.colorScheme` 21. The remaining `colorScheme` sites
-are in `App.js`'s `createTheme` overrides and two `sx` blocks, and need a real migration
-rather than a rename.
+**Migration complete as of 2026-07-29.** All ~285 v6 call sites are gone — verified by grep:
+`theme.colorScheme` 0, `sx={` 0, `spacing=` 0, `position=` 0, `Text weight/align` 0,
+`precision=` 0. The table above is now a rule for new code, not a backlog.
+
+`App.js` uses `localStorageColorSchemeManager` with `defaultColorScheme`, and the old
+`createTheme` nested selectors live in CSS modules keyed on
+`:global([data-mantine-color-scheme='dark'])`. `light-dark()` was deliberately **not** used —
+there is no postcss config here, so it would be native CSS, and it could not be verified in a
+browser at migration time.
+
+Beware when replacing `position=`: it is only wrong on Mantine `Group`/`Flex`. CSS `position`
+inside `style={{}}` is correct, and Recharts components take their own `position` prop. Match
+on the component, never the bare string.
 
 Stylesheet order matters: `App.js` imports `@mantine/core/styles.css`, so `index.css` must be
 imported **after** `App` in `index.js` or Mantine wins every tie.
@@ -97,14 +106,13 @@ imported **after** `App` in `index.js` or Mantine wins every tie.
 - Market data uses the **free/public CoinGecko API** (`https://api.coingecko.com/api/v3`).
   No Pro keys.
 - News feeds (crypto, macro, Reddit) use live endpoints.
-- **No Twitter/X feed** — dropped from scope 2026-07-28. `services/news/twitter_service.py`
-  and `GET /api/v1/news/twitter/user/{handle}` still exist and are reachable, but must not be
-  built on, configured, or treated as unfinished work to complete. Reddit is the social source.
-- **No Binance** — dropped from scope 2026-07-28. Supported exchanges are **Coinbase and
-  Kraken**. `services/exchanges/binance.py` holds 180 lines of *working* ccxt code and stays
-  on disk unwired; `python-binance` in `requirements.txt` is now unused. Do not wire it in,
-  and do not file it as a half-built capability — this was a product decision.
-  `services/exchanges/kraken.py` does not exist yet and has to be written.
+- **No Twitter/X feed** — dropped 2026-07-28, **removed 2026-07-29**. `twitter_service.py`,
+  the `/news/twitter/user/{handle}` route and the `TwitterPost` model are gone. Reddit is the
+  social source. Do not reintroduce it.
+- **No Binance** — dropped 2026-07-28, **removed 2026-07-29**. Supported exchanges are
+  **Coinbase and Kraken**. `binance.py` and the `python-binance` dependency are gone. Note that
+  BNB as a *token* remains in the coin mappings and keyword extractor — that is the asset, not
+  the exchange, and is unaffected.
 - API errors return **clear user-facing messages**, not silent fallbacks to mock data.
 - Mock data is for explicit testing only, must be recorded in
   `backend/tests/mock_data_log.md` with an expiry, and deleted when done.

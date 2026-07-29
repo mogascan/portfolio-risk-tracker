@@ -6,7 +6,6 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
 
 # In a real application, these would be actual service imports
-# from app.services.exchanges.binance import BinanceService
 # from app.services.exchanges.coinbase import CoinbaseService
 # from app.services.blockchain.eth import EthereumService
 # from app.services.market_data.coingecko import CoinGeckoService
@@ -19,7 +18,6 @@ class PortfolioAnalysisService:
     def __init__(self):
         self.base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
         # In a real application, initialize actual services
-        # self.binance_service = BinanceService()
         # self.coinbase_service = CoinbaseService()
         # self.ethereum_service = EthereumService()
         # self.market_data_service = CoinGeckoService()

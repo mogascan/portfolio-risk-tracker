@@ -58,7 +58,6 @@ markdown>=3.5.1
 
 # External APIs
 ccxt==4.2.15
-python-binance==1.0.19
 twilio==8.12.0
 python-telegram-bot==20.8
 praw>=7.7.1
