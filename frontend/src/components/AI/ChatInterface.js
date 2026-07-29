@@ -1,6 +1,6 @@
 // frontend/src/components/AI/ChatInterface.js
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Paper, Textarea, Stack, Text, Loader, ActionIcon, Group, Select, Tooltip, Alert, useMantineColorScheme, useMantineTheme, Avatar, Code, Switch } from '@mantine/core';
+import { Paper, Textarea, Stack, Text, Loader, ActionIcon, Group, Select, Tooltip, Alert, useMantineColorScheme, useMantineTheme, Avatar, Switch } from '@mantine/core';
 import { useAI } from '../../contexts/AIContext';
 import ChatHistoryPanel from './ChatHistoryPanel';
 

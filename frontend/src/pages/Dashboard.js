@@ -1,14 +1,12 @@
 // frontend/src/pages/Dashboard.js
-import React, { useState, useEffect } from 'react';
-import { Grid, Box, Paper, Title, Text, useMantineColorScheme, useMantineTheme, Stack } from '@mantine/core';
+import React, { useEffect } from 'react';
+import { Grid, Box, Paper, Title, useMantineColorScheme, useMantineTheme, Stack } from '@mantine/core';
 import DashboardSummary from '../components/Portfolio/DashboardSummary';
 import DashboardPerformanceChart from '../components/Portfolio/DashboardPerformanceChart';
 import ChatInterface from '../components/AI/ChatInterface';
 import InsightsPanel from '../components/AI/InsightsPanel';
 import NewsFeed from '../components/News/NewsFeed';
 import { usePortfolio } from '../contexts/PortfolioContext';
-import { fetchCryptoNews, fetchMacroNews } from '../api/newsService';
-
 function Dashboard() {
   const { portfolio } = usePortfolio();
   const { colorScheme } = useMantineColorScheme();

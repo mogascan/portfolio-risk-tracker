@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useConfig } from '../contexts/ConfigContext';
 import { usePortfolio } from '../contexts/PortfolioContext';
-import { Container, Paper, Title, Switch, Select, Checkbox, Button, Group, Text, Stack, Divider, Slider, NumberInput, Box, Tooltip, SimpleGrid } from '@mantine/core';
+import { Container, Paper, Title, Switch, Select, Button, Group, Text, Stack, Divider, Slider, NumberInput, Box, Tooltip, SimpleGrid } from '@mantine/core';
 import { format } from 'date-fns';
 import ThemeToggle from '../components/ThemeToggle';
 import './Settings.css';

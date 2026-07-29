@@ -173,7 +173,7 @@ export const isDateInMonth = (dateStr, year, month) => {
   }
 };
 
-export default {
+const dateUtils = {
   formatTimeAgo,
   formatDate,
   formatToISODate,
@@ -181,4 +181,6 @@ export default {
   formatDateRangeForDisplay,
   isDateInPast,
   isDateInMonth
-}; 
+};
+
+export default dateUtils; 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Container, Title, Paper, TextInput, Group, Button, Select, Text, Progress, Stack, SimpleGrid, Box, NumberInput, Badge, Alert, Loader, Divider } from '@mantine/core';
+import { Container, Title, Paper, TextInput, Group, Button, Select, Text, Progress, SimpleGrid, Box, NumberInput, Badge, Alert, Loader, Divider } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
-import { IconInfoCircle, IconAlertTriangle, IconCoin, IconChartLine } from '@tabler/icons-react';
+import { IconInfoCircle, IconCoin, IconChartLine } from '@tabler/icons-react';
 import axios from 'axios';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import './TokenUnlockAnalyzer.css';

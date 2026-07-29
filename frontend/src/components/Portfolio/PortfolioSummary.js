@@ -1,6 +1,6 @@
 // frontend/src/components/Portfolio/PortfolioSummary.js
 import React from 'react';
-import { Paper, Title, Text, Group, Stack, SimpleGrid, Badge, Tooltip, Image, useMantineTheme, useMantineColorScheme, Box } from '@mantine/core';
+import { Paper, Title, Text, Group, Stack, SimpleGrid, Badge, Tooltip, Image, useMantineTheme, useMantineColorScheme } from '@mantine/core';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { usePortfolio } from '../../contexts/PortfolioContext';
 import { useMarket } from '../../contexts/MarketContext';

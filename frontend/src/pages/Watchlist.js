@@ -10,7 +10,6 @@ import {
   Image,
   Box,
   TextInput,
-  Button,
   ActionIcon,
   Tooltip,
   UnstyledButton,
@@ -18,13 +17,12 @@ import {
   Pagination,
   Select,
   Badge,
-  Collapse,
   Divider,
   Grid,
   ThemeIcon,
   Progress
 } from '@mantine/core';
-import { IconSearch, IconPlus, IconTrash, IconStar, IconStarFilled, IconChevronUp, IconChevronDown, IconSelector, IconChevronRight, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
+import { IconSearch, IconTrash, IconStar, IconStarFilled, IconChevronUp, IconChevronDown, IconSelector, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { useMarket } from '../contexts/MarketContext';
 import axios from 'axios';

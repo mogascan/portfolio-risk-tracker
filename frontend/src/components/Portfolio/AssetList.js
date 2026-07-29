@@ -5,8 +5,8 @@ import { useConfig } from '../../contexts/ConfigContext';
 import { useAI } from '../../contexts/AIContext';
 import { useMarket } from '../../contexts/MarketContext';
 import { fetchAssetAnalysis } from '../../api/ai';
-import { Table, Paper, Text, ActionIcon, Group, Tooltip, Badge, useMantineTheme, useMantineColorScheme } from '@mantine/core';
-import { IconTrash, IconInfoCircle, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
+import { Table, Paper, Text, ActionIcon, Group, Tooltip, useMantineTheme, useMantineColorScheme } from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
 import { differenceInDays, differenceInMonths, differenceInYears, format } from 'date-fns';
 import './Portfolio.css';
 
