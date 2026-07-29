@@ -351,12 +351,16 @@ class CoinGeckoService:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, params=params) as response:
                     if response.status == 429:
-                        logger.warning("CoinGecko API rate limit exceeded. Using mock data.")
-                        return self._get_mock_market_data()
-                    
+                        # Same rule as get_prices: never substitute invented market data.
+                        # /symbols builds its TradingView mapping from this, and a mapping
+                        # derived from fictional coins would send the user to set alerts on
+                        # charts that do not exist.
+                        raise IntegrationUnavailable("coingecko", "rate limit exceeded")
+
                     if response.status != 200:
-                        logger.error(f"Error from CoinGecko API: {response.status}")
-                        return self._get_mock_market_data()
+                        raise IntegrationUnavailable(
+                            "coingecko", f"API returned status {response.status}"
+                        )
                     
                     coins_data = await response.json()
             
@@ -407,9 +411,11 @@ class CoinGeckoService:
             
             return market_data
         
+        except IntegrationUnavailable:
+            raise
         except Exception as e:
             logger.error(f"Error fetching market data: {str(e)}")
-            return self._get_mock_market_data()
+            raise IntegrationUnavailable("coingecko", str(e)) from e
     
     def _get_mock_prices(self, asset_ids: List[str]) -> Dict[str, float]:
         """Generate mock price data for development purposes"""

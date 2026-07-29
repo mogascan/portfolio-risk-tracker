@@ -1,8 +1,53 @@
 # Phase 0c — Capability audit
 
-**Date:** 2026-07-28
+**Date:** 2026-07-28 · **Updated:** 2026-07-29 after implementation
 **Purpose:** the factual basis for `openspec/project.md`. Written because reading code alone
 misleads in this repository — subsystems here look finished and are switched off.
+
+---
+
+## Status after implementation (2026-07-29)
+
+The aggregation change is implemented. What moved:
+
+| Capability | Was | Now |
+|---|---|---|
+| Portfolio aggregation | half-built, unregistered | **live** — `/api/v1/accounts/*` |
+| CEX (Coinbase, Kraken) | facade / nonexistent | **live** — real ccxt, Kraken newly written |
+| On-chain Ethereum | facade, `web3` absent | **live** — real RPC, `scanner.py` written |
+| Golden/death-cross alerts | 3/4 missing, no receiver | **live** — webhook + symbol mapping |
+| Token supply data | route absent | **live** — `/api/v1/token/{id}` |
+| Tax | hardcoded zeros | **live** — FIFO/LIFO cost-basis engine |
+| Dark mode | broken at 52 sites | **fixed** — pending visual confirmation |
+
+**Tests: 19 → 109.** flake8 0. Frontend build clean.
+
+### Fabricated data on default paths — eliminated
+
+The audit's central finding was code that looked finished and was switched off. Implementation
+surfaced a second, worse pattern: code that looked finished and returned **invented financial
+data**.
+
+| Location | Was | Now |
+|---|---|---|
+| `coinbase.py` | 0.05 BTC, 1 ETH, 2000 USDC when unconfigured | raises `not_configured` |
+| `coingecko.get_prices` | BTC $40,000 hardcoded; **`random.uniform(0.1, 100)`** for unknowns | raises `unavailable` |
+| `coingecko.get_market_data` | mock market on rate limit | raises `unavailable` |
+| `eth.py` | mock balances, mock transactions, `random.uniform` history | real RPC or raises |
+| `eth.py` wallets | defaulted to two hardcoded addresses | no fallback |
+| `/tax` | hardcoded zeros, reading as "you owe nothing" | real engine or 422 |
+
+Verified after: no `_get_mock*` call is reachable from any registered route. The remaining ones
+are in `binance.py` (deliberately unwired) and `services/ai/portfolio_analysis.py` (orphaned —
+the live `services/portfolio/portfolio_analysis.py` has none).
+
+### Silent arithmetic bugs found during implementation
+
+- **Balances were discarded.** `{**coinbase, **ethereum}` drops the earlier value on a key
+  collision — 1 BTC on two exchanges reported 1 BTC. Invisible with one exchange wired.
+- **Unpriced assets vanished** from `/summary` rather than showing as unpriced.
+- **`extract_keywords` was defined twice** in `api/v1/ai.py`; the route handler shadowed a
+  60-line helper.
 
 Every capability was checked against five questions:
 
