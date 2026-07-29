@@ -22,7 +22,7 @@ const symbolsService = {
       }
       
       // Fetch fresh data
-      const response = await axios.get(`${WEBHOOK_SERVER_URL}/api/symbols`);
+      const response = await axios.get(`${WEBHOOK_SERVER_URL}/api/v1/symbols`);
       
       // Cache the response
       saveToStorage('tv_symbols_cache', response.data);
@@ -45,7 +45,7 @@ const symbolsService = {
   // Force refresh of symbols
   refreshSymbols: async (exchange = 'BINANCE') => {
     try {
-      const response = await axios.post(`${WEBHOOK_SERVER_URL}/api/symbols/refresh`, null, {
+      const response = await axios.post(`${WEBHOOK_SERVER_URL}/api/v1/symbols/refresh`, null, {
         params: { exchange }
       });
       
@@ -62,7 +62,7 @@ const symbolsService = {
   // Get alert setup instructions
   getAlertSetup: async () => {
     try {
-      const response = await axios.get(`${WEBHOOK_SERVER_URL}/api/symbols/alert-setup`);
+      const response = await axios.get(`${WEBHOOK_SERVER_URL}/api/v1/symbols/alert-setup`);
       return response.data;
     } catch (error) {
       console.error('Error fetching alert setup:', error);

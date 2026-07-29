@@ -19,6 +19,8 @@ from app.api.v1.social import router as social_router
 # Aggregation across connected exchange accounts and on-chain wallets. Distinct from
 # portfolio_router above, which serves the user's hand-entered holdings.
 from app.api.routes.portfolio import router as accounts_router
+# TradingView symbol mapping, golden/death-cross alert webhook, token supply data.
+from app.api.v1.symbols import router as symbols_router
 
 # Import services for direct initialization
 from app.services.news import crypto_news_service, macro_news_service, reddit_service
@@ -61,6 +63,7 @@ app.include_router(ai_router, prefix="/api/v1", tags=["AI Analysis"])
 app.include_router(portfolio_router, prefix="/api/v1", tags=["Portfolio"])
 app.include_router(social_router, prefix="/api/v1", tags=["Social Media"])
 app.include_router(accounts_router, prefix="/api/v1", tags=["Accounts"])
+app.include_router(symbols_router, prefix="/api/v1", tags=["Symbols & Alerts"])
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):

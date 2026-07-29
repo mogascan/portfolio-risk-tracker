@@ -569,7 +569,7 @@ const TokenUnlockAnalyzer = () => {
       if (!token.totalSupply || !token.circulatingSupply) {
         try {
           // Use CoinGecko or your existing API setup
-          const response = await axios.get(`/api/token/${tokenId}`);
+          const response = await axios.get(`/api/v1/token/${tokenId}`);
           if (response.data) {
             tokenData = { ...tokenData, ...response.data };
           }
