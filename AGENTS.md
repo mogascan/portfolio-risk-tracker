@@ -97,6 +97,9 @@ imported **after** `App` in `index.js` or Mantine wins every tie.
 - Market data uses the **free/public CoinGecko API** (`https://api.coingecko.com/api/v3`).
   No Pro keys.
 - News feeds (crypto, macro, Reddit) use live endpoints.
+- **No Twitter/X feed** — dropped from scope 2026-07-28. `services/news/twitter_service.py`
+  and `GET /api/v1/news/twitter/user/{handle}` still exist and are reachable, but must not be
+  built on, configured, or treated as unfinished work to complete. Reddit is the social source.
 - API errors return **clear user-facing messages**, not silent fallbacks to mock data.
 - Mock data is for explicit testing only, must be recorded in
   `backend/tests/mock_data_log.md` with an expiry, and deleted when done.

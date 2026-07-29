@@ -32,6 +32,15 @@ Explicit, and not up for reinterpretation in a change proposal:
 - **Read-only exchange keys only.** No trade execution.
 - **Single user.** No multi-tenancy, no user accounts beyond local use.
 - **Not financial advice.** AI output is analysis, never a recommendation to transact.
+- **No Twitter/X feed.** Decided 2026-07-28. The planning documents name Twitter as the
+  "Water Cooler" social source; that is **dropped**, not deferred. Do not build, extend, or
+  re-add it. Reddit remains the social source.
+
+  Note the existing state: `services/news/twitter_service.py` (433 lines) is instantiated in
+  `services/news/__init__.py` and `GET /api/v1/news/twitter/user/{handle}` is registered and
+  reachable. No frontend component calls it, and it is gated on an unset
+  `TWITTER_BEARER_TOKEN`. Removing it is a separate change — this entry stops it being
+  *built on*, and prevents a future audit reclassifying it as work to finish.
 
 ---
 
@@ -119,7 +128,7 @@ Authoritative as of the Phase 0c audit. Full evidence in `AUDIT.md`.
 | `pro.x.com`-style three-column workspace, AI prompt centred | Page-router app — **accepted baseline**, see below |
 | Covalent primary, The Graph secondary, ccxt for CEX | CoinGecko only; ccxt present but unreachable |
 | SQLite or PostgreSQL | JSON flat files — never named as a design choice in any document |
-| Twitter for "Water Cooler" | Reddit, currently 403 |
+| Twitter for "Water Cooler" | Reddit, currently 403. **Twitter is now dropped from scope** — see non-goals. |
 | Tax calculator as a backend component | Prompt text only |
 
 Built but in **no** document: TokenUnlockAnalyzer, RiskAssessment (×2), Watchlist, Markets,
