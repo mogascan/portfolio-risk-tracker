@@ -361,4 +361,3 @@ class TestAIPipelineIntegration:
             assert "answer" in result
             assert result["answer"] == "This is a test response from the AI."
             assert "metadata" in result
-``` 

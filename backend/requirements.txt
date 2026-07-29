@@ -28,10 +28,15 @@ langchain>=0.0.335
 tiktoken>=0.5.1
 regex>=2023.10.3
 nltk>=3.8.1
+spacy>=3.7.0
+# NOTE: also requires the model: python -m spacy download en_core_web_sm
 
 # Data science
 pandas==2.2.0
 numpy==1.26.4
+
+# Document parsing
+PyPDF2>=3.0.1
 
 # News and feed parsing
 feedparser>=6.0.10
