@@ -84,3 +84,19 @@ class RedditPost(BaseModel):
     def published_at(self) -> datetime:
         """Convert UTC timestamp to datetime"""
         return datetime.fromtimestamp(self.created_utc) 
+
+class TwitterPost(BaseModel):
+    """Model for Twitter/X posts"""
+    id: str
+    text: str
+    author_id: str
+    author_name: str
+    author_username: str
+    created_at: datetime
+    like_count: Optional[int] = 0
+    retweet_count: Optional[int] = 0
+    reply_count: Optional[int] = 0
+    quote_count: Optional[int] = 0
+    public_metrics: Optional[Dict[str, Any]] = None
+    media: Optional[List[Dict[str, Any]]] = None
+    sentiment: Optional[str] = None  # "POSITIVE", "NEGATIVE", "NEUTRAL" 

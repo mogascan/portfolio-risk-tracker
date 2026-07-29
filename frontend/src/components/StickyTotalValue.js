@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Text, useMantineColorScheme, Group } from '@mantine/core';
-import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { formatDollarWithCommas, formatPercentage } from '../utils/formatters';
 
@@ -19,9 +18,6 @@ function StickyTotalValue({ visible }) {
     : isNegative 
       ? (isDark ? '#FF5C5C' : '#D00000') 
       : 'dimmed';
-  
-  // Choose arrow icon based on direction
-  const ArrowIcon = isPositive ? IconArrowUpRight : IconArrowDownRight;
 
   return (
     <div 
@@ -58,14 +54,6 @@ function StickyTotalValue({ visible }) {
           borderRadius: '4px',
           backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.07)'
         }}>
-          <ArrowIcon 
-            size={18}
-            stroke={3}
-            style={{ 
-              color: changeColor,
-              marginRight: '3px'
-            }} 
-          />
           <Text
             size="sm"
             weight={700}

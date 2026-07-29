@@ -12,9 +12,9 @@ from datetime import datetime
 
 from app.models.news import (
     CryptoNewsItem, MacroNewsItem, NewsResponse, 
-    CryptoNewsResponse, MacroNewsResponse, SocialMediaPost, SocialMediaResponse, RedditPost
+    CryptoNewsResponse, MacroNewsResponse, SocialMediaPost, SocialMediaResponse, RedditPost, TwitterPost
 )
-from app.services.news import crypto_news_service, macro_news_service, reddit_service
+from app.services.news import crypto_news_service, macro_news_service, reddit_service, twitter_service
 from app.core.logging import get_logger
 
 # Initialize logger
@@ -648,6 +648,98 @@ async def get_latest_news(
     except Exception as e:
         logger.error(f"Error fetching latest news: {e}")
         raise HTTPException(status_code=500, detail=f"Error fetching latest news: {str(e)}")
+
+@router.get("/twitter/user/{handle}", response_model=SocialMediaResponse)
+async def get_user_tweets(
+    handle: str = Path(..., description="Twitter handle (username) to fetch tweets from"),
+    limit: int = Query(10, description="Number of tweets to fetch"),
+    page: int = Query(1, description="Page number")
+):
+    """
+    Get tweets from a specific Twitter/X user
+    """
+    try:
+        logger.info(f"Fetching tweets from user @{handle}, limit={limit}, page={page}")
+        
+        if not handle:
+            raise HTTPException(status_code=400, detail="Twitter handle is required")
+            
+        # Remove @ if present
+        if handle.startswith('@'):
+            handle = handle[1:]
+            
+        # Check if Twitter API token is configured
+        if not twitter_service.bearer_token:
+            logger.error("TWITTER_BEARER_TOKEN environment variable is not set")
+            raise HTTPException(
+                status_code=503, 
+                detail="Twitter API is not configured. Please set the TWITTER_BEARER_TOKEN environment variable."
+            )
+            
+        # Get tweets with modified limit to account for pagination
+        modified_limit = limit * page  # Request enough tweets to cover pagination
+        tweets = await twitter_service.get_tweets_by_username(handle, modified_limit)
+        
+        # If no tweets and it's likely due to rate limiting, return a specific error
+        if not tweets and twitter_service.rate_limited:
+            raise HTTPException(
+                status_code=429,
+                detail="Twitter API rate limit exceeded. Please try again later."
+            )
+        
+        # Calculate pagination
+        total_count = len(tweets)
+        start_idx = (page - 1) * limit
+        end_idx = min(start_idx + limit, total_count)
+        
+        # Handle case where pagination is out of range
+        if total_count > 0 and start_idx >= total_count:
+            raise HTTPException(status_code=400, detail=f"Page {page} is out of range. Max page is {(total_count // limit) + 1}.")
+            
+        paginated_tweets = tweets[start_idx:end_idx]
+        
+        # Convert to SocialMediaPost
+        social_posts = []
+        for tweet in paginated_tweets:
+            try:
+                # Format tweet creation date if needed
+                created_at = tweet.created_at
+                if isinstance(created_at, str):
+                    try:
+                        created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+                    except:
+                        created_at = datetime.now()  # Fallback
+                
+                # Create a post with data from tweet
+                post = SocialMediaPost(
+                    id=f"twitter-{tweet.id}",
+                    platform="twitter",
+                    author=f"{tweet.author_name} (@{tweet.author_username})",
+                    content=tweet.text,
+                    title=None,  # Twitter doesn't have titles, just content
+                    url=f"https://twitter.com/{tweet.author_username}/status/{tweet.id}",
+                    score=tweet.like_count,
+                    comments=tweet.reply_count,
+                    published_at=created_at,
+                    sentiment=tweet.sentiment or "NEUTRAL"
+                )
+                social_posts.append(post)
+            except Exception as e:
+                logger.error(f"Error converting tweet to social post: {e}")
+        
+        return SocialMediaResponse(
+            items=social_posts,
+            total_count=total_count,
+            page=page,
+            page_size=limit
+        )
+        
+    except HTTPException as http_ex:
+        # Re-raise HTTP exceptions
+        raise http_ex
+    except Exception as e:
+        logger.error(f"Error fetching tweets from @{handle}: {e}")
+        raise HTTPException(status_code=500, detail=f"Error fetching tweets: {str(e)}")
 
 @router.on_event("startup")
 async def start_news_services():

@@ -1,12 +1,15 @@
-# 🧠 AI-Powered Crypto Portfolio Tracker
+# 🧠 AI-Powered Portfolio Tracker
 
 A unified dashboard and intelligent assistant for tracking your crypto assets across exchanges and wallets. This project combines real-time market data, News, Social, Research, AI-driven insights, tax flagging, and performance analytics—all in one platform.
 
-![Portfolio Dashboard](https://via.placeholder.com/800x450/3498db/FFFFFF?text=Crypto+Portfolio+Dashboard)
+![image](https://github.com/user-attachments/assets/8b07ceb2-4a57-4d5d-91c9-5a13448b59d2)
+![image](https://github.com/user-attachments/assets/6cbe384c-dc7c-4b9c-bb57-325dd5c9249a)
+
+![image](https://github.com/user-attachments/assets/9d189ddf-b555-4365-8323-ff1c21d98146)
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Connect Accounts**: Supports Binance, Coinbase, and Ethereum wallets - Future feature (MVP add account feature for manual entry of assets)
 - **Unified Portfolio View**: Track total value, P&L, and asset allocation  
@@ -18,7 +21,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Layer     | Technology                      |
 |-----------|----------------------------------|
@@ -31,7 +34,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 /frontend/            # React dashboard
@@ -44,7 +47,7 @@ A unified dashboard and intelligent assistant for tracking your crypto assets ac
 
 ---
 
-## 🧠 AI Assistant Capabilities
+## AI Assistant Capabilities
 
 The AI assistant supports natural language queries about:
 
@@ -65,7 +68,7 @@ The assistant uses:
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 ### 1. Install Dependencies
 
@@ -86,17 +89,18 @@ OPENAI_API_KEY=your_openai_key
 COINGECKO_API_KEY=your_coingecko_key
 ```
 
-✅ `.env` is ignored by Git (`.gitignore` covers it)
+`.env` is ignored by Git (`.gitignore` covers it)
 
 ---
 
-## 🚀 Running the App
+## Running the App
 
 ### Backend
 
 ```bash
 cd backend
 ./scripts/start_services.sh
+ python3 -m uvicorn app.main:app  
 ```
 
 This will:
@@ -108,13 +112,14 @@ This will:
 ```bash
 cd frontend
 npm run dev
+npm start
 ```
 
 Opens the dashboard at `http://localhost:3000`
 
 ---
 
-## 🧪 Testing Queries
+## Testing Queries
 
 ```bash
 cd backend
@@ -123,7 +128,7 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 
-## 🛡 Security
+## Security
 
 - All API keys are stored in `.env` and loaded via `load_dotenv()`
 - No API keys are committed to the repo
@@ -131,7 +136,7 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 
-## 📌 Roadmap
+## Roadmap
 
 - [ ] Token-based wallet auth
 - [ ] User-specific portfolio storage
@@ -141,21 +146,19 @@ python test_query.py "What is the price of Bitcoin?"
 
 ---
 ## Screenshots
+![image](https://github.com/user-attachments/assets/6cbc7b6d-023e-477f-8197-42f561f08175)
 
-![Portfolio Summary](https://via.placeholder.com/400x225/3498db/FFFFFF?text=Portfolio+Summary)
-![Asset Allocation](https://via.placeholder.com/400x225/2ecc71/FFFFFF?text=Asset+Allocation)
-![AI Chat Interface](https://via.placeholder.com/400x225/9b59b6/FFFFFF?text=AI+Chat+Interface)
-![Wallet Management](https://via.placeholder.com/400x225/e74c3c/FFFFFF?text=Wallet+Management)
+![image](https://github.com/user-attachments/assets/b6489d1a-ca64-46ac-bf0c-c4a36759579c)
 
----
-## 👩‍💻 Contributors
+![image](https://github.com/user-attachments/assets/3acd6c32-9eb3-4cf6-9c63-3f8435be410a)
 
-- **Sim D.** – Core Developer & AI Architect  
-- **ChatGPT** – Assistant Developer, Prompt Engineer, QA  
+![image](https://github.com/user-attachments/assets/cacfe1ad-a8eb-4f77-be64-44c76b7c8bd8)
+
+![image](https://github.com/user-attachments/assets/0284b4d8-2a7b-45aa-bb74-129f08c3056b)
 
 ---
 
-## 📄 License
+## License
 
 MIT License © 2025
 
