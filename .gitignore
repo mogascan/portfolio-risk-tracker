@@ -74,3 +74,19 @@ var/
 .env.local
 # Local agent state
 .memsearch/
+
+# Documents and research material — never commit these.
+# Source documents live outside the repo, in skittles/Documents/. They were
+# purged from history on 2026-07-28 (STA_Feb.docx alone was 10 MB) and must not
+# come back: binaries bloat the pack permanently, since every future clone pays
+# for them even after a later delete.
+docs/
+documents/
+Documents/
+backend/app/data/research/
+*.docx
+*.doc
+*.pdf
+*.pptx
+*.xlsx
+*.pkg
