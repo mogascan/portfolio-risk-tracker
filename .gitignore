@@ -72,3 +72,5 @@ var/
 .installed.cfg
 *.egg 
 .env.local
+# Local agent state
+.memsearch/
